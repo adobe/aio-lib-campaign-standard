@@ -1,714 +1,536 @@
 {
-   "openapi": "3.0.0",
-   "info": {
-     "title": "Campaign Standard REST API requests",
-     "version": "v0.0.0"
-   },
-   "servers": [
-     {
-       "url": "https://mc.adobe.io/{ORGANIZATION}/campaign",
-       "variables": {
-         "ORGANIZATION": {
-           "default": "TODO_ORGANIZATION_NOT_SPECIFIED",
-           "description": "the organization identifier"
-         }
-       }
-     }
-   ],
-   "components": {
-     "securitySchemes": {
-       "BearerAuth": {
-           "type": "http",
-           "scheme": "bearer"
-       },
-       "BasicAuth": {
-         "type": "http",
-         "scheme": "basic"
-       },
-       "ApiKeyAuth": {
-         "type": "apiKey",
-         "in": "header",
-         "name": "X-Api-Key"
-       }
-     },
-     "parameters": {
-       "Cache-Control": {
-         "in": "header",
-         "name": "Cache-Control",
-         "required": false,
-         "schema": {
-           "type": "string",
-           "default": "no-cache"
-         }
-       },
-       "Content-Type": {
-         "in": "header",
-         "name": "Content-Type",
-         "required": false,
-         "schema": {
-           "type": "string",
-           "default": "application/json"
-         }
-       }
-     }
-   },
-   "security": [
-     {
-       "ApiKeyAuth": []
-       
-     },
-     {
-       "BearerAuth": []
-     }
-   ],
-   "paths": {
-     "/profileAndServices/profile/": {
-       "parameters": [
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "tags": [ 
-           "retrieveProfile"
-         ],
-         "summary": "Retrieving all profiles",
-         "operationId": "getAllProfiles",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       },
-       "post": {
-         "summary": "Creating a profile",
-         "operationId": "createProfile",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServices/profile/{PROFILE_PKEY}": {
-       "parameters": [
-         {
-           "in": "path",          
-           "name": "PROFILE_PKEY",
-           "required": true,
-           "schema": {
-             "type": "string"
-           }
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "patch": {
-         "summary": "Update a profile's phone number",
-         "operationId": "updateProfilePhoneNumber",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       },
-       "get": {
-         "summary": "Retrieving the OrgUnit PKey",
-         "operationId": "getOrgUnitPKey",
-         "parameters": [
-         ],
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServices/service/{SERVICE_PKEY}": {
-       "parameters": [
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "summary": "Retrieving the service and its subscriptions URL",
-         "operationId": "getServiceAndSubscriptionsUrl",
-         "parameters": [
-           {
-             "in": "path",
-             "name": "SERVICE_PKEY",
-             "required": true,
-             "schema": {
-               "type": "string"
-             }
-           }
-         ],
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/{SERVICE_SUBSCRIPTIONS_URL}": {
-       "parameters": [
-         {
-           "in": "path",
-           "name": "SERVICE_SUBSCRIPTIONS_URL",
-           "required": true,
-           "schema": {
-             "type": "string"
-           }
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "summary": "Retrieving the lists of subscribers",
-         "operationId": "getListsOfSubscribers",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       },
-       "post": {
-         "summary": "Adding a profile to the service's subscribers",
-         "operationId": "addProfileToServiceSubscribers",
-         "parameters": [
-         ],
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/{PROFILE_SUBSCRIPTIONS_URL}": {
-       "parameters": [
-         {
-           "in": "path",          
-           "name": "PROFILE_SUBSCRIPTIONS_URL",
-           "required": true,
-           "schema": {
-             "type": "string"
-           }
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "summary": "Retrieving the Organizational Unit",
-         "operationId": "getOrganizationalUnit",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       },
-       "post": {
-         "summary": "Retrieving the service URL",
-         "operationId": "getServiceUrl",
-         "parameters": [
-         ],
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/{PROFILE_SERVICE_URL}": {
-       "parameters": [
-         {
-           "in": "path",
-           "name": "PROFILE_SERVICE_URL",
-           "required": true,
-           "schema": {
-             "type": "string"
-           }
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "delete": {
-         "summary": "Deleting the service",
-         "operationId": "deleteService",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServices/service/": {
-       "parameters": [
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "post": {
-         "summary": "Creating a service",
-         "operationId": "createService",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServices/profile/history/{PROFILE_PKEY}": {
-       "parameters": [
-         {
-           "in": "path",
-           "name": "PROFILE_PKEY",
-           "required": true,
-           "schema": {
-             "type": "string"
-           }
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "summary": "Accessing a profile's marketing history",
-         "description": "ACS Service Unsub\n\nNote : Use the url get from \"href\" in the service subscribed  from Lesson 4",
-         "operationId": "getProfileHistory",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/{PROFILE_EVENTS_URL}": {
-       "parameters": [
-         {
-           "in": "path",
-           "name": "PROFILE_EVENTS_URL",
-           "required": true,
-           "schema": {
-             "type": "string"
-           }
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "summary": "Retrieving events' mirror page URL",
-         "description": "ACS Service Unsub\n\nNote : Use the url get from \"href\" in the service subscribed  from Lesson 4",
-         "operationId": "getEventsMirrorUrl",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/privacy/privacyTool": {
-       "parameters": [
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "post": {
-         "summary": "Creating a GDPR request",
-         "description": "ACS Service Unsub\n\nNote : Use the url get from \"href\" in the service subscribed  from Lesson 4",
-         "operationId": "createGDPRRequest",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       },
-       "get": {
-         "summary": "Monitoring GDPR requests information",
-         "description": "ACS Service Unsub\n\nNote : Use the url get from \"href\" in the service subscribed  from Lesson 4",
-         "operationId": "getGDPRRequestInfo",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/{PRIVACYREQUESTDATA_URL}": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "PRIVACYREQUESTDATA_URL",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "post": {
-         "summary": "Requesting the data file",
-         "description": "ACS Service Unsub\n\nNote : Use the url get from \"href\" in the service subscribed  from Lesson 4",
-         "operationId": "requestDataFile",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/{TRANSACTIONAL_API_ENDPOINT}/{EVENT_ID}": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "TRANSACTIONAL_API_ENDPOINT",
-           "required": true
-         },
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "EVENT_ID",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "post": {
-         "summary": "Sending a transactional event",
-         "operationId": "sendTransactionalEvent",
-         "security": [{
-           "BasicAuth": []
-         }],  
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/workflow/execution/{WORKFLOW_ID}": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "WORKFLOW_ID",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "summary": "Retrieving the signal activity trigger URL",
-         "operationId": "getSignalActivityTriggerUrl",
-         "security": [{
-           "BasicAuth": []
-         }],
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/{TRIGGER_URL}": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "TRIGGER_URL",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "post": {
-         "summary": "Triggering the signal activity",
-         "operationId": "triggerSignalActivity",
-         "security": [{
-           "BasicAuth": []
-         }],
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/workflow/execution/{WORKFLOW_ID}/commands": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "WORKFLOW_ID",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "post": {
-         "summary": "Resuming a workflow",
-         "operationId": "resumeWorkflow",
-         "security": [{
-           "BasicAuth": []
-         }],
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServices/profile/byEmail": {
-       "parameters": [
-         {
-           "in": "query",
-           "schema": {
-             "type": "string"
-           },
-           "example": "doe@mail.com",
-           "name": "email",
-           "required": false
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-     "get": {
-         "tags": [ 
-           "retrieveProfile"
-         ],
-         "summary": "Retrieving profiles with \"doe@mail.com\" in the email field",
-         "operationId": "getProfileByEmail",  
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServices/resourceType/{RESOURCE}": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "RESOURCE",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "summary": "Retrieving the resource filters URL",
-         "operationId": "getResourceFiltersUrl",      
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/{RESOURCE_FILTERS_URL}": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "RESOURCE_FILTERS_URL",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "summary": "Retrieving the filters description",
-         "operationId": "getFiltersDescription",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServices/service/byChannel/byText": {
-       "parameters": [
-         {
-           "in": "query",
-           "schema": {
-             "type": "string"
-           },
-           "example": "email",
-           "name": "channel",
-           "required": false
-         },
-         {
-           "in": "query",
-           "schema": {
-             "type": "string"
-           },
-           "example": "sport",
-           "name": "text",
-           "required": false
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "tags": [ 
-           "retrieveProfile"
-         ],
-         "summary": "Retrieving services with the \"email\" type and the \"sport\" label",
-         "operationId": "getServicesByChannelAndText",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServices/service": {
-       "parameters": [
-         {
-           "in": "query",
-           "schema": {
-             "type": "string",
-             "default": "2"
-           },
-           "name": "_lineCount",
-           "required": false
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "tags": [ 
-           "retrieveProfile"
-         ],
-         "summary": "Limiting the number of results",
-         "operationId": "getProfileService",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServicesExt/profile": {
-       "parameters": [
-         {
-           "in": "query",
-           "schema": {
-             "type": "string"
-           },
-           "example": "<FIELD_NAME>%20desc",
-           "name": "_order",
-           "required": false
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "get": {
-         "tags": [ 
-           "retrieveProfile"
-         ],
-         "summary": "Retrieving results in a sorted alphabetical order",
-         "operationId": "getProfileSortedResults",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServicesExt/profile/{PROFILE_PKEY}": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "PROFILE_PKEY",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-     "get": {
-         "tags": [ 
-           "retrieveProfile"
-         ],
-         "summary": "Retrieving the profile and its orgUnit URL",
-         "operationId": "getProfileAndOrgUnitUrl",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       },
-       "patch": {
-         "summary": "Updating the profile's orgUnit",
-         "operationId": "updateProfileOrgUnit",
-         "parameters": [
-         ],
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     },
-     "/profileAndServicesExt/profile/{ORGUNIT_PKEY}": {
-       "parameters": [
-         {
-           "in": "path",
-           "schema": {
-             "type": "string"
-           },
-           "name": "ORGUNIT_PKEY",
-           "required": true
-         },
-         {
-           "$ref": "#/components/parameters/Cache-Control"
-         }
-       ],
-       "patch": {
-         "summary": "Update the orgUnit attributes",
-         "operationId": "updateProfileOrgUnitAttributes",
-         "responses": {
-           "default": {
-             "description": ""
-           }
-         }
-       }
-     }
-   }
- }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Adobe Campaign Standard REST API requests",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://mc.adobe.io/{ORGANIZATION}/campaign",
+      "variables": {
+        "ORGANIZATION": {
+          "default": "TODO_ORGANIZATION_NOT_SPECIFIED",
+          "description": "the organization identifier"
+        }
+      }
+    }
+  ],
+  "components": {
+    "schemas": {
+      "WorkflowCommand": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": [
+              "start",
+              "pause",
+              "resume",
+              "stop"
+            ]
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "WorkflowCommand": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WorkflowCommand"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Api-Key"
+      }
+    },
+    "parameters": {
+      "Cache-Control": {
+        "in": "header",
+        "name": "Cache-Control",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "default": "no-cache"
+        }
+      },
+      "Content-Type": {
+        "in": "header",
+        "name": "Content-Type",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "default": "application/json;charset=utf-8"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    },
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/profileAndServices/profile/": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieving all profiles",
+        "operationId": "getAllProfiles",
+        "tags": [
+          "profile"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "summary": "Creating a profile",
+        "operationId": "createProfile",
+        "tags": [
+          "profile"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profileAndServices/profile/{PROFILE_PKEY}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "PROFILE_PKEY",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "patch": {
+        "summary": "Update a profile",
+        "operationId": "updateProfile",
+        "tags": [
+          "profile"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieving the Profile record",
+        "operationId": "getProfile",
+        "parameters": [],
+        "tags": [
+          "profile"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profileAndServices/service/": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "summary": "Creating a service",
+        "operationId": "createService",
+        "tags": [
+          "service"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profileAndServices/service/{SERVICE_PKEY}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieving the service record",
+        "operationId": "getService",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "SERVICE_PKEY",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "service"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profileAndServices/history/{PROFILE_PKEY}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "PROFILE_PKEY",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Accessing a Profile's marketing history",
+        "description": "",
+        "operationId": "getHistoryOfProfile",
+        "tags": [
+          "history"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profileAndServices/resourceType/{RESOURCE}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "RESOURCE",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieving the metadata for a resource",
+        "operationId": "getMetadataForResource",
+        "tags": [
+          "metadata"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/privacy/privacyTool": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "summary": "Creating a GDPR request",
+        "description": "",
+        "operationId": "createGDPRRequest",
+        "tags": [
+          "gdpr"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "summary": "Get information on a GDPR request",
+        "description": "",
+        "operationId": "getGDPRRequest",
+        "tags": [
+          "gdpr"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/mc{ORGANIZATION}/{EVENT_ID}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "ORGANIZATION",
+          "required": true
+        },
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "EVENT_ID",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "summary": "Sending a transactional event",
+        "operationId": "sendTransactionalEvent",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/mc{ORGANIZATION}/{EVENT_ID}/{EVENT_PKEY}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "EVENT_PKEY",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "ORGANIZATION",
+          "required": true
+        },
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "EVENT_ID",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "summary": "Get a transactional event (event data, event status)",
+        "operationId": "getTransactionalEvent",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/workflow/execution/{WORKFLOW_ID}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "WORKFLOW_ID",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Get the workflow record",
+        "operationId": "getWorkflow",
+        "tags": [
+          "workflow"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/workflow/execution/{WORKFLOW_ID}/commands": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "WORKFLOW_ID",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "summary": "Control a workflow",
+        "operationId": "controlWorkflow",
+        "tags": [
+          "workflow"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/WorkflowCommand"
+        }
+      }
+    },
+    "/profileAndServicesExt/profile/{PROFILE_PKEY}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "PROFILE_PKEY",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieving the profile (includes orgUnit URL)",
+        "operationId": "getProfileOrgUnit",
+        "tags": [
+          "organization"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update the profile's orgUnit",
+        "operationId": "updateProfileOrgUnit",
+        "parameters": [],
+        "tags": [
+          "organization"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profileAndServicesExt/orgUnitBase/{ORGUNIT_PKEY}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "ORGUNIT_PKEY",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "patch": {
+        "summary": "Update the orgUnit",
+        "operationId": "updateOrgUnit",
+        "tags": [
+          "organization"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}
