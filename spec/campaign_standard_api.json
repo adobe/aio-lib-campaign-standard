@@ -459,6 +459,55 @@
         }
       }
     },
+    "/{TRIGGER_URL}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "TRIGGER_URL",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "summary": "Trigger a signal activity",
+        "operationId": "triggerSignalActivity",
+        "tags": [
+          "workflow"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  },
+                  "parameters": {
+                    "type": "object"
+                  }
+                },
+                "required": [ "source"]
+              }
+            }
+          }
+        }
+      }
+    },
     "/profileAndServicesExt/profile/{PROFILE_PKEY}": {
       "parameters": [
         {
