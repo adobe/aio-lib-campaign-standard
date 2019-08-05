@@ -312,6 +312,46 @@
         }
       }
     },
+    "/{PRIVACY_REQUEST_DATA_URL}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "post": {
+        "summary": "Get a GDPR data file",
+        "description": "",
+        "operationId": "getGDPRDataFile",
+        "tags": [
+          "gdpr"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [ "name"]
+              }
+            }
+          }
+        }
+
+      }
+    },
     "/mc{ORGANIZATION}/{EVENT_ID}": {
       "parameters": [
         {
