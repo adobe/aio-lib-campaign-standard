@@ -4,7 +4,8 @@
   "description": "Adobe Campaign Standard SDK",
   "main": "src/index.js",
   "scripts": {
-    "test": "npm run lint && npm run unit-tests",
+    "validate": "bin/validate_spec.js spec/campaign_standard_api.json",
+    "test": "npm run validate && npm run lint && npm run unit-tests",
     "lint": "eslint './src/**/*.js' test",
     "unit-tests": "jest --ci -w=2"
   },
@@ -15,13 +16,14 @@
     "swagger-client": "^3.9.0"
   },
   "devDependencies": {
-    "jest": "^24.8.0",
     "eslint": "^5.14.1",
-    "eslint-plugin-import": "^2.18.0",
     "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-jest": "^22.7.2",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.8.0",
+    "openapi-schema-validator": "^3.0.3"
   }
 }
