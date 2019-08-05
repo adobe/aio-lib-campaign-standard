@@ -548,6 +548,28 @@
         }
       }
     },
+    "/profileAndServicesExt": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieve all custom resource collections linked to the Profile table",
+        "operationId": "getCustomResources",
+        "tags": [
+          "metadata"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },    
     "/profileAndServicesExt/profile/{PROFILE_PKEY}": {
       "parameters": [
         {
