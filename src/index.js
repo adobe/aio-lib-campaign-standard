@@ -36,27 +36,15 @@ class CampaignStandardCoreAPI {
     const spec = require('../spec/campaign_standard_api.json')
     const swagger = new Swagger({
       spec: spec,
-      securities: {
-        authorized: {
-          BearerAuth: { value: token },
-          ApiKeyAuth: { value: apiKey }
-        }
-      },
-      serverVariables: {
-        ORGANIZATION: tenant
-      },
       requestInterceptor: req => {
         debug('REQUEST', JSON.stringify(req, null, 2))
         return req
       },
       responseInterceptor: res => {
-        if (debug.enabled('adobeio-cna-core-campaign-standard')) {
-          debug('RESPONSE', JSON.stringify(res, null, 2))
-          if (!res.ok) {
-            const str = res.text.toString('utf-8')
-            const json = JSON.parse(str)
-            debug('DATA\n', JSON.stringify(json, null, 2))
-          }
+        debug('RESPONSE', JSON.stringify(res, null, 2))
+        if (res.ok) {
+          const json = JSON.parse(res.text.toString('utf-8'))
+          debug('DATA\n', JSON.stringify(json, null, 2))
         }
         return res
       },
@@ -67,6 +55,37 @@ class CampaignStandardCoreAPI {
     this.apiKey = apiKey
     this.token = token
     return this
+  }
+
+  /**
+   * Get all Profiles.
+   */
+  getAllProfiles () {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.profile.getAllProfiles({}, this.__createRequest())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          console.log('Error while calling Adobe Campaign Standard getAllProfiles - ' + err)
+          reject(err)
+        })
+    })
+  }
+
+  __createRequest (body = {}, query = {}) {
+    return {
+      requestBody: body,
+      securities: {
+        authorized: {
+          BearerAuth: { value: this.token },
+          ApiKeyAuth: { value: this.apiKey }
+        }
+      },
+      serverVariables: {
+        ORGANIZATION: this.tenant
+      }
+    }
   }
 }
 
