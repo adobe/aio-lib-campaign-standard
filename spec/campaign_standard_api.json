@@ -555,6 +555,36 @@
         }
       }
     },
+    "/{RELATIVE_URL}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "RELATIVE_URL",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Get data from a relative url",
+        "operationId": "getDataFromRelativeUrl",
+        "tags": [
+          "util"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/profileAndServicesExt": {
       "parameters": [
         {
