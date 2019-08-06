@@ -315,6 +315,14 @@
     "/{PRIVACY_REQUEST_DATA_URL}": {
       "parameters": [
         {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "PRIVACY_REQUEST_DATA_URL",
+          "required": true
+        },
+        {
           "$ref": "#/components/parameters/Cache-Control"
         },
         {
@@ -349,7 +357,6 @@
             }
           }
         }
-
       }
     },
     "/mc{ORGANIZATION}/{EVENT_ID}": {
