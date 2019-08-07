@@ -1,4 +1,4 @@
-function createRequestOptions (tenant, apiKey, token, body = {}) {
+function createRequestOptions ({ tenant, apiKey, token, body = {} }) {
   return {
     requestBody: body,
     securities: {
@@ -13,6 +13,11 @@ function createRequestOptions (tenant, apiKey, token, body = {}) {
   }
 }
 
+function wrapGeneralError (functionName, error) {
+  return new Error(`Error while calling Adobe Campaign Standard ${functionName} - ${error}`)
+}
+
 module.exports = {
-  createRequestOptions
+  createRequestOptions,
+  wrapGeneralError
 }

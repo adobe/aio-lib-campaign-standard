@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
 const Swagger = require('swagger-client')
 const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
-const { createRequestOptions } = require('./helpers')
+const { wrapGeneralError, createRequestOptions } = require('./helpers')
 
 function init (tenant, apiKey, token) {
   return new Promise((resolve, reject) => {
@@ -22,11 +22,12 @@ function init (tenant, apiKey, token) {
 
     clientWrapper.init(tenant, apiKey, token)
       .then(initializedSDK => {
-        console.log('sdk initialized successfully')
+        debug('sdk initialized successfully')
         resolve(initializedSDK)
       })
       .catch(err => {
-        console.log('sdk init error ' + err)
+        debug(`sdk init error: ${err}`)
+        throw err
       })
   })
 }
@@ -58,8 +59,13 @@ class CampaignStandardCoreAPI {
     return this
   }
 
-  __createRequestOptions (body = {}) {
-    return createRequestOptions(this.tenant, this.apiKey, this.token, body)
+  __createRequestOptions ({ body } = {}) {
+    return createRequestOptions({
+      tenant: this.tenant,
+      apiKey: this.apiKey,
+      token: this.token,
+      body
+    })
   }
 
   /**
@@ -72,7 +78,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new Error('Error while calling Adobe Campaign Standard getAllProfiles - ' + err))
+          reject(wrapGeneralError('getAllProfiles', err))
         })
     })
   }
@@ -82,12 +88,27 @@ class CampaignStandardCoreAPI {
    */
   createProfile (profileObject) {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.createProfile({}, this.__createRequestOptions(profileObject))
+      this.sdk.apis.profile.createProfile({}, this.__createRequestOptions({ body: profileObject }))
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new Error('Error while calling Adobe Campaign Standard createProfile - ' + err))
+          reject(wrapGeneralError('createProfile', err))
+        })
+    })
+  }
+
+  /**
+   * Update a Profile
+   */
+  updateProfile (profilePKey, profileObject) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.profile.updateProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions({ body: profileObject }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('updateProfile', err))
         })
     })
   }
