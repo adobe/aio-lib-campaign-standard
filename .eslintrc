@@ -1,4 +1,9 @@
 {
   "plugins": ["jest"],
-  "extends": ["standard", "plugin:jest/recommended"]
+  "extends": ["standard", "plugin:jest/recommended"],
+  "globals": {
+    "fixtureFile": true,
+    "fixtureJson": true,
+    "fakeFileSystem": true
+  }
 }

@@ -13,12 +13,12 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "fs": "0.0.1-security",
-    "path": "^0.12.7",
     "swagger-client": "^3.9.0"
   },
   "devDependencies": {
-    "eslint": "^5.14.1",
+    "babel-runtime": "^6.26.0",
+    "eol": "^0.9.1",
+    "eslint": "^6.1.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-jest": "^22.7.2",
@@ -26,6 +26,33 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.8.0",
-    "openapi-schema-validator": "^3.0.3"
+    "jest-junit": "^7.0.0",
+    "jest-plugin-fs": "^2.9.0",
+    "openapi-schema-validator": "^3.0.3",
+    "stdout-stderr": "^0.1.9"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./test/jest.setup.js"
+    ]
   }
 }

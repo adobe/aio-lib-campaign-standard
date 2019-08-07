@@ -67,8 +67,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          console.log('Error while calling Adobe Campaign Standard getAllProfiles - ' + err)
-          reject(err)
+          reject(new Error('Error while calling Adobe Campaign Standard getAllProfiles - ' + err))
         })
     })
   }
