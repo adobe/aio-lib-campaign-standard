@@ -10,28 +10,28 @@ governing permissions and limitations under the License.
 */
 
 const sdk = require('../src')
+const { createRequestOptions } = require('../src/helpers')
+
+// /////////////////////////////////////////////
 
 const tenant = 'test-company'
 const apiKey = 'test-apikey'
 const token = 'test-token'
 
-const createSwaggerOptions = (body = {}, query = {}) => {
-  return {
-    requestBody: body,
-    securities: {
-      authorized: {
-        BearerAuth: { value: token },
-        ApiKeyAuth: { value: apiKey }
-      }
-    },
-    serverVariables: {
-      ORGANIZATION: tenant
-    }
-  }
+// /////////////////////////////////////////////
+
+const createSwaggerOptions = (body = {}) => {
+  return createRequestOptions(tenant, apiKey, token, body)
 }
 
+const createSdkClient = async () => {
+  return sdk.init(tenant, apiKey, token)
+}
+
+// /////////////////////////////////////////////
+
 test('sdk init test', async () => {
-  const sdkClient = await sdk.init(tenant, apiKey, token)
+  const sdkClient = await createSdkClient()
 
   expect(sdkClient.tenant).toBe(tenant)
   expect(sdkClient.apiKey).toBe(apiKey)
@@ -39,7 +39,8 @@ test('sdk init test', async () => {
 })
 
 test('getAllProfiles', async () => {
-  const sdkClient = await sdk.init(tenant, apiKey, token)
+  const sdkClient = await createSdkClient()
+  const apiFunction = 'profile.getAllProfiles'
 
   let returnValue
   let mockFn
@@ -48,15 +49,40 @@ test('getAllProfiles', async () => {
 
   // success case
   returnValue = {}
-  mockFn = sdkClient.sdk.mockResolved('profile.getAllProfiles', returnValue)
+  mockFn = sdkClient.sdk.mockResolved(apiFunction, returnValue)
   await expect(sdkClient.getAllProfiles()).resolves.toEqual(returnValue)
   expect(mockFn).toHaveBeenCalledWith(parameters, options)
 
   // failure case
   returnValue = new Error('some API error')
-  mockFn = sdkClient.sdk.mockRejected('profile.getAllProfiles', returnValue)
+  mockFn = sdkClient.sdk.mockRejected(apiFunction, returnValue)
   await expect(sdkClient.getAllProfiles()).rejects.toEqual(
     new Error(`Error while calling Adobe Campaign Standard getAllProfiles - ${returnValue}`)
+  )
+  expect(mockFn).toHaveBeenCalledWith(parameters, options)
+})
+
+test('createProfile', async () => {
+  const sdkClient = await createSdkClient()
+  const apiFunction = 'profile.createProfile'
+
+  let returnValue
+  let mockFn
+  const profileObject = { firstName: 'Jack', lastName: 'Smith', email: 'foo@bar.com' }
+  const parameters = {}
+  const options = createSwaggerOptions(profileObject)
+
+  // success case
+  returnValue = {}
+  mockFn = sdkClient.sdk.mockResolved(apiFunction, returnValue)
+  await expect(sdkClient.createProfile(profileObject)).resolves.toEqual(returnValue)
+  expect(mockFn).toHaveBeenCalledWith(parameters, options)
+
+  // failure case
+  returnValue = new Error('some API error')
+  mockFn = sdkClient.sdk.mockRejected(apiFunction, returnValue)
+  await expect(sdkClient.createProfile(profileObject)).rejects.toEqual(
+    new Error(`Error while calling Adobe Campaign Standard createProfile - ${returnValue}`)
   )
   expect(mockFn).toHaveBeenCalledWith(parameters, options)
 })

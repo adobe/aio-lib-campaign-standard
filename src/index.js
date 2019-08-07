@@ -14,6 +14,7 @@ governing permissions and limitations under the License.
 const Swagger = require('swagger-client')
 const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
+const { createRequestOptions } = require('./helpers')
 
 function init (tenant, apiKey, token) {
   return new Promise((resolve, reject) => {
@@ -57,12 +58,16 @@ class CampaignStandardCoreAPI {
     return this
   }
 
+  __createRequestOptions (body = {}) {
+    return createRequestOptions(this.tenant, this.apiKey, this.token, body)
+  }
+
   /**
    * Get all Profiles.
    */
   getAllProfiles () {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.getAllProfiles({}, this.__createRequest())
+      this.sdk.apis.profile.getAllProfiles({}, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
@@ -72,19 +77,19 @@ class CampaignStandardCoreAPI {
     })
   }
 
-  __createRequest (body = {}, query = {}) {
-    return {
-      requestBody: body,
-      securities: {
-        authorized: {
-          BearerAuth: { value: this.token },
-          ApiKeyAuth: { value: this.apiKey }
-        }
-      },
-      serverVariables: {
-        ORGANIZATION: this.tenant
-      }
-    }
+  /**
+   * Create a Profile
+   */
+  createProfile (profileObject) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.profile.createProfile({}, this.__createRequestOptions(profileObject))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new Error('Error while calling Adobe Campaign Standard createProfile - ' + err))
+        })
+    })
   }
 }
 
