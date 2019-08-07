@@ -14,18 +14,18 @@ const { wrapGeneralError, createRequestOptions } = require('../src/helpers')
 
 // /////////////////////////////////////////////
 
-const tenant = 'test-company'
+const tenantId = 'test-company'
 const apiKey = 'test-apikey'
-const token = 'test-token'
+const accessToken = 'test-token'
 
 // /////////////////////////////////////////////
 
 const createSwaggerOptions = ({ body } = {}) => {
-  return createRequestOptions({ tenant, apiKey, token, body })
+  return createRequestOptions({ tenantId, apiKey, accessToken, body })
 }
 
 const createSdkClient = async () => {
-  return sdk.init(tenant, apiKey, token)
+  return sdk.init(tenantId, apiKey, accessToken)
 }
 
 // /////////////////////////////////////////////
@@ -33,9 +33,27 @@ const createSdkClient = async () => {
 test('sdk init test', async () => {
   const sdkClient = await createSdkClient()
 
-  expect(sdkClient.tenant).toBe(tenant)
+  expect(sdkClient.tenantId).toBe(tenantId)
   expect(sdkClient.apiKey).toBe(apiKey)
-  expect(sdkClient.token).toBe(token)
+  expect(sdkClient.accessToken).toBe(accessToken)
+})
+
+test('sdk init test - no tenantId', async () => {
+  return expect(sdk.init(null, apiKey, accessToken)).rejects.toEqual(
+    new Error('SDK initialization error(s). Missing arguments: tenantId')
+  )
+})
+
+test('sdk init test - no apiKey', async () => {
+  return expect(sdk.init(tenantId, null, accessToken)).rejects.toEqual(
+    new Error('SDK initialization error(s). Missing arguments: apiKey')
+  )
+})
+
+test('sdk init test - no accessToken', async () => {
+  return expect(sdk.init(tenantId, apiKey, null)).rejects.toEqual(
+    new Error('SDK initialization error(s). Missing arguments: accessToken')
+  )
 })
 
 async function standardTest ({ apiName, args, parameters, options, successReturnValue = {} }) {

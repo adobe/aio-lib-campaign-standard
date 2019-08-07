@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
 const Swagger = require('swagger-client')
 const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
-const { wrapGeneralError, createRequestOptions } = require('./helpers')
+const { requestInterceptor, responseInterceptor, wrapGeneralError, createRequestOptions } = require('./helpers')
 
 function init (tenant, apiKey, token) {
   return new Promise((resolve, reject) => {
@@ -27,43 +27,48 @@ function init (tenant, apiKey, token) {
       })
       .catch(err => {
         debug(`sdk init error: ${err}`)
-        throw err
+        reject(err)
       })
   })
 }
 
 class CampaignStandardCoreAPI {
-  async init (tenant, apiKey, token) {
+  async init (tenantId, apiKey, accessToken) {
     // init swagger client
     const spec = require('../spec/campaign_standard_api.json')
     const swagger = new Swagger({
       spec: spec,
-      requestInterceptor: req => {
-        debug('REQUEST', JSON.stringify(req, null, 2))
-        return req
-      },
-      responseInterceptor: res => {
-        debug('RESPONSE', JSON.stringify(res, null, 2))
-        if (res.ok) {
-          const json = JSON.parse(res.text.toString('utf-8'))
-          debug('DATA\n', JSON.stringify(json, null, 2))
-        }
-        return res
-      },
+      requestInterceptor,
+      responseInterceptor,
       usePromise: true
     })
     this.sdk = (await swagger)
-    this.tenant = tenant
+
+    const initErrors = []
+    if (!tenantId) {
+      initErrors.push('tenantId')
+    }
+    if (!apiKey) {
+      initErrors.push('apiKey')
+    }
+    if (!accessToken) {
+      initErrors.push('accessToken')
+    }
+
+    if (initErrors.length) {
+      throw new Error(`SDK initialization error(s). Missing arguments: ${initErrors.join(', ')}`)
+    }
+    this.tenantId = tenantId
     this.apiKey = apiKey
-    this.token = token
+    this.accessToken = accessToken
     return this
   }
 
   __createRequestOptions ({ body } = {}) {
     return createRequestOptions({
-      tenant: this.tenant,
+      tenantId: this.tenantId,
       apiKey: this.apiKey,
-      token: this.token,
+      accessToken: this.accessToken,
       body
     })
   }

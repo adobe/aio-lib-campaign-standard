@@ -9,29 +9,29 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { wrapGeneralError, createRequestOptions } = require('../src/helpers')
+const { requestInterceptor, responseInterceptor, wrapGeneralError, createRequestOptions } = require('../src/helpers')
 
 test('createRequestOptions', () => {
-  const tenant = 'my-tenant'
+  const tenantId = 'my-tenant'
   const apiKey = 'my-api-key'
-  const token = 'my-token'
+  const accessToken = 'my-token'
 
   const options = createRequestOptions({
-    tenant,
+    tenantId,
     apiKey,
-    token
+    accessToken
   })
 
   expect(options).toEqual({
     requestBody: {},
     securities: {
       authorized: {
-        BearerAuth: { value: token },
+        BearerAuth: { value: accessToken },
         ApiKeyAuth: { value: apiKey }
       }
     },
     serverVariables: {
-      ORGANIZATION: tenant
+      ORGANIZATION: tenantId
     }
   })
 })
@@ -43,4 +43,18 @@ test('wrapGeneralError', () => {
   const wrappedErr = wrapGeneralError(functionName, err)
 
   expect(wrappedErr.message).toEqual(`Error while calling Adobe Campaign Standard ${functionName} - ${err}`)
+})
+
+test('requestInterceptor', () => {
+  const req = {}
+  expect(requestInterceptor(req)).toEqual(req)
+})
+
+test('responseInterceptor', () => {
+  let res
+
+  res = { ok: true, text: '{}' }
+  expect(responseInterceptor(res)).toEqual(res)
+  res = { ok: false, text: '{}' }
+  expect(responseInterceptor(res)).toEqual(res)
 })
