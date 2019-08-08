@@ -11,7 +11,7 @@ $ npm install
 ### Usage
 ```
 
-var sdk = require('adobeio-cna-core-campaign-standard');
+var sdk = require('@adobe/adobeio-cna-core-campaign-standard');
 
 //initialize sdk
 const acsClient = await sdk.init('<tenant>', 'x-api-key', '<valid auth token>')

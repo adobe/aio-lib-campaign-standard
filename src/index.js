@@ -8,6 +8,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+/**
+ * Adobe Campaign Standard Core SDK
+ * @module @adobe/adobeio-cna-core-campaign-standard
+ */
 
 'use strict'
 
@@ -16,11 +20,19 @@ const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
 const { requestInterceptor, responseInterceptor, wrapGeneralError, createRequestOptions } = require('./helpers')
 
-function init (tenant, apiKey, token) {
+/**
+ * Initializes a CampaignStandardCoreAPI object and returns it.
+ *
+ * @param {string} tenantId the tenant id (your personal organization in Campaign Standard)
+ * @param {string} apiKey the API key for your Adobe I/O Campaign Standard Integration
+ * @param {string} accessToken the access token for your Adobe I/O Campaign Standard Integration
+ * @returns {CampaignStandardCoreAPI}
+ */
+module.exports.init = function (tenantId, apiKey, accessToken) {
   return new Promise((resolve, reject) => {
     const clientWrapper = new CampaignStandardCoreAPI()
 
-    clientWrapper.init(tenant, apiKey, token)
+    clientWrapper.init(tenantId, apiKey, accessToken)
       .then(initializedSDK => {
         debug('sdk initialized successfully')
         resolve(initializedSDK)
@@ -32,7 +44,21 @@ function init (tenant, apiKey, token) {
   })
 }
 
+/**
+ * Wrapper for the Adobe Campaign Standard REST API.
+ * 
+ */
 class CampaignStandardCoreAPI {
+  /**
+   * Initializes the object.
+   *
+   * @param {string} tenantId the tenant id (your personal organization in Campaign Standard)
+   * @param {string} apiKey the API key for your Adobe I/O Campaign Standard Integration
+   * @param {string} accessToken the access token for your Adobe I/O Campaign Standard Integration
+   * @throws {Error} when any of the arguments tenantId, apiKey, or accessToken is missing
+   * @async
+   */
+
   async init (tenantId, apiKey, accessToken) {
     // init swagger client
     const spec = require('../spec/campaign_standard_api.json')
@@ -58,8 +84,11 @@ class CampaignStandardCoreAPI {
     if (initErrors.length) {
       throw new Error(`SDK initialization error(s). Missing arguments: ${initErrors.join(', ')}`)
     }
+    /** the tenant id (your personal organization in Campaign Standard) */
     this.tenantId = tenantId
+    /** the api key from your Adobe I/O Campaign Standard integration */
     this.apiKey = apiKey
+    /** the access token from your Adobe I/O Campaign Standard integration */
     this.accessToken = accessToken
     return this
   }
@@ -90,6 +119,8 @@ class CampaignStandardCoreAPI {
 
   /**
    * Create a Profile record
+   *
+   * @param {Object} profileObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|profile properties}
    */
   createProfile (profileObject) {
     return new Promise((resolve, reject) => {
@@ -105,6 +136,9 @@ class CampaignStandardCoreAPI {
 
   /**
    * Update a Profile record
+   *
+   * @param {string} profilePKey the PKey property of a Profile record
+   * @param {Object} profileObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|profile properties}. Only set the properties you want to update.
    */
   updateProfile (profilePKey, profileObject) {
     return new Promise((resolve, reject) => {
@@ -120,6 +154,8 @@ class CampaignStandardCoreAPI {
 
   /**
    * Get a Profile record
+   *
+   * @param {string} profilePKey the PKey property of a Profile record
    */
   getProfile (profilePKey) {
     return new Promise((resolve, reject) => {
@@ -135,6 +171,8 @@ class CampaignStandardCoreAPI {
 
   /**
    * Create a Service record
+   *
+   * @param {Object} serviceObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#service|service properties}
    */
   createService (serviceObject) {
     return new Promise((resolve, reject) => {
@@ -150,6 +188,8 @@ class CampaignStandardCoreAPI {
 
   /**
    * Get a Service record
+   *
+   * @param {string} servicePKey the PKey property of a Service record
    */
   getService (servicePKey) {
     return new Promise((resolve, reject) => {
@@ -165,6 +205,8 @@ class CampaignStandardCoreAPI {
 
   /**
    * Get the marketing history of a Profile
+   *
+   * @param {string} profilePKey the PKey property of a Profile record
    */
   getHistoryOfProfile (profilePKey) {
     return new Promise((resolve, reject) => {
@@ -178,6 +220,11 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Get the metadata information for a resource.
+   *
+   * @param {string} resource one of profile, service, history, orgUnitBase
+   */
   getMetadataForResource (resource) {
     return new Promise((resolve, reject) => {
       const acceptedResources = ['profile', 'service', 'history', 'orgunitbase']
@@ -196,6 +243,9 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Get all the custom resource collections linked to the Profile table.
+   */
   getCustomResources () {
     return new Promise((resolve, reject) => {
       this.sdk.apis.metadata.getCustomResources({}, this.__createRequestOptions())
@@ -244,6 +294,12 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Send a transactional event.
+   *
+   * @param {string} eventId the type of event you want to send
+   * @param {Object} eventBody the event data to send. TODO: define what this is
+   */
   sendTransactionalEvent (eventId, eventBody) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.messaging.sendTransactionalEvent(
@@ -260,6 +316,12 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Gets data about a transactional event (status, properties)
+   *
+   * @param {string} eventId the type of event you want to send
+   * @param {string} eventPKey the PKey of an event (you get this from a sendTransactionalEvent() call)
+   */
   getTransactionalEvent (eventId, eventPKey) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.messaging.getTransactionalEvent(
@@ -277,6 +339,11 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Gets the properties of a workflow.
+   *
+   * @param {string} workflowId the id of the workflow
+   */
   getWorkflow (workflowId) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.workflow.getWorkflow({ WORKFLOW_ID: workflowId }, this.__createRequestOptions())
@@ -289,6 +356,12 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Trigger a workflow.
+   *
+   * @param {string} workflowTriggerUrl the trigger url for a workflow. You can get this from a call to getWorkflow()
+   * @param {Object} workflowParameters the parameters to send to the workflow. TODO: define object
+   */
   triggerSignalActivity (workflowTriggerUrl, workflowParameters) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.workflow.triggerSignalActivity({ TRIGGER_URL: workflowTriggerUrl },
@@ -303,6 +376,12 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Controls execution of a workflow.
+   *
+   * @param {string} workflowId the id of the workflow
+   * @param {string} command the command to execute for the workflow. one of start, pause, resume, stop
+   */
   controlWorkflow (workflowId, command) {
     return new Promise((resolve, reject) => {
       const acceptedCommands = ['start', 'pause', 'resume', 'stop']
@@ -326,7 +405,12 @@ class CampaignStandardCoreAPI {
     })
   }
 
-  getAllOrgUnits (profilePKey) {
+  /**
+   * Gets all available orgUnits
+   *
+   * @param {string} profilePKey the PKey property of a Profile record
+   */
+  getAllOrgUnits () {
     return new Promise((resolve, reject) => {
       this.sdk.apis.organization.getAllOrgUnits({}, this.__createRequestOptions())
         .then(response => {
@@ -338,6 +422,11 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Gets a Profile record (with it's orgUnit property)
+   *
+   * @param {string} profilePKey the PKey property of a Profile record
+   */
   getProfileWithOrgUnit (profilePKey) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.organization.getProfileWithOrgUnit({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
@@ -350,6 +439,12 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Update the orgUnit of a Profile
+   *
+   * @param {string} profilePKey the PKey property of a Profile record
+   * @param {string} orgUnitPKey the PKey property of a OrgUnitBase record
+   */
   updateProfileOrgUnit (profilePKey, orgUnitPKey) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.organization.updateProfileOrgUnit({ PROFILE_PKEY: profilePKey },
@@ -369,6 +464,12 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Update the properties of an OrgUnitBase.
+   *
+   * @param {string} orgUnitPKey the PKey property of a OrgUnitBase record
+   * @param {Object} orgUnitObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#orgunitbase|orgUnitBase properties}. Only set the properties you want to update.
+   */
   updateOrgUnit (orgUnitPKey, orgUnitObject) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.organization.updateOrgUnit({ ORGUNIT_PKEY: orgUnitPKey },
@@ -382,6 +483,11 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Gets data from a relative url. Helper function.
+   *
+   * @param {string} relativeUrl the relative url (returned from some ACS API calls)
+   */
   getDataFromRelativeUrl (relativeUrl) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.util.getDataFromRelativeUrl({ RELATIVE_URL: relativeUrl }, this.__createRequestOptions())
@@ -393,8 +499,4 @@ class CampaignStandardCoreAPI {
         })
     })
   }
-}
-
-module.exports = {
-  init: init
 }

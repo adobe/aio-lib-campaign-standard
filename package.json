@@ -1,5 +1,5 @@
 {
-  "name": "adobeio-cna-core-campaign-standard",
+  "name": "@adobe/adobeio-cna-core-campaign-standard",
   "version": "1.0.0",
   "description": "Adobe Campaign Standard SDK",
   "repository": "https://github.com/adobe/adobeio-cna-core-campaign-standard/",
