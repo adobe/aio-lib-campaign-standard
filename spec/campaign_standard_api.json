@@ -30,10 +30,45 @@
             ]
           }
         }
+      },
+      "GDPRRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "reconciliationValue": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "access",
+              "delete"
+            ]
+          }
+        }
       }
     },
     "requestBodies": {
+      "GDPRRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GDPRRequest"
+            }
+          }
+        }
+      },
       "WorkflowCommand": {
+        "required": true,
         "content": {
           "application/json": {
             "schema": {
@@ -296,6 +331,9 @@
           "default": {
             "description": ""
           }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/GDPRRequest"
         }
       },
       "get": {

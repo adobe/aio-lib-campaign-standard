@@ -233,3 +233,24 @@ test('getCustomResources', async () => {
     sdkArgs
   })
 })
+
+test('createGDPRRequest', async () => {
+  const gdprRequest = {
+    name: 'PT11832',
+    namespaceName: 'AMCDS2',
+    reconciliationValue: 'customers@adobe.com',
+    label: 'Delete customers',
+    type: 'delete'
+  }
+
+  const sdkArgs = [gdprRequest]
+  const apiParameters = {}
+  const apiOptions = createSwaggerOptions({ body: gdprRequest })
+
+  return standardTest({
+    fullyQualifiedApiName: 'gdpr.createGDPRRequest',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})

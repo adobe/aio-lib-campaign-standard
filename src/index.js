@@ -207,6 +207,18 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  createGDPRRequest (gdprRequest) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.gdpr.createGDPRRequest({}, this.__createRequestOptions({ body: gdprRequest }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('createGDPRRequest', err))
+        })
+    })
+  }
 }
 
 module.exports = {
