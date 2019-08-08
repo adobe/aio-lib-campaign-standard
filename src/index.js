@@ -288,6 +288,20 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  triggerSignalActivity (workflowTriggerUrl, workflowParameters) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.workflow.triggerSignalActivity({ TRIGGER_URL: workflowTriggerUrl },
+        this.__createRequestOptions({ body: workflowParameters }
+        ))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('triggerSignalActivity', err))
+        })
+    })
+  }
 }
 
 module.exports = {

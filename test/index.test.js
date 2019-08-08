@@ -344,3 +344,30 @@ test('getWorkflow', async () => {
     sdkArgs
   })
 })
+
+test('triggerSignalActivity', async () => {
+  const workflowTriggerUrl = 'https://fake.site'
+  const workflowParameters = {
+    'source:': 'API',
+    parameters: {
+      audience: 'audience',
+      email: 'anna.anna@gibberishxyz.com',
+      template: '05',
+      contentURL: 'http://www.adobe.com',
+      test: 'true',
+      segmentCode: 'my segment',
+      attribute: '2019-04-03 08:17:19.100Z'
+    }
+  }
+
+  const sdkArgs = [workflowTriggerUrl, workflowParameters]
+  const apiParameters = { TRIGGER_URL: workflowTriggerUrl }
+  const apiOptions = createSwaggerOptions({ body: workflowParameters })
+
+  return standardTest({
+    fullyQualifiedApiName: 'workflow.triggerSignalActivity',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})

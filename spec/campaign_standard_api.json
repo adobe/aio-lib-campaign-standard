@@ -17,6 +17,19 @@
   ],
   "components": {
     "schemas": {
+      "WorkflowParameters": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "required": true
+          },
+          "parameters": {
+            "type": "object",
+            "required": false
+          }
+        }
+      },
       "WorkflowCommand": {
         "type": "object",
         "properties": {
@@ -57,12 +70,12 @@
       }
     },
     "requestBodies": {
-      "GDPRRequest": {
+      "WorkflowParameters": {
         "required": true,
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/GDPRRequest"
+              "$ref": "#/components/schemas/WorkflowParameters"
             }
           }
         }
@@ -73,6 +86,16 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/WorkflowCommand"
+            }
+          }
+        }
+      },
+      "GDPRRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GDPRRequest"
             }
           }
         }
@@ -573,23 +596,7 @@
           }
         },
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "source": {
-                    "type": "string"
-                  },
-                  "parameters": {
-                    "type": "object"
-                  }
-                },
-                "required": [ "source"]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/WorkflowParameters"
         }
       }
     },
