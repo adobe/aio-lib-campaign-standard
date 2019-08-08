@@ -369,6 +369,18 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  updateOrgUnit (orgUnitPKey, orgUnitObject) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.organization.updateOrgUnit({ ORGUNIT_PKEY: orgUnitPKey },
+        this.__createRequestOptions({ body: orgUnitObject }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('updateOrgUnit', err))
+        })
+    })
+  }
 }
 
 module.exports = {

@@ -451,3 +451,22 @@ test('updateProfileOrgUnit', async () => {
     sdkArgs
   })
 })
+
+test('updateOrgUnit', async () => {
+  const pkey = '@agsagasgasgasgasg313'
+  const orgUnitObject = {
+    desc: 'this is the org description',
+    label: 'this is the org label'
+  }
+
+  const sdkArgs = [pkey, orgUnitObject]
+  const apiParameters = { ORGUNIT_PKEY: pkey }
+  const apiOptions = createSwaggerOptions({ body: orgUnitObject })
+
+  return standardTest({
+    fullyQualifiedApiName: 'organization.updateOrgUnit',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
