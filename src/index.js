@@ -338,6 +338,18 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  getProfileWithOrgUnit (profilePKey) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.organization.getProfileWithOrgUnit({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getProfileWithOrgUnit', err))
+        })
+    })
+  }
+
 }
 
 module.exports = {

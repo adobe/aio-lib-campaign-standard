@@ -671,7 +671,7 @@
       ],
       "get": {
         "summary": "Retrieving the profile (includes orgUnit URL)",
-        "operationId": "getProfileOrgUnit",
+        "operationId": "getProfileWithOrgUnit",
         "tags": [
           "organization"
         ],
