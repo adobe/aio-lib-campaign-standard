@@ -177,6 +177,24 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  getMetadataForResource (resource) {
+    return new Promise((resolve, reject) => {
+      const acceptedResources = ['profile', 'service', 'history', 'orgunitbase']
+      if (!acceptedResources.includes(resource.toLowerCase())) {
+        reject(wrapGeneralError('getMetadataForResource',
+          new Error(`resource values can only be: ${acceptedResources.join(', ')}`)))
+      }
+
+      this.sdk.apis.metadata.getMetadataForResource({ RESOURCE: resource }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getMetadataForResource', err))
+        })
+    })
+  }
 }
 
 module.exports = {

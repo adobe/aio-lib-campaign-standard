@@ -196,3 +196,27 @@ test('getHistoryOfProfile', async () => {
     sdkArgs
   })
 })
+
+test('getMetadataForResource', async () => {
+  const resource = 'profile'
+
+  const sdkArgs = [resource]
+  const apiParameters = { RESOURCE: resource }
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'metadata.getMetadataForResource',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
+
+test('getMetadataForResource - invalid resource', async () => {
+  const resource = 'gibberish'
+  const sdkClient = await createSdkClient()
+
+  return expect(sdkClient.getMetadataForResource(resource)).rejects.toEqual(
+    new Error('Error while calling Adobe Campaign Standard getMetadataForResource - Error: resource values can only be: profile, service, history, orgunitbase')
+  )
+})
