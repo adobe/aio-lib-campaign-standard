@@ -254,3 +254,16 @@ test('createGDPRRequest', async () => {
     sdkArgs
   })
 })
+
+test('getGDPRRequest', async () => {
+  const sdkArgs = []
+  const apiParameters = {}
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'gdpr.getGDPRRequest',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
