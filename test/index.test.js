@@ -289,10 +289,22 @@ test('getGDPRDataFile', async () => {
 
 test('sendTransactionalEvent', async () => {
   const eventId = 'foo-bar-321'
+  const eventBody =
+  {
+    email: 'test@example.com',
+    scheduled: '2017-12-01 08:00:00.768Z',
+    expiration: '2017-12-31 08:00:00.768Z',
+    ctx:
+    {
+      cartAmount: '$ 125',
+      lastProduct: 'Leather motorbike jacket',
+      firstName: 'Jack'
+    }
+  }
 
-  const sdkArgs = [eventId]
+  const sdkArgs = [eventId, eventBody]
   const apiParameters = { EVENT_ID: eventId, ORGANIZATION: gTenantId }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: eventBody })
 
   return standardTest({
     fullyQualifiedApiName: 'messaging.sendTransactionalEvent',

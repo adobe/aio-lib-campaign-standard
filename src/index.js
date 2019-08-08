@@ -244,13 +244,13 @@ class CampaignStandardCoreAPI {
     })
   }
 
-  sendTransactionalEvent (eventId) {
+  sendTransactionalEvent (eventId, eventBody) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.messaging.sendTransactionalEvent(
         {
           ORGANIZATION: this.tenantId,
           EVENT_ID: eventId
-        }, this.__createRequestOptions())
+        }, this.__createRequestOptions({ body: eventBody }))
         .then(response => {
           resolve(response)
         })
