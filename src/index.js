@@ -147,6 +147,21 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  /**
+   * Get a Service record
+   */
+  getService (servicePKey) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.service.getService({ SERVICE_PKEY: servicePKey }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getService', err))
+        })
+    })
+  }
 }
 
 module.exports = {

@@ -147,7 +147,7 @@ test('getProfile', async () => {
 })
 
 test('createService', async () => {
-  const serviceObject = { 
+  const serviceObject = {
     desc: 'service description',
     label: 'My newsletter',
     messageType: 'email',
@@ -161,6 +161,21 @@ test('createService', async () => {
 
   return standardTest({
     fullyQualifiedApiName: 'service.createService',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
+
+test('getService', async () => {
+  const pkey = '@agsagasgasgasgasg313'
+
+  const sdkArgs = [pkey]
+  const apiParameters = { SERVICE_PKEY: pkey }
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'service.getService',
     apiParameters,
     apiOptions,
     sdkArgs
