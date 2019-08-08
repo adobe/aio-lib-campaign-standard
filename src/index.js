@@ -162,6 +162,21 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  /**
+   * Get the marketing history of a Profile
+   */
+  getHistoryOfProfile (profilePKey) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.history.getHistoryOfProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getHistoryOfProfile', err))
+        })
+    })
+  }
 }
 
 module.exports = {

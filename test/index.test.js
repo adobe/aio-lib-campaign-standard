@@ -181,3 +181,18 @@ test('getService', async () => {
     sdkArgs
   })
 })
+
+test('getHistoryOfProfile', async () => {
+  const pkey = '@agsagasgasgasgasg313'
+
+  const sdkArgs = [pkey]
+  const apiParameters = { PROFILE_PKEY: pkey }
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'history.getHistoryOfProfile',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
