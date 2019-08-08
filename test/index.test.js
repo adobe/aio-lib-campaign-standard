@@ -401,3 +401,16 @@ test('controlWorkflow - invalid resource', async () => {
     new Error('Error while calling Adobe Campaign Standard controlWorkflow - Error: command values can only be: start, pause, resume, stop')
   )
 })
+
+test('getAllOrgUnits', async () => {
+  const sdkArgs = []
+  const apiParameters = {}
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'organization.getAllOrgUnits',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})

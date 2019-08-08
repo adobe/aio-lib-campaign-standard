@@ -724,6 +724,28 @@
           }
         }
       }
+    },
+    "/profileAndServicesExt/orgUnitBase": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "patch": {
+        "summary": "Retrieve all the Org Units",
+        "operationId": "getAllOrgUnits",
+        "tags": [
+          "organization"
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
     }
   }
 }
