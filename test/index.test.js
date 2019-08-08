@@ -429,3 +429,25 @@ test('getProfileWithOrgUnit', async () => {
     sdkArgs
   })
 })
+
+test('updateProfileOrgUnit', async () => {
+  const profilePKey = 'pfoo-bar-321'
+  const orgUnitPKey = 'ogfoo-bar-321'
+
+  const sdkArgs = [profilePKey, orgUnitPKey]
+  const apiParameters = { PROFILE_PKEY: profilePKey }
+  const apiOptions = createSwaggerOptions({
+    body: {
+      orgUnit: {
+        PKey: orgUnitPKey
+      }
+    }
+  })
+
+  return standardTest({
+    fullyQualifiedApiName: 'organization.updateProfileOrgUnit',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})

@@ -350,6 +350,25 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  updateProfileOrgUnit (profilePKey, orgUnitPKey) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.organization.updateProfileOrgUnit({ PROFILE_PKEY: profilePKey },
+        this.__createRequestOptions({
+          body: {
+            orgUnit: {
+              PKey: orgUnitPKey
+            }
+          }
+        }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('updateProfileOrgUnit', err))
+        })
+    })
+  }
+
 }
 
 module.exports = {
