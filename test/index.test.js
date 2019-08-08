@@ -267,3 +267,18 @@ test('getGDPRRequest', async () => {
     sdkArgs
   })
 })
+
+test('getGDPRDataFile', async () => {
+  const privateRequestDataUrl = 'https://fake.site'
+
+  const sdkArgs = [privateRequestDataUrl]
+  const apiParameters = { PRIVACY_REQUEST_DATA_URL: privateRequestDataUrl }
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'gdpr.getGDPRDataFile',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})

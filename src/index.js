@@ -231,6 +231,18 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  getGDPRDataFile (privateRequestDataUrl) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.gdpr.getGDPRDataFile({ PRIVACY_REQUEST_DATA_URL: privateRequestDataUrl }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getGDPRDataFile', err))
+        })
+    })
+  }
 }
 
 module.exports = {
