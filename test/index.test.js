@@ -56,65 +56,76 @@ test('sdk init test - no accessToken', async () => {
   )
 })
 
-async function standardTest ({ apiName, args, parameters, options, successReturnValue = {} }) {
+async function standardTest ({
+  fullyQualifiedApiName, apiParameters, apiOptions,
+  sdkFunctionName, sdkArgs,
+  successReturnValue = {}
+}) {
   const sdkClient = await createSdkClient()
-  const [, apiFunction] = apiName.split('.')
-  const fn = sdkClient[apiFunction]
+  const [, apiFunction] = fullyQualifiedApiName.split('.')
 
+  // sdk function name is the same as the apiname (without the namespace) by default
+  // so if it is not set, we set it
+  if (!sdkFunctionName) {
+    sdkFunctionName = apiFunction
+  }
+  const fn = sdkClient[sdkFunctionName]
   let mockFn
 
   // success case
-  mockFn = sdkClient.sdk.mockResolved(apiName, successReturnValue)
-  await expect(fn.apply(sdkClient, args)).resolves.toEqual(successReturnValue)
-  expect(mockFn).toHaveBeenCalledWith(parameters, options)
+  mockFn = sdkClient.sdk.mockResolved(fullyQualifiedApiName, successReturnValue)
+  await expect(fn.apply(sdkClient, sdkArgs)).resolves.toEqual(successReturnValue)
+  expect(mockFn).toHaveBeenCalledWith(apiParameters, apiOptions)
 
   // failure case
   const err = new Error('some API error')
-  mockFn = sdkClient.sdk.mockRejected(apiName, err)
-  await expect(fn.apply(sdkClient, args)).rejects.toEqual(
+  mockFn = sdkClient.sdk.mockRejected(fullyQualifiedApiName, err)
+  await expect(fn.apply(sdkClient, sdkArgs)).rejects.toEqual(
     wrapGeneralError(apiFunction, err)
   )
-  expect(mockFn).toHaveBeenCalledWith(parameters, options)
+  expect(mockFn).toHaveBeenCalledWith(apiParameters, apiOptions)
 }
 
 test('getAllProfiles', async () => {
-  const args = []
-  const parameters = {}
-  const options = createSwaggerOptions()
+  const sdkArgs = []
+  const apiParameters = {}
+  const apiOptions = createSwaggerOptions()
 
   return standardTest({
-    apiName: 'profile.getAllProfiles',
-    args,
-    parameters,
-    options
+    fullyQualifiedApiName: 'profile.getAllProfiles',
+    apiParameters,
+    apiOptions,
+    sdkArgs
   })
 })
 
 test('createProfile', async () => {
   const profileObject = { firstName: 'Jack', lastName: 'Smith', email: 'foo@bar.com' }
-  const args = [profileObject]
-  const parameters = {}
-  const options = createSwaggerOptions({ body: profileObject })
+
+  const sdkArgs = [profileObject]
+  const apiParameters = {}
+  const apiOptions = createSwaggerOptions({ body: profileObject })
 
   return standardTest({
-    apiName: 'profile.createProfile',
-    args,
-    parameters,
-    options
+    fullyQualifiedApiName: 'profile.createProfile',
+    apiParameters,
+    apiOptions,
+    sdkArgs
   })
 })
 
 test('updateProfile', async () => {
   const pkey = '@agsagasgasgasgasg313'
   const profileObject = { firstName: 'Jack', lastName: 'Smith', email: 'foo@bar.com' }
-  const args = [pkey, profileObject]
-  const parameters = { PROFILE_PKEY: pkey }
-  const options = createSwaggerOptions({ body: profileObject })
+
+  const sdkArgs = [pkey, profileObject]
+  const apiParameters = { PROFILE_PKEY: pkey }
+  const apiOptions = createSwaggerOptions({ body: profileObject })
 
   return standardTest({
-    apiName: 'profile.updateProfile',
-    args,
-    parameters,
-    options
+    fullyQualifiedApiName: 'profile.updateProfile',
+    apiParameters,
+    apiOptions,
+    sdkArgs
   })
 })
