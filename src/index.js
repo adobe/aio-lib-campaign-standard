@@ -276,6 +276,18 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  getWorkflow (workflowId) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.workflow.getWorkflow({ WORKFLOW_ID: workflowId }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getWorkflow', err))
+        })
+    })
+  }
 }
 
 module.exports = {

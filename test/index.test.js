@@ -329,3 +329,18 @@ test('getTransactionalEvent', async () => {
     sdkArgs
   })
 })
+
+test('getWorkflow', async () => {
+  const workflowId = 'wfoo-bar-321'
+
+  const sdkArgs = [workflowId]
+  const apiParameters = { WORKFLOW_ID: workflowId }
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'workflow.getWorkflow',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
