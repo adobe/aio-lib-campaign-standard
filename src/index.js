@@ -74,7 +74,7 @@ class CampaignStandardCoreAPI {
   }
 
   /**
-   * Get all Profiles.
+   * Get all Profile records
    */
   getAllProfiles () {
     return new Promise((resolve, reject) => {
@@ -89,7 +89,7 @@ class CampaignStandardCoreAPI {
   }
 
   /**
-   * Create a Profile
+   * Create a Profile record
    */
   createProfile (profileObject) {
     return new Promise((resolve, reject) => {
@@ -104,7 +104,7 @@ class CampaignStandardCoreAPI {
   }
 
   /**
-   * Update a Profile
+   * Update a Profile record
    */
   updateProfile (profilePKey, profileObject) {
     return new Promise((resolve, reject) => {
@@ -114,6 +114,21 @@ class CampaignStandardCoreAPI {
         })
         .catch(err => {
           reject(wrapGeneralError('updateProfile', err))
+        })
+    })
+  }
+
+  /**
+   * Get a Profile record
+   */
+  getProfile (profilePKey) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.profile.getProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getProfile', err))
         })
     })
   }
