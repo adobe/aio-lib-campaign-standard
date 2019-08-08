@@ -66,6 +66,7 @@ async function standardTest ({
 
   // sdk function name is the same as the apiname (without the namespace) by default
   // so if it is not set, we set it
+  // this means in the SDK the namespace is flattened, so functions have to have unique names
   if (!sdkFunctionName) {
     sdkFunctionName = apiFunction
   }
@@ -139,6 +140,27 @@ test('getProfile', async () => {
 
   return standardTest({
     fullyQualifiedApiName: 'profile.getProfile',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
+
+test('createService', async () => {
+  const serviceObject = { 
+    desc: 'service description',
+    label: 'My newsletter',
+    messageType: 'email',
+    name: 'newsletter1',
+    start: '2019-04-06'
+  }
+
+  const sdkArgs = [serviceObject]
+  const apiParameters = {}
+  const apiOptions = createSwaggerOptions({ body: serviceObject })
+
+  return standardTest({
+    fullyQualifiedApiName: 'service.createService',
     apiParameters,
     apiOptions,
     sdkArgs

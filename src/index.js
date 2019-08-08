@@ -132,6 +132,21 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  /**
+   * Create a Service record
+   */
+  createService (serviceObject) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.service.createService({}, this.__createRequestOptions({ body: serviceObject }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('createService', err))
+        })
+    })
+  }
 }
 
 module.exports = {
