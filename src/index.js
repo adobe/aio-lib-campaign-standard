@@ -46,7 +46,7 @@ module.exports.init = function (tenantId, apiKey, accessToken) {
 
 /**
  * Wrapper for the Adobe Campaign Standard REST API.
- * 
+ *
  */
 class CampaignStandardCoreAPI {
   /**
@@ -258,6 +258,11 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Create a new GDPR request.
+   *
+   * @param {Object} gdprRequest see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#create-a-new-gdpr-request|the properties} that are needed.
+   */
   createGDPRRequest (gdprRequest) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.gdpr.createGDPRRequest({}, this.__createRequestOptions({ body: gdprRequest }))
@@ -270,6 +275,9 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Get data about the current GDPR request.
+   */
   getGDPRRequest () {
     return new Promise((resolve, reject) => {
       this.sdk.apis.gdpr.getGDPRRequest({}, this.__createRequestOptions())
@@ -282,6 +290,12 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  /**
+   * Get the GDPR data file.
+   *
+   * @param {string} privateRequestDataUrl this is acquired from a getGDPRRequest call
+   * @see getGDPRRequest
+   */
   getGDPRDataFile (privateRequestDataUrl) {
     return new Promise((resolve, reject) => {
       this.sdk.apis.gdpr.getGDPRDataFile({ PRIVACY_REQUEST_DATA_URL: privateRequestDataUrl }, this.__createRequestOptions())
@@ -297,8 +311,8 @@ class CampaignStandardCoreAPI {
   /**
    * Send a transactional event.
    *
-   * @param {string} eventId the type of event you want to send
-   * @param {Object} eventBody the event data to send. TODO: define what this is
+   * @param {string} eventId the type of event you want to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
+   * @param {Object} eventBody the event data to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
    */
   sendTransactionalEvent (eventId, eventBody) {
     return new Promise((resolve, reject) => {
@@ -320,7 +334,8 @@ class CampaignStandardCoreAPI {
    * Gets data about a transactional event (status, properties)
    *
    * @param {string} eventId the type of event you want to send
-   * @param {string} eventPKey the PKey of an event (you get this from a sendTransactionalEvent() call)
+   * @param {string} eventPKey the PKey of an event (you get this from a sendTransactionalEvent call)
+   * @see sendTransactionalEvent
    */
   getTransactionalEvent (eventId, eventPKey) {
     return new Promise((resolve, reject) => {
@@ -359,8 +374,9 @@ class CampaignStandardCoreAPI {
   /**
    * Trigger a workflow.
    *
-   * @param {string} workflowTriggerUrl the trigger url for a workflow. You can get this from a call to getWorkflow()
-   * @param {Object} workflowParameters the parameters to send to the workflow. TODO: define object
+   * @param {string} workflowTriggerUrl the trigger url for a workflow. You can get this from a call to getWorkflow
+   * @param {Object} workflowParameters the parameters to send to the workflow. see the payload in the {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#sending-a-transactional-event|docs}
+   * @see getWorkflow
    */
   triggerSignalActivity (workflowTriggerUrl, workflowParameters) {
     return new Promise((resolve, reject) => {
@@ -408,7 +424,6 @@ class CampaignStandardCoreAPI {
   /**
    * Gets all available orgUnits
    *
-   * @param {string} profilePKey the PKey property of a Profile record
    */
   getAllOrgUnits () {
     return new Promise((resolve, reject) => {
