@@ -470,3 +470,18 @@ test('updateOrgUnit', async () => {
     sdkArgs
   })
 })
+
+test('getDataFromRelativeUrl', async () => {
+  const relativeUrl = '/profile/bla/blu/blee'
+
+  const sdkArgs = [relativeUrl]
+  const apiParameters = { RELATIVE_URL: relativeUrl }
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'util.getDataFromRelativeUrl',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})

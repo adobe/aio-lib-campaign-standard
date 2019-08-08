@@ -381,6 +381,18 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  getDataFromRelativeUrl (relativeUrl) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.util.getDataFromRelativeUrl({ RELATIVE_URL: relativeUrl }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getDataFromRelativeUrl', err))
+        })
+    })
+  }
 }
 
 module.exports = {
