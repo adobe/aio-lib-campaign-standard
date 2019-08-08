@@ -195,6 +195,18 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  getCustomResources () {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.metadata.getCustomResources({}, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getCustomResources', err))
+        })
+    })
+  }
 }
 
 module.exports = {

@@ -220,3 +220,16 @@ test('getMetadataForResource - invalid resource', async () => {
     new Error('Error while calling Adobe Campaign Standard getMetadataForResource - Error: resource values can only be: profile, service, history, orgunitbase')
   )
 })
+
+test('getCustomResources', async () => {
+  const sdkArgs = []
+  const apiParameters = {}
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'metadata.getCustomResources',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
