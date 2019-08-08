@@ -14,18 +14,22 @@ const { wrapGeneralError, createRequestOptions } = require('../src/helpers')
 
 // /////////////////////////////////////////////
 
-const tenantId = 'test-company'
-const apiKey = 'test-apikey'
-const accessToken = 'test-token'
+const gTenantId = 'test-company'
+const gApiKey = 'test-apikey'
+const gAccessToken = 'test-token'
 
 // /////////////////////////////////////////////
 
 const createSwaggerOptions = ({ body } = {}) => {
-  return createRequestOptions({ tenantId, apiKey, accessToken, body })
+  return createRequestOptions({
+    tenantId: gTenantId,
+    apiKey: gApiKey,
+    accessToken: gAccessToken,
+    body })
 }
 
 const createSdkClient = async () => {
-  return sdk.init(tenantId, apiKey, accessToken)
+  return sdk.init(gTenantId, gApiKey, gAccessToken)
 }
 
 // /////////////////////////////////////////////
@@ -33,25 +37,25 @@ const createSdkClient = async () => {
 test('sdk init test', async () => {
   const sdkClient = await createSdkClient()
 
-  expect(sdkClient.tenantId).toBe(tenantId)
-  expect(sdkClient.apiKey).toBe(apiKey)
-  expect(sdkClient.accessToken).toBe(accessToken)
+  expect(sdkClient.tenantId).toBe(gTenantId)
+  expect(sdkClient.apiKey).toBe(gApiKey)
+  expect(sdkClient.accessToken).toBe(gAccessToken)
 })
 
 test('sdk init test - no tenantId', async () => {
-  return expect(sdk.init(null, apiKey, accessToken)).rejects.toEqual(
+  return expect(sdk.init(null, gApiKey, gAccessToken)).rejects.toEqual(
     new Error('SDK initialization error(s). Missing arguments: tenantId')
   )
 })
 
 test('sdk init test - no apiKey', async () => {
-  return expect(sdk.init(tenantId, null, accessToken)).rejects.toEqual(
+  return expect(sdk.init(gTenantId, null, gAccessToken)).rejects.toEqual(
     new Error('SDK initialization error(s). Missing arguments: apiKey')
   )
 })
 
 test('sdk init test - no accessToken', async () => {
-  return expect(sdk.init(tenantId, apiKey, null)).rejects.toEqual(
+  return expect(sdk.init(gTenantId, gApiKey, null)).rejects.toEqual(
     new Error('SDK initialization error(s). Missing arguments: accessToken')
   )
 })
@@ -277,6 +281,21 @@ test('getGDPRDataFile', async () => {
 
   return standardTest({
     fullyQualifiedApiName: 'gdpr.getGDPRDataFile',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
+
+test('sendTransactionalEvent', async () => {
+  const eventId = 'foo-bar-321'
+
+  const sdkArgs = [eventId]
+  const apiParameters = { EVENT_ID: eventId, ORGANIZATION: gTenantId }
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'messaging.sendTransactionalEvent',
     apiParameters,
     apiOptions,
     sdkArgs
