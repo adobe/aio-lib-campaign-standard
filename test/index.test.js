@@ -371,3 +371,33 @@ test('triggerSignalActivity', async () => {
     sdkArgs
   })
 })
+
+test('controlWorkflow', async () => {
+  const workflowId = 'wfoo-bar-321'
+  const command = 'START'
+
+  const sdkArgs = [workflowId, command]
+  const apiParameters = { WORKFLOW_ID: workflowId }
+  const apiOptions = createSwaggerOptions({
+    body: {
+      method: command.toLowerCase()
+    }
+  })
+
+  return standardTest({
+    fullyQualifiedApiName: 'workflow.controlWorkflow',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
+
+test('controlWorkflow - invalid resource', async () => {
+  const workflowId = 'wfoo-bar-321'
+  const command = 'gibberish'
+  const sdkClient = await createSdkClient()
+
+  return expect(sdkClient.controlWorkflow(workflowId, command)).rejects.toEqual(
+    new Error('Error while calling Adobe Campaign Standard controlWorkflow - Error: command values can only be: start, pause, resume, stop')
+  )
+})

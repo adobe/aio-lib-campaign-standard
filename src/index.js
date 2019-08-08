@@ -302,6 +302,29 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  controlWorkflow (workflowId, command) {
+    return new Promise((resolve, reject) => {
+      const acceptedCommands = ['start', 'pause', 'resume', 'stop']
+      if (!acceptedCommands.includes(command.toLowerCase())) {
+        reject(wrapGeneralError('controlWorkflow',
+          new Error(`command values can only be: ${acceptedCommands.join(', ')}`)))
+      }
+
+      this.sdk.apis.workflow.controlWorkflow({ WORKFLOW_ID: workflowId },
+        this.__createRequestOptions({
+          body: {
+            method: command.toLowerCase()
+          }
+        }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('controlWorkflow', err))
+        })
+    })
+  }
 }
 
 module.exports = {
