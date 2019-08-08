@@ -259,6 +259,23 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+  getTransactionalEvent (eventId, eventPKey) {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.messaging.getTransactionalEvent(
+        {
+          ORGANIZATION: this.tenantId,
+          EVENT_ID: eventId,
+          EVENT_PKEY: eventPKey
+        }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getTransactionalEvent', err))
+        })
+    })
+  }
 }
 
 module.exports = {

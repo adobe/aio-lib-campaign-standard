@@ -313,3 +313,19 @@ test('sendTransactionalEvent', async () => {
     sdkArgs
   })
 })
+
+test('getTransactionalEvent', async () => {
+  const eventId = 'foo-bar-321'
+  const eventPKey = '@agsagasgasgasgasg313'
+
+  const sdkArgs = [eventId, eventPKey]
+  const apiParameters = { EVENT_ID: eventId, ORGANIZATION: gTenantId, EVENT_PKEY: eventPKey }
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'messaging.getTransactionalEvent',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
