@@ -252,6 +252,16 @@
           "$ref": "#/components/parameters/Content-Type"
         }
       ],
+      "get": {
+        "summary": "Retrieving all services",
+        "operationId": "getAllServices",
+        "tags": ["service"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
       "post": {
         "summary": "Creating a service",
         "operationId": "createService",

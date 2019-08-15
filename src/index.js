@@ -170,6 +170,21 @@ class CampaignStandardCoreAPI {
   }
 
   /**
+   * Get all Service records
+   */
+  getAllServices () {
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.service.getAllServices({}, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(wrapGeneralError('getAllServices', err))
+        })
+    })
+  }
+
+  /**
    * Create a Service record
    *
    * @param {Object} serviceObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#service|service properties}

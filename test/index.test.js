@@ -150,6 +150,19 @@ test('getProfile', async () => {
   })
 })
 
+test('getAllServices', async () => {
+  const sdkArgs = []
+  const apiParameters = {}
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'service.getAllServices',
+    apiParameters,
+    apiOptions,
+    sdkArgs
+  })
+})
+
 test('createService', async () => {
   const serviceObject = {
     desc: 'service description',
