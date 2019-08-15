@@ -13,11 +13,11 @@ Adobe Campaign Standard Core SDK
             * [.apiKey](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+apiKey)
             * [.accessToken](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+accessToken)
             * [.init(tenantId, apiKey, accessToken)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+init)
-            * [.getAllProfiles()](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllProfiles)
+            * [.getAllProfiles(filters, param)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllProfiles)
             * [.createProfile(profileObject)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+createProfile)
             * [.updateProfile(profilePKey, profileObject)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+updateProfile)
             * [.getProfile(profilePKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getProfile)
-            * [.getAllServices()](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllServices)
+            * [.getAllServices(filters, param)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllServices)
             * [.createService(serviceObject)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+createService)
             * [.getService(servicePKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getService)
             * [.getHistoryOfProfile(profilePKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getHistoryOfProfile)
@@ -31,7 +31,7 @@ Adobe Campaign Standard Core SDK
             * [.getWorkflow(workflowId)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getWorkflow)
             * [.triggerSignalActivity(workflowTriggerUrl, workflowParameters)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+triggerSignalActivity)
             * [.controlWorkflow(workflowId, command)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+controlWorkflow)
-            * [.getAllOrgUnits()](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllOrgUnits)
+            * [.getAllOrgUnits(filters, param)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllOrgUnits)
             * [.getProfileWithOrgUnit(profilePKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getProfileWithOrgUnit)
             * [.updateProfileOrgUnit(profilePKey, orgUnitPKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+updateProfileOrgUnit)
             * [.updateOrgUnit(orgUnitPKey, orgUnitObject)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+updateOrgUnit)
@@ -62,11 +62,11 @@ Wrapper for the Adobe Campaign Standard REST API.
     * [.apiKey](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+apiKey)
     * [.accessToken](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+accessToken)
     * [.init(tenantId, apiKey, accessToken)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+init)
-    * [.getAllProfiles()](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllProfiles)
+    * [.getAllProfiles(filters, param)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllProfiles)
     * [.createProfile(profileObject)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+createProfile)
     * [.updateProfile(profilePKey, profileObject)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+updateProfile)
     * [.getProfile(profilePKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getProfile)
-    * [.getAllServices()](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllServices)
+    * [.getAllServices(filters, param)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllServices)
     * [.createService(serviceObject)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+createService)
     * [.getService(servicePKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getService)
     * [.getHistoryOfProfile(profilePKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getHistoryOfProfile)
@@ -80,7 +80,7 @@ Wrapper for the Adobe Campaign Standard REST API.
     * [.getWorkflow(workflowId)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getWorkflow)
     * [.triggerSignalActivity(workflowTriggerUrl, workflowParameters)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+triggerSignalActivity)
     * [.controlWorkflow(workflowId, command)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+controlWorkflow)
-    * [.getAllOrgUnits()](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllOrgUnits)
+    * [.getAllOrgUnits(filters, param)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllOrgUnits)
     * [.getProfileWithOrgUnit(profilePKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getProfileWithOrgUnit)
     * [.updateProfileOrgUnit(profilePKey, orgUnitPKey)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+updateProfileOrgUnit)
     * [.updateOrgUnit(orgUnitPKey, orgUnitObject)](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+updateOrgUnit)
@@ -123,10 +123,20 @@ Initializes the object.
 
 <a name="module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllProfiles"></a>
 
-#### campaignStandardCoreAPI.getAllProfiles()
+#### campaignStandardCoreAPI.getAllProfiles(filters, param)
 Get all Profile records
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI)  
+**See**: getMetadataForResource  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| filters | <code>Array</code> | apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call |
+| param | <code>Object</code> | parameters to pass |
+| param.lineCount | <code>integer</code> | limit the number of records to return (default is 25) |
+| param.order | <code>string</code> | the field to order your records by (see the fields of a [Profile](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile)) |
+| param.descendingSort | <code>descendingSort</code> | set to true to get results in descending order (default is ascending) |
+
 <a name="module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+createProfile"></a>
 
 #### campaignStandardCoreAPI.createProfile(profileObject)
@@ -163,10 +173,20 @@ Get a Profile record
 
 <a name="module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllServices"></a>
 
-#### campaignStandardCoreAPI.getAllServices()
+#### campaignStandardCoreAPI.getAllServices(filters, param)
 Get all Service records
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI)  
+**See**: getMetadataForResource  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| filters | <code>Array</code> | apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call |
+| param | <code>Object</code> | parameters to pass |
+| param.lineCount | <code>integer</code> | limit the number of records to return (default is 25) |
+| param.order | <code>string</code> | the field to order your records by (see the fields of a [Service](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#service)) |
+| param.descendingSort | <code>descendingSort</code> | set to true to get results in descending order (default is ascending) |
+
 <a name="module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+createService"></a>
 
 #### campaignStandardCoreAPI.createService(serviceObject)
@@ -309,10 +329,20 @@ Controls execution of a workflow.
 
 <a name="module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getAllOrgUnits"></a>
 
-#### campaignStandardCoreAPI.getAllOrgUnits()
-Gets all available orgUnits
+#### campaignStandardCoreAPI.getAllOrgUnits(filters, param)
+Get all available orgUnits
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI)  
+**See**: getMetadataForResource  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| filters | <code>Array</code> | apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call |
+| param | <code>Object</code> | parameters to pass |
+| param.lineCount | <code>integer</code> | limit the number of records to return (default is 25) |
+| param.order | <code>string</code> | the field to order your records by (see the fields of a [OrgUnitBase](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#orgunitbase)) |
+| param.descendingSort | <code>descendingSort</code> | set to true to get results in descending order (default is ascending) |
+
 <a name="module_@adobe/adobeio-cna-core-campaign-standard..CampaignStandardCoreAPI+getProfileWithOrgUnit"></a>
 
 #### campaignStandardCoreAPI.getProfileWithOrgUnit(profilePKey)

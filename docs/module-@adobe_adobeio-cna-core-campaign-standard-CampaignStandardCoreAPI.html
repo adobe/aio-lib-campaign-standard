@@ -464,7 +464,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line401">line 401</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line454">line 454</a>
     </li></ul></dd>
     
 
@@ -601,7 +601,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line266">line 266</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line319">line 319</a>
     </li></ul></dd>
     
 
@@ -738,7 +738,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line125">line 125</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line153">line 153</a>
     </li></ul></dd>
     
 
@@ -875,7 +875,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line177">line 177</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line230">line 230</a>
     </li></ul></dd>
     
 
@@ -911,7 +911,7 @@
     
 
     
-    <h4 class="name" id="getAllOrgUnits"><span class="type-signature"></span>getAllOrgUnits<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getAllOrgUnits"><span class="type-signature"></span>getAllOrgUnits<span class="signature">(filters, param)</span><span class="type-signature"></span></h4>
     
 
     
@@ -919,7 +919,7 @@
 
 
 <div class="description">
-    Gets all available orgUnits
+    Get all available orgUnits
 </div>
 
 
@@ -928,6 +928,173 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">parameters to pass
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lineCount</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">limit the number of records to return (default is 25)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>order</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the field to order your records by (see the fields of a <a href="https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#orgunitbase">OrgUnitBase</a>)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>descendingSort</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">descendingSort</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">set to true to get results in descending order (default is ascending)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -963,12 +1130,19 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line428">line 428</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line488">line 488</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>getMetadataForResource</li>
+        </ul>
+    </dd>
     
 
     
@@ -999,7 +1173,7 @@
     
 
     
-    <h4 class="name" id="getAllProfiles"><span class="type-signature"></span>getAllProfiles<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getAllProfiles"><span class="type-signature"></span>getAllProfiles<span class="signature">(filters, param)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1018,6 +1192,173 @@
 
 
 
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">parameters to pass
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lineCount</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">limit the number of records to return (default is 25)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>order</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the field to order your records by (see the fields of a <a href="https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile">Profile</a>)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>descendingSort</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">descendingSort</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">set to true to get results in descending order (default is ascending)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
 
 
 
@@ -1051,12 +1392,281 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line108">line 108</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>getMetadataForResource</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getAllServices"><span class="type-signature"></span>getAllServices<span class="signature">(filters, param)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get all Service records
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">parameters to pass
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lineCount</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">limit the number of records to return (default is 25)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>order</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the field to order your records by (see the fields of a <a href="https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#service">Service</a>)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>descendingSort</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">descendingSort</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">set to true to get results in descending order (default is ascending)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line211">line 211</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>getMetadataForResource</li>
+        </ul>
+    </dd>
     
 
     
@@ -1139,7 +1749,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line249">line 249</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line302">line 302</a>
     </li></ul></dd>
     
 
@@ -1276,7 +1886,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line506">line 506</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line568">line 568</a>
     </li></ul></dd>
     
 
@@ -1413,7 +2023,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line299">line 299</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line352">line 352</a>
     </li></ul></dd>
     
 
@@ -1508,7 +2118,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line281">line 281</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line334">line 334</a>
     </li></ul></dd>
     
 
@@ -1645,7 +2255,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line211">line 211</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line264">line 264</a>
     </li></ul></dd>
     
 
@@ -1782,7 +2392,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line228">line 228</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line281">line 281</a>
     </li></ul></dd>
     
 
@@ -1919,7 +2529,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line160">line 160</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
@@ -2056,7 +2666,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line445">line 445</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line507">line 507</a>
     </li></ul></dd>
     
 
@@ -2193,7 +2803,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line247">line 247</a>
     </li></ul></dd>
     
 
@@ -2353,7 +2963,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line340">line 340</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line393">line 393</a>
     </li></ul></dd>
     
 
@@ -2497,7 +3107,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line362">line 362</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line415">line 415</a>
     </li></ul></dd>
     
 
@@ -2869,7 +3479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line317">line 317</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line370">line 370</a>
     </li></ul></dd>
     
 
@@ -3029,7 +3639,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line381">line 381</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line434">line 434</a>
     </li></ul></dd>
     
 
@@ -3196,7 +3806,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line488">line 488</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line550">line 550</a>
     </li></ul></dd>
     
 
@@ -3356,7 +3966,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line143">line 143</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line171">line 171</a>
     </li></ul></dd>
     
 
@@ -3516,7 +4126,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line463">line 463</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line525">line 525</a>
     </li></ul></dd>
     
 
@@ -3568,7 +4178,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Aug 08 2019 22:17:47 GMT+0800 (+08)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Aug 15 2019 12:38:44 GMT+0800 (+08)
 </footer>
 
 <script> prettyPrint(); </script>

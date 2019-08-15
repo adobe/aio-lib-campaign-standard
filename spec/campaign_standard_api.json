@@ -129,6 +129,30 @@
       }
     },
     "parameters": {
+      "Filters": {
+        "in": "path",
+        "schema": {
+          "type": "string"
+        },
+        "name": "FILTERS",
+        "required": false
+      },
+      "LineCount": {
+        "in": "query",
+        "name": "_lineCount",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "Order": {
+        "in": "query",
+        "name": "_order",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
       "Cache-Control": {
         "in": "header",
         "name": "Cache-Control",
@@ -158,8 +182,17 @@
     }
   ],
   "paths": {
-    "/profileAndServices/profile/": {
+    "/profileAndServices/profile/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/Filters"
+        },
+        {
+          "$ref": "#/components/parameters/LineCount"
+        },
+        {
+          "$ref": "#/components/parameters/Order"
+        },
         {
           "$ref": "#/components/parameters/Cache-Control"
         },
@@ -227,8 +260,17 @@
         }
       }
     },
-    "/profileAndServices/service/": {
+    "/profileAndServices/service/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/Filters"
+        },
+        {
+          "$ref": "#/components/parameters/LineCount"
+        },
+        {
+          "$ref": "#/components/parameters/Order"
+        },
         {
           "$ref": "#/components/parameters/Cache-Control"
         },
@@ -712,8 +754,17 @@
         }
       }
     },
-    "/profileAndServicesExt/orgUnitBase": {
+    "/profileAndServicesExt/orgUnitBase/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/Filters"
+        },
+        {
+          "$ref": "#/components/parameters/LineCount"
+        },
+        {
+          "$ref": "#/components/parameters/Order"
+        },
         {
           "$ref": "#/components/parameters/Cache-Control"
         },
