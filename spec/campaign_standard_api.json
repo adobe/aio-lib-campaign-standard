@@ -129,6 +129,14 @@
       }
     },
     "parameters": {
+      "Ext": {
+        "in": "path",
+        "schema": {
+          "type": "string"
+        },
+        "name": "EXT",
+        "required": false
+      },
       "Filters": {
         "in": "path",
         "schema": {
@@ -182,8 +190,11 @@
     }
   ],
   "paths": {
-    "/profileAndServices/profile/{FILTERS}": {
+    "/profileAndServices{EXT}/profile/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/Ext"
+        },
         {
           "$ref": "#/components/parameters/Filters"
         },
@@ -260,8 +271,11 @@
         }
       }
     },
-    "/profileAndServices/service/{FILTERS}": {
+    "/profileAndServices{EXT}/service/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/Ext"
+        },
         {
           "$ref": "#/components/parameters/Filters"
         },
