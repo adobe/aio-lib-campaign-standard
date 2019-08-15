@@ -117,7 +117,7 @@ test('getAllProfiles - with filters', async () => {
   }
 
   function createApiParameters (descendingSort) {
-    return { 
+    return {
       FILTERS: 'byEmail/byText',
       _lineCount: 10,
       _order: descendingSort ? 'email%20desc' : 'email'
