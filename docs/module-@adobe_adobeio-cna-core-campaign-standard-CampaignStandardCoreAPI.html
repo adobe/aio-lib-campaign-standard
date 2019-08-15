@@ -464,7 +464,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line454">line 454</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line459">line 459</a>
     </li></ul></dd>
     
 
@@ -601,7 +601,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line319">line 319</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line324">line 324</a>
     </li></ul></dd>
     
 
@@ -738,7 +738,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line153">line 153</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line159">line 159</a>
     </li></ul></dd>
     
 
@@ -875,7 +875,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line230">line 230</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line235">line 235</a>
     </li></ul></dd>
     
 
@@ -911,7 +911,7 @@
     
 
     
-    <h4 class="name" id="getAllOrgUnits"><span class="type-signature"></span>getAllOrgUnits<span class="signature">(filters, param)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getAllOrgUnits"><span class="type-signature"></span>getAllOrgUnits<span class="signature">(parameters)</span><span class="type-signature"></span></h4>
     
 
     
@@ -955,30 +955,7 @@
 
         <tr>
             
-                <td class="name"><code>filters</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>param</code></td>
+                <td class="name"><code>parameters</code></td>
             
 
             <td class="type">
@@ -1016,6 +993,29 @@
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call</td>
+        </tr>
+
     
 
         <tr>
@@ -1130,7 +1130,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line488">line 488</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line493">line 493</a>
     </li></ul></dd>
     
 
@@ -1173,7 +1173,7 @@
     
 
     
-    <h4 class="name" id="getAllProfiles"><span class="type-signature"></span>getAllProfiles<span class="signature">(filters, param)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getAllProfiles"><span class="type-signature"></span>getAllProfiles<span class="signature">(parameters)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1194,6 +1194,48 @@
 
     <h5>Parameters:</h5>
     
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>parameters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">parameters to pass
+                <h6>Properties</h6>
+                
 
 <table class="params">
     <thead>
@@ -1240,13 +1282,13 @@
 
         <tr>
             
-                <td class="name"><code>param</code></td>
+                <td class="name"><code>hasCustomFilter</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -1256,28 +1298,9 @@
 
             
 
-            <td class="description last">parameters to pass
-                <h6>Properties</h6>
-                
+            <td class="description last">set to true if you have a custom filter. Defaults to false.</td>
+        </tr>
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
@@ -1334,7 +1357,7 @@
             <td class="type">
             
                 
-<span class="param-type">descendingSort</span>
+<span class="param-type">boolean</span>
 
 
             
@@ -1392,7 +1415,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line134">line 134</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line142">line 142</a>
     </li></ul></dd>
     
 
@@ -1435,7 +1458,7 @@
     
 
     
-    <h4 class="name" id="getAllServices"><span class="type-signature"></span>getAllServices<span class="signature">(filters, param)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getAllServices"><span class="type-signature"></span>getAllServices<span class="signature">(parameters)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1456,6 +1479,48 @@
 
     <h5>Parameters:</h5>
     
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>parameters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">parameters to pass
+                <h6>Properties</h6>
+                
 
 <table class="params">
     <thead>
@@ -1502,13 +1567,13 @@
 
         <tr>
             
-                <td class="name"><code>param</code></td>
+                <td class="name"><code>hasCustomFilter</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -1518,28 +1583,9 @@
 
             
 
-            <td class="description last">parameters to pass
-                <h6>Properties</h6>
-                
+            <td class="description last">set to true if you have a custom filter. Defaults to false.</td>
+        </tr>
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
@@ -1654,7 +1700,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line211">line 211</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line218">line 218</a>
     </li></ul></dd>
     
 
@@ -1749,7 +1795,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line302">line 302</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line307">line 307</a>
     </li></ul></dd>
     
 
@@ -1886,7 +1932,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line568">line 568</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line571">line 571</a>
     </li></ul></dd>
     
 
@@ -2023,7 +2069,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line352">line 352</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line357">line 357</a>
     </li></ul></dd>
     
 
@@ -2118,7 +2164,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line334">line 334</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line339">line 339</a>
     </li></ul></dd>
     
 
@@ -2255,7 +2301,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line264">line 264</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line269">line 269</a>
     </li></ul></dd>
     
 
@@ -2392,7 +2438,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line281">line 281</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line286">line 286</a>
     </li></ul></dd>
     
 
@@ -2529,7 +2575,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line188">line 188</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -2666,7 +2712,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line507">line 507</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line510">line 510</a>
     </li></ul></dd>
     
 
@@ -2803,7 +2849,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line247">line 247</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line252">line 252</a>
     </li></ul></dd>
     
 
@@ -2963,7 +3009,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line393">line 393</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line398">line 398</a>
     </li></ul></dd>
     
 
@@ -3107,7 +3153,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line415">line 415</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line420">line 420</a>
     </li></ul></dd>
     
 
@@ -3479,7 +3525,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line370">line 370</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line375">line 375</a>
     </li></ul></dd>
     
 
@@ -3639,7 +3685,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line434">line 434</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line439">line 439</a>
     </li></ul></dd>
     
 
@@ -3806,7 +3852,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line550">line 550</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line553">line 553</a>
     </li></ul></dd>
     
 
@@ -3966,7 +4012,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line171">line 171</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line177">line 177</a>
     </li></ul></dd>
     
 
@@ -4126,7 +4172,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line525">line 525</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line528">line 528</a>
     </li></ul></dd>
     
 
@@ -4178,7 +4224,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Aug 15 2019 12:38:44 GMT+0800 (+08)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Aug 15 2019 14:40:41 GMT+0800 (+08)
 </footer>
 
 <script> prettyPrint(); </script>

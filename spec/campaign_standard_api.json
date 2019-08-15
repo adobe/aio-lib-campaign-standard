@@ -129,10 +129,20 @@
       }
     },
     "parameters": {
+      "Ext": {
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "default": ""
+        },
+        "name": "EXT",
+        "required": false
+      },
       "Filters": {
         "in": "path",
         "schema": {
-          "type": "string"
+          "type": "string",
+          "default": ""
         },
         "name": "FILTERS",
         "required": false
@@ -182,8 +192,11 @@
     }
   ],
   "paths": {
-    "/profileAndServices/profile/{FILTERS}": {
+    "/profileAndServices{EXT}/profile/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/Ext"
+        },
         {
           "$ref": "#/components/parameters/Filters"
         },
@@ -260,8 +273,11 @@
         }
       }
     },
-    "/profileAndServices/service/{FILTERS}": {
+    "/profileAndServices{EXT}/service/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/Ext"
+        },
         {
           "$ref": "#/components/parameters/Filters"
         },
