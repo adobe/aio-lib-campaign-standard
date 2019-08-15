@@ -475,12 +475,21 @@ class CampaignStandardCoreAPI {
   }
 
   /**
-   * Gets all available orgUnits
+   * Get all available orgUnits
    *
+   * @param {Array} filters apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {Object} param parameters to pass
+   * @param {integer} param.lineCount limit the number of records to return (default is 25)
+   * @param {string} param.order the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#orgunitbase|OrgUnitBase})
+   * @param {descendingSort} param.descendingSort set to true to get results in descending order (default is ascending)
+   *
+   * @see getMetadataForResource
    */
-  getAllOrgUnits () {
+  getAllOrgUnits (filters, { lineCount, order, descendingSort } = {}) {
+    const params = this.__createFilterParams(filters, lineCount, order, descendingSort)
+
     return new Promise((resolve, reject) => {
-      this.sdk.apis.organization.getAllOrgUnits({}, this.__createRequestOptions())
+      this.sdk.apis.organization.getAllOrgUnits(params, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
