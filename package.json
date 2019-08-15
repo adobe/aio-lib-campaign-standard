@@ -6,9 +6,9 @@
   "license": "Apache-2.0",
   "main": "src/index.js",
   "scripts": {
-    "validate": "bin/validate_spec.js spec/campaign_standard_api.json",
+    "validate": "node bin/validate_spec.js spec/campaign_standard_api.json",
     "test": "npm run validate && npm run lint && npm run unit-tests",
-    "lint": "eslint './src/**/*.js' test",
+    "lint": "eslint src test",
     "unit-tests": "jest --ci -w=2",
     "docs": "npm run md-docs && npm run html-docs",
     "html-docs": "jsdoc src/index.js --destination docs",
