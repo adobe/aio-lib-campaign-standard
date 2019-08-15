@@ -1,7 +1,8 @@
 # Adobe I/O CNA Adobe Campaign Standard Core SDK
 Javascript Core SDK wrapping [Adobe Campaign Standard APIs](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#introduction).
 
-[JSDoc](https://opensource.adobe.com/adobeio-cna-core-campaign-standard/index.html)
+- [JSDoc (HTML)](https://opensource.adobe.com/adobeio-cna-core-campaign-standard/index.html)
+- [JSDoc (Markdown)](./docs/SDK.md)
 
 
 ### Installing 

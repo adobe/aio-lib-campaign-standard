@@ -10,7 +10,9 @@
     "test": "npm run validate && npm run lint && npm run unit-tests",
     "lint": "eslint './src/**/*.js' test",
     "unit-tests": "jest --ci -w=2",
-    "docs": "jsdoc src/index.js --destination docs"
+    "docs": "npm run md-docs && npm run html-docs",
+    "html-docs": "jsdoc src/index.js --destination docs",
+    "md-docs": "jsdoc2md ./src/index.js > ./docs/SDK.md"
   },
   "dependencies": {
     "debug": "^4.1.1",
@@ -30,6 +32,7 @@
     "jest-junit": "^7.0.0",
     "jest-plugin-fs": "^2.9.0",
     "jsdoc": "^3.6.3",
+    "jsdoc-to-markdown": "^5.0.0",
     "openapi-schema-validator": "^3.0.3",
     "stdout-stderr": "^0.1.9"
   },
