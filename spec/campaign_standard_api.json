@@ -761,7 +761,7 @@
           "$ref": "#/components/parameters/Content-Type"
         }
       ],
-      "patch": {
+      "get": {
         "summary": "Retrieve all the Org Units",
         "operationId": "getAllOrgUnits",
         "tags": [
