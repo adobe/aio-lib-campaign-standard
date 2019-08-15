@@ -27,19 +27,14 @@
             "type": "object"
           }
         },
-        "required": [ "source"]
+        "required": ["source"]
       },
       "WorkflowCommand": {
         "type": "object",
         "properties": {
           "method": {
             "type": "string",
-            "enum": [
-              "start",
-              "pause",
-              "resume",
-              "stop"
-            ]
+            "enum": ["start", "pause", "resume", "stop"]
           }
         }
       },
@@ -60,10 +55,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "access",
-              "delete"
-            ]
+            "enum": ["access", "delete"]
           }
         }
       },
@@ -77,10 +69,10 @@
                 "type": "string"
               }
             },
-            "required": [ "PKey"]
+            "required": ["PKey"]
           }
         },
-        "required": [ "orgUnit"]
+        "required": ["orgUnit"]
       }
     },
     "requestBodies": {
@@ -178,9 +170,7 @@
       "get": {
         "summary": "Retrieving all profiles",
         "operationId": "getAllProfiles",
-        "tags": [
-          "profile"
-        ],
+        "tags": ["profile"],
         "responses": {
           "default": {
             "description": ""
@@ -190,9 +180,7 @@
       "post": {
         "summary": "Creating a profile",
         "operationId": "createProfile",
-        "tags": [
-          "profile"
-        ],
+        "tags": ["profile"],
         "responses": {
           "default": {
             "description": ""
@@ -220,9 +208,7 @@
       "patch": {
         "summary": "Update a profile",
         "operationId": "updateProfile",
-        "tags": [
-          "profile"
-        ],
+        "tags": ["profile"],
         "responses": {
           "default": {
             "description": ""
@@ -233,9 +219,7 @@
         "summary": "Retrieving the Profile record",
         "operationId": "getProfile",
         "parameters": [],
-        "tags": [
-          "profile"
-        ],
+        "tags": ["profile"],
         "responses": {
           "default": {
             "description": ""
@@ -265,9 +249,7 @@
       "post": {
         "summary": "Creating a service",
         "operationId": "createService",
-        "tags": [
-          "service"
-        ],
+        "tags": ["service"],
         "responses": {
           "default": {
             "description": ""
@@ -297,9 +279,7 @@
             }
           }
         ],
-        "tags": [
-          "service"
-        ],
+        "tags": ["service"],
         "responses": {
           "default": {
             "description": ""
@@ -328,9 +308,7 @@
         "summary": "Accessing a Profile's marketing history",
         "description": "",
         "operationId": "getHistoryOfProfile",
-        "tags": [
-          "history"
-        ],
+        "tags": ["history"],
         "responses": {
           "default": {
             "description": ""
@@ -358,9 +336,7 @@
       "get": {
         "summary": "Retrieving the metadata for a resource",
         "operationId": "getMetadataForResource",
-        "tags": [
-          "metadata"
-        ],
+        "tags": ["metadata"],
         "responses": {
           "default": {
             "description": ""
@@ -381,9 +357,7 @@
         "summary": "Creating a GDPR request",
         "description": "",
         "operationId": "createGDPRRequest",
-        "tags": [
-          "gdpr"
-        ],
+        "tags": ["gdpr"],
         "responses": {
           "default": {
             "description": ""
@@ -397,9 +371,7 @@
         "summary": "Get information on a GDPR request",
         "description": "",
         "operationId": "getGDPRRequest",
-        "tags": [
-          "gdpr"
-        ],
+        "tags": ["gdpr"],
         "responses": {
           "default": {
             "description": ""
@@ -428,9 +400,7 @@
         "summary": "Get a GDPR data file",
         "description": "",
         "operationId": "getGDPRDataFile",
-        "tags": [
-          "gdpr"
-        ],
+        "tags": ["gdpr"],
         "responses": {
           "default": {
             "description": ""
@@ -447,7 +417,7 @@
                     "type": "string"
                   }
                 },
-                "required": [ "name"]
+                "required": ["name"]
               }
             }
           }
@@ -482,9 +452,7 @@
       "post": {
         "summary": "Sending a transactional event",
         "operationId": "sendTransactionalEvent",
-        "tags": [
-          "messaging"
-        ],
+        "tags": ["messaging"],
         "responses": {
           "default": {
             "description": ""
@@ -528,9 +496,7 @@
       "post": {
         "summary": "Get a transactional event (event data, event status)",
         "operationId": "getTransactionalEvent",
-        "tags": [
-          "messaging"
-        ],
+        "tags": ["messaging"],
         "responses": {
           "default": {
             "description": ""
@@ -558,9 +524,7 @@
       "get": {
         "summary": "Get the workflow record",
         "operationId": "getWorkflow",
-        "tags": [
-          "workflow"
-        ],
+        "tags": ["workflow"],
         "responses": {
           "default": {
             "description": ""
@@ -588,9 +552,7 @@
       "post": {
         "summary": "Control a workflow",
         "operationId": "controlWorkflow",
-        "tags": [
-          "workflow"
-        ],
+        "tags": ["workflow"],
         "responses": {
           "default": {
             "description": ""
@@ -621,9 +583,7 @@
       "post": {
         "summary": "Trigger a signal activity",
         "operationId": "triggerSignalActivity",
-        "tags": [
-          "workflow"
-        ],
+        "tags": ["workflow"],
         "responses": {
           "default": {
             "description": ""
@@ -654,9 +614,7 @@
       "get": {
         "summary": "Get data from a relative url",
         "operationId": "getDataFromRelativeUrl",
-        "tags": [
-          "util"
-        ],
+        "tags": ["util"],
         "responses": {
           "default": {
             "description": ""
@@ -676,16 +634,14 @@
       "get": {
         "summary": "Retrieve all custom resource collections linked to the Profile table",
         "operationId": "getCustomResources",
-        "tags": [
-          "metadata"
-        ],
+        "tags": ["metadata"],
         "responses": {
           "default": {
             "description": ""
           }
         }
       }
-    },    
+    },
     "/profileAndServicesExt/profile/{PROFILE_PKEY}": {
       "parameters": [
         {
@@ -706,9 +662,7 @@
       "get": {
         "summary": "Retrieving the profile (includes orgUnit URL)",
         "operationId": "getProfileWithOrgUnit",
-        "tags": [
-          "organization"
-        ],
+        "tags": ["organization"],
         "responses": {
           "default": {
             "description": ""
@@ -719,9 +673,7 @@
         "summary": "Update the profile's orgUnit",
         "operationId": "updateProfileOrgUnit",
         "parameters": [],
-        "tags": [
-          "organization"
-        ],
+        "tags": ["organization"],
         "responses": {
           "default": {
             "description": ""
@@ -752,9 +704,7 @@
       "patch": {
         "summary": "Update the orgUnit",
         "operationId": "updateOrgUnit",
-        "tags": [
-          "organization"
-        ],
+        "tags": ["organization"],
         "responses": {
           "default": {
             "description": ""
@@ -774,9 +724,7 @@
       "get": {
         "summary": "Retrieve all the Org Units",
         "operationId": "getAllOrgUnits",
-        "tags": [
-          "organization"
-        ],
+        "tags": ["organization"],
         "responses": {
           "default": {
             "description": ""
