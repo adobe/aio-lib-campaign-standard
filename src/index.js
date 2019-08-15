@@ -102,12 +102,37 @@ class CampaignStandardCoreAPI {
     })
   }
 
+  __createFilterParams (filters, lineCount, order, descendingSort) {
+    const params = {}
+    if (filters) {
+      params.FILTERS = filters.join('/')
+    }
+    if (lineCount) { // lineCount default is 25
+      params._lineCount = lineCount
+    }
+    if (order) {
+      params._order = order
+      if (descendingSort) { // ascending is the default
+        params._order += '%20desc'
+      }
+    }
+
+    return params
+  }
+
   /**
    * Get all Profile records
+   *
+   * @param {Array} filters apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {Object} param1
+   *
+   * @see getMetadataForResource
    */
-  getAllProfiles () {
+  getAllProfiles (filters, { lineCount, order, descendingSort } = {}) {
+    const params = this.__createFilterParams(filters, lineCount, order, descendingSort)
+
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.getAllProfiles({}, this.__createRequestOptions())
+      this.sdk.apis.profile.getAllProfiles(params, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })

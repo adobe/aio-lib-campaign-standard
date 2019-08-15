@@ -104,6 +104,45 @@ test('getAllProfiles', async () => {
   })
 })
 
+test('getAllProfiles - with filters', async () => {
+  function createSdkArgs (descendingSort) {
+    return [
+      ['byEmail', 'byText'],
+      {
+        lineCount: 10,
+        order: 'email',
+        descendingSort
+      }
+    ]
+  }
+
+  function createApiParameters (descendingSort) {
+    return { 
+      FILTERS: 'byEmail/byText',
+      _lineCount: 10,
+      _order: descendingSort ? 'email%20desc' : 'email'
+    }
+  }
+
+  const apiOptions = createSwaggerOptions()
+
+  // descending sort
+  await standardTest({
+    fullyQualifiedApiName: 'profile.getAllProfiles',
+    apiParameters: createApiParameters(true),
+    apiOptions,
+    sdkArgs: createSdkArgs(true)
+  })
+
+  // ascending sort
+  await standardTest({
+    fullyQualifiedApiName: 'profile.getAllProfiles',
+    apiParameters: createApiParameters(false),
+    apiOptions,
+    sdkArgs: createSdkArgs(false)
+  })
+})
+
 test('createProfile', async () => {
   const profileObject = { firstName: 'Jack', lastName: 'Smith', email: 'foo@bar.com' }
 
