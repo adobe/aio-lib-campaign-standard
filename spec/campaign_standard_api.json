@@ -132,7 +132,8 @@
       "Ext": {
         "in": "path",
         "schema": {
-          "type": "string"
+          "type": "string",
+          "default": ""
         },
         "name": "EXT",
         "required": false
@@ -140,7 +141,8 @@
       "Filters": {
         "in": "path",
         "schema": {
-          "type": "string"
+          "type": "string",
+          "default": ""
         },
         "name": "FILTERS",
         "required": false

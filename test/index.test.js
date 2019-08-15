@@ -107,8 +107,9 @@ test('getAllProfiles', async () => {
 test('getAllProfiles - with filters', async () => {
   function createSdkArgs (descendingSort) {
     return [
-      ['byEmail', 'byText'],
       {
+        filters: ['byEmail', 'byText', 'myCustomFilter'],
+        hasCustomFilter: true,
         lineCount: 10,
         order: 'email',
         descendingSort
@@ -118,7 +119,8 @@ test('getAllProfiles - with filters', async () => {
 
   function createApiParameters (descendingSort) {
     return {
-      FILTERS: 'byEmail/byText',
+      FILTERS: 'byEmail/byText/myCustomFilter',
+      EXT: 'Ext',
       _lineCount: 10,
       _order: descendingSort ? 'email%20desc' : 'email'
     }

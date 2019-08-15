@@ -102,14 +102,21 @@ class CampaignStandardCoreAPI {
     })
   }
 
-  __createFilterParams (filters, lineCount, order, descendingSort) {
+  __createFilterParams ({ filters, hasCustomFilter, lineCount, order, descendingSort } = {}) {
     const params = {}
+
     if (filters) {
       params.FILTERS = filters.join('/')
     }
+
+    if (hasCustomFilter) {
+      params.EXT = 'Ext'
+    }
+
     if (lineCount) { // lineCount default is 25
       params._lineCount = lineCount
     }
+
     if (order) {
       params._order = order
       if (descendingSort) { // ascending is the default
@@ -123,19 +130,18 @@ class CampaignStandardCoreAPI {
   /**
    * Get all Profile records
    *
-   * @param {Array} filters apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
-   * @param {Object} param parameters to pass
-   * @param {integer} param.lineCount limit the number of records to return (default is 25)
-   * @param {string} param.order the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|Profile})
-   * @param {descendingSort} param.descendingSort set to true to get results in descending order (default is ascending)
+   * @param {Object} parameters parameters to pass
+   * @param {Array} parameters.filters apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {Boolean} parameters.hasCustomFilter set to true if you have a custom filter. Defaults to false.
+   * @param {integer} parameters.lineCount limit the number of records to return (default is 25)
+   * @param {string} parameters.order the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|Profile})
+   * @param {boolean} parameters.descendingSort set to true to get results in descending order (default is ascending)
    *
    * @see getMetadataForResource
    */
-  getAllProfiles (filters, { lineCount, order, descendingSort } = {}) {
-    const params = this.__createFilterParams(filters, lineCount, order, descendingSort)
-
+  getAllProfiles (parameters) {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.getAllProfiles(params, this.__createRequestOptions())
+      this.sdk.apis.profile.getAllProfiles(this.__createFilterParams(parameters), this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
@@ -200,19 +206,18 @@ class CampaignStandardCoreAPI {
   /**
    * Get all Service records
    *
-   * @param {Array} filters apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
-   * @param {Object} param parameters to pass
-   * @param {integer} param.lineCount limit the number of records to return (default is 25)
-   * @param {string} param.order the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#service|Service})
-   * @param {descendingSort} param.descendingSort set to true to get results in descending order (default is ascending)
+   * @param {Object} parameters parameters to pass
+   * @param {Array} parameters.filters apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {Boolean} parameters.hasCustomFilter set to true if you have a custom filter. Defaults to false.
+   * @param {integer} parameters.lineCount limit the number of records to return (default is 25)
+   * @param {string} parameters.order the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#service|Service})
+   * @param {descendingSort} parameters.descendingSort set to true to get results in descending order (default is ascending)
    *
    * @see getMetadataForResource
    */
-  getAllServices (filters, { lineCount, order, descendingSort } = {}) {
-    const params = this.__createFilterParams(filters, lineCount, order, descendingSort)
-
+  getAllServices (parameters) {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.service.getAllServices(params, this.__createRequestOptions())
+      this.sdk.apis.service.getAllServices(this.__createFilterParams(parameters), this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
@@ -477,19 +482,17 @@ class CampaignStandardCoreAPI {
   /**
    * Get all available orgUnits
    *
-   * @param {Array} filters apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
-   * @param {Object} param parameters to pass
-   * @param {integer} param.lineCount limit the number of records to return (default is 25)
-   * @param {string} param.order the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#orgunitbase|OrgUnitBase})
-   * @param {descendingSort} param.descendingSort set to true to get results in descending order (default is ascending)
+   * @param {Object} parameters parameters to pass
+   * @param {Array} parameters.filters apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {integer} parameters.lineCount limit the number of records to return (default is 25)
+   * @param {string} parameters.order the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#orgunitbase|OrgUnitBase})
+   * @param {descendingSort} parameters.descendingSort set to true to get results in descending order (default is ascending)
    *
    * @see getMetadataForResource
    */
-  getAllOrgUnits (filters, { lineCount, order, descendingSort } = {}) {
-    const params = this.__createFilterParams(filters, lineCount, order, descendingSort)
-
+  getAllOrgUnits (parameters) {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.organization.getAllOrgUnits(params, this.__createRequestOptions())
+      this.sdk.apis.organization.getAllOrgUnits(this.__createFilterParams(parameters), this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
