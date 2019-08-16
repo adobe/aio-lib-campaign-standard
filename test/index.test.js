@@ -105,7 +105,7 @@ test('getAllProfiles', async () => {
 })
 
 test('getAllProfiles - with filters', async () => {
-  function createSdkArgs (descendingSort) {
+  function createSdkArgs ({ descendingSort }) {
     return [
       {
         filters: ['byEmail', 'byText', 'myCustomFilter'],
@@ -117,7 +117,7 @@ test('getAllProfiles - with filters', async () => {
     ]
   }
 
-  function createApiParameters (descendingSort) {
+  function createApiParameters ({ descendingSort }) {
     return {
       FILTERS: 'byEmail/byText/myCustomFilter',
       EXT: 'Ext',
@@ -131,17 +131,17 @@ test('getAllProfiles - with filters', async () => {
   // descending sort
   await standardTest({
     fullyQualifiedApiName: 'profile.getAllProfiles',
-    apiParameters: createApiParameters(true),
+    apiParameters: createApiParameters({ descendingSort: true }),
     apiOptions,
-    sdkArgs: createSdkArgs(true)
+    sdkArgs: createSdkArgs({ descendingSort: true })
   })
 
   // ascending sort
   await standardTest({
     fullyQualifiedApiName: 'profile.getAllProfiles',
-    apiParameters: createApiParameters(false),
+    apiParameters: createApiParameters({ descendingSort: false }),
     apiOptions,
-    sdkArgs: createSdkArgs(false)
+    sdkArgs: createSdkArgs({ descendingSort: false })
   })
 })
 
