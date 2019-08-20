@@ -5,7 +5,7 @@ Javascript Core SDK wrapping [Adobe Campaign Standard APIs](https://docs.campaig
 - [JSDoc (Markdown)](./docs/SDK.md)
 
 
-### Installing 
+### Installing
 
 ```bash
 $ npm install
@@ -16,11 +16,21 @@ $ npm install
 
 var sdk = require('@adobe/adobeio-cna-core-campaign-standard');
 
-//initialize sdk
+// initialize sdk
 const acsClient = await sdk.init('<tenant>', 'x-api-key', '<valid auth token>')
 
-//call methods
-// TODO:
+// call methods
+
+// get profiles by custom filters
+acsClient.getAllProfiles({
+  filters: [
+    'byLinkedin'
+  ],
+  hasCustomFilter: true
+})
+
+// get a workflow
+acsClient.getWorkflow('myWkfId')
 ``` 
 
 ### Contributing
