@@ -433,7 +433,7 @@ class CampaignStandardCoreAPI {
    * Trigger a workflow.
    *
    * @param {string} workflowTriggerUrl the trigger url for a workflow. You can get this from a call to getWorkflow
-   * @param {Object} workflowParameters the parameters to send to the workflow. see the payload in the {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#sending-a-transactional-event|docs}
+   * @param {Object} workflowParameters the parameters to send to the workflow. see the payload in the {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#triggering-a-signal-activity|docs}
    * @see getWorkflow
    */
   triggerSignalActivity (workflowTriggerUrl, workflowParameters) {
