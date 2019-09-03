@@ -103,7 +103,10 @@ class CampaignStandardCoreAPI {
   }
 
   __createFilterParams ({ filters, hasCustomFilter, lineCount, order, descendingSort } = {}) {
-    const params = {}
+    const params = {
+      EXT: '',
+      FILTERS: []
+    }
 
     if (filters) {
       params.FILTERS = filters.join('/')
