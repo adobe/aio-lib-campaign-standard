@@ -93,7 +93,7 @@ async function standardTest ({
 
 test('getAllProfiles', async () => {
   const sdkArgs = []
-  const apiParameters = {}
+  const apiParameters = { EXT: '', FILTERS: [] } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({
@@ -193,7 +193,7 @@ test('getProfile', async () => {
 
 test('getAllServices', async () => {
   const sdkArgs = []
-  const apiParameters = {}
+  const apiParameters = { EXT: '', FILTERS: [] } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({
@@ -458,7 +458,7 @@ test('controlWorkflow - invalid resource', async () => {
 
 test('getAllOrgUnits', async () => {
   const sdkArgs = []
-  const apiParameters = {}
+  const apiParameters = { EXT: '', FILTERS: [] } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({
