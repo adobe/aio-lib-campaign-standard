@@ -355,18 +355,17 @@ class CampaignStandardCoreAPI {
   /**
    * Get the GDPR data file.
    *
-   * @param {string} privateRequestDataUrl this is acquired from a getGDPRRequest call
+   * @param {string} privacyRequestDataUrl this is acquired from a getGDPRRequest call
+   * @param {string} requestInternalName  the request internal name
+   *
    * @see getGDPRRequest
    */
-  getGDPRDataFile (privateRequestDataUrl) {
+  getGDPRDataFile (privacyRequestDataUrl, requestInternalName) {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.gdpr.getGDPRDataFile({ PRIVACY_REQUEST_DATA_URL: privateRequestDataUrl }, this.__createRequestOptions())
-        .then(response => {
-          resolve(response)
-        })
-        .catch(err => {
-          reject(wrapGeneralError('getGDPRDataFile', err))
-        })
+      this.postDataToUrl(privacyRequestDataUrl, { name: requestInternalName })
+        .then(res => res.json())
+        .then(json => resolve(json))
+        .catch(err => reject(wrapGeneralError('getGDPRDataFile', err)))
     })
   }
 

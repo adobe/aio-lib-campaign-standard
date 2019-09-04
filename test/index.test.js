@@ -331,19 +331,40 @@ test('getGDPRRequest', async () => {
   })
 })
 
-test('getGDPRDataFile', async () => {
-  const privateRequestDataUrl = 'https://fake.site'
+test('getGDPRDataFile - success', async () => {
+  const privacyDataRequestUrl = 'https://fake.site'
+  const requestInternalName = 'my-name'
 
-  const sdkArgs = [privateRequestDataUrl]
-  const apiParameters = { PRIVACY_REQUEST_DATA_URL: privateRequestDataUrl }
-  const apiOptions = createSwaggerOptions()
+  const expectedResult = { data: '12345' }
+  fetch.mockResponseOnce(JSON.stringify(expectedResult))
 
-  return standardTest({
-    fullyQualifiedApiName: 'gdpr.getGDPRDataFile',
-    apiParameters,
-    apiOptions,
-    sdkArgs
-  })
+  // this API function does not go through Swagger Client at all,
+  // and goes through node-fetch
+  const client = await createSdkClient()
+  const triggerSuccess = client.getGDPRDataFile(privacyDataRequestUrl, requestInternalName)
+
+  expect(fetch.mock.calls.length).toEqual(1)
+  // [0][0] -> [call-index][argument-index], so first call's first argument
+  expect(fetch.mock.calls[0][0]).toEqual(privacyDataRequestUrl)
+  return expect(triggerSuccess).resolves.toEqual(expectedResult)
+})
+
+test('getGDPRDataFile - error', async () => {
+  const privacyDataRequestUrl = 'https://fake.site'
+  const requestInternalName = 'my-name'
+
+  const expectedError = new Error('Foo')
+  fetch.mockRejectOnce(expectedError)
+
+  // this API function does not go through Swagger Client at all,
+  // and goes through node-fetch
+  const client = await createSdkClient()
+
+  const triggerFail = client.getGDPRDataFile(privacyDataRequestUrl, requestInternalName)
+  expect(fetch.mock.calls.length).toEqual(1)
+  // [0][0] -> [call-index][argument-index], so first call's first argument
+  expect(fetch.mock.calls[0][0]).toEqual(privacyDataRequestUrl)
+  return expect(triggerFail).rejects.toEqual(new Error(`Error while calling Adobe Campaign Standard getGDPRDataFile - ${expectedError}`))
 })
 
 test('sendTransactionalEvent', async () => {
