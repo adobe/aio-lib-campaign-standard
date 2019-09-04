@@ -6,5 +6,8 @@
     "fixtureJson": true,
     "fakeFileSystem": true,
     "fetch": true
-  }
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  }  
 }
