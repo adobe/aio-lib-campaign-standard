@@ -32,6 +32,13 @@ acsClient.getAllProfiles({
 // get a workflow
 acsClient.getWorkflow('myWkfId')
 ``` 
+### Debug Logs
+
+```bash
+DEBUG=adobeio-cna-core-campaign-standard  <your_call_here>
+```
+
+Prepend the `DEBUG` environment variable and value to the call that invokes your function, on the command line. This should output a lot of debug data for your SDK calls.
 
 ### Contributing
 
