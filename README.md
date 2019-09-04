@@ -12,26 +12,64 @@ $ npm install
 ```
 
 ### Usage
-```
 
-var sdk = require('@adobe/adobeio-cna-core-campaign-standard');
+async/await (preferred)
+```javascript
+const sdk = require('@adobe/adobeio-cna-core-campaign-standard');
+
+const main = async () => {
+  // initialize sdk
+  const acsClient = await sdk.init('<tenant>', 'x-api-key', '<valid auth token>')
+  let result
+
+  // call methods
+  try {
+    // get profiles by custom filters
+    result = await acsClient.getAllProfiles({
+      filters: [
+        'byLinkedin'
+      ],
+      hasCustomFilter: true
+    })
+    console.log(result)
+
+    // get a workflow
+    result = await acsClient.getWorkflow('myWkfId')
+    console.log(result)
+
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+main()
+``` 
+
+Promises
+```javascript
+const sdk = require('@adobe/adobeio-cna-core-campaign-standard');
 
 // initialize sdk
-const acsClient = await sdk.init('<tenant>', 'x-api-key', '<valid auth token>')
+const sdkPromise = sdk.init('<tenant>', 'x-api-key', '<valid auth token>')
 
-// call methods
-
-// get profiles by custom filters
-acsClient.getAllProfiles({
-  filters: [
-    'byLinkedin'
-  ],
-  hasCustomFilter: true
+sdkPromise
+.then(acsClient => {
+  return acsClient.getAllProfiles({
+    filters: [
+      'byLinkedin'
+    ],
+    hasCustomFilter: true
+  })
 })
+.then(result => console.log(result))
+.catch(err => console.error(err))
 
-// get a workflow
-acsClient.getWorkflow('myWkfId')
+sdkPromise
+.then(acsClient => acsClient.getWorkflow('myWkfId'))
+.then(result => console.log(result))
+.catch(err => console.error(err))
 ``` 
+
 ### Debug Logs
 
 ```bash
