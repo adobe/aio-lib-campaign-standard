@@ -18,6 +18,7 @@ governing permissions and limitations under the License.
 const Swagger = require('swagger-client')
 const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
+const fetch = require('node-fetch')
 const { requestInterceptor, responseInterceptor, wrapGeneralError, createRequestOptions } = require('./helpers')
 
 /**
@@ -436,20 +437,17 @@ class CampaignStandardCoreAPI {
    * Trigger a workflow.
    *
    * @param {string} workflowTriggerUrl the trigger url for a workflow. You can get this from a call to getWorkflow
-   * @param {Object} workflowParameters the parameters to send to the workflow. see the payload in the {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#triggering-a-signal-activity|docs}
+   * @param {Object} [workflowParameters] workflow parameters object. see the payload in the {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#triggering-a-signal-activity|docs}
+   * @param {string} workflowParameters.source the triggering request source
+   * @param {Object} workflowParameters.parameters the parameters to send to the workflow (paramater name, and parameter value pairs)
    * @see getWorkflow
    */
   triggerSignalActivity (workflowTriggerUrl, workflowParameters) {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.workflow.triggerSignalActivity({ TRIGGER_URL: workflowTriggerUrl },
-        this.__createRequestOptions({ body: workflowParameters }
-        ))
-        .then(response => {
-          resolve(response)
-        })
-        .catch(err => {
-          reject(wrapGeneralError('triggerSignalActivity', err))
-        })
+      this.postDataToUrl(workflowTriggerUrl, workflowParameters)
+        .then(res => res.json())
+        .then(json => resolve(json))
+        .catch(err => reject(wrapGeneralError('triggerSignalActivity', err)))
     })
   }
 
@@ -563,6 +561,27 @@ class CampaignStandardCoreAPI {
         .catch(err => {
           reject(wrapGeneralError('updateOrgUnit', err))
         })
+    })
+  }
+
+  /**
+   * Post to an absolute url.
+   *
+   * @param {string} url the url to POST to
+   * @param {Object} body the POST body
+   */
+  postDataToUrl (url, body) {
+    const options = this.__createRequestOptions()
+
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'Cache-Control': 'no-cache',
+        Authorization: `Bearer ${options.accessToken}`,
+        'X-Api-Key': options.apiKey
+      }
     })
   }
 
