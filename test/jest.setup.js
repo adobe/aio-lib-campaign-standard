@@ -14,6 +14,9 @@ const { stdout } = require('stdout-stderr')
 const fs = require.requireActual('fs')
 const eol = require('eol')
 
+const fetch = require('jest-fetch-mock')
+jest.setMock('node-fetch', fetch)
+
 jest.setTimeout(30000)
 jest.useFakeTimers()
 

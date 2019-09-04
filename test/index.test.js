@@ -10,6 +10,7 @@ governing permissions and limitations under the License.
 */
 
 const sdk = require('../src')
+const fetch = require('node-fetch')
 const { wrapGeneralError, createRequestOptions } = require('../src/helpers')
 
 // /////////////////////////////////////////////
@@ -33,6 +34,10 @@ const createSdkClient = async () => {
 }
 
 // /////////////////////////////////////////////
+
+beforeEach(() => {
+  fetch.resetMocks()
+})
 
 test('sdk init test', async () => {
   const sdkClient = await createSdkClient()
@@ -399,7 +404,7 @@ test('getWorkflow', async () => {
   })
 })
 
-test('triggerSignalActivity', async () => {
+test('triggerSignalActivity - success', async () => {
   const workflowTriggerUrl = 'https://fake.site'
   const workflowParameters = {
     'source:': 'API',
@@ -414,16 +419,47 @@ test('triggerSignalActivity', async () => {
     }
   }
 
-  const sdkArgs = [workflowTriggerUrl, workflowParameters]
-  const apiParameters = { TRIGGER_URL: workflowTriggerUrl }
-  const apiOptions = createSwaggerOptions({ body: workflowParameters })
+  const expectedResult = { data: '12345' }
+  fetch.mockResponseOnce(JSON.stringify(expectedResult))
 
-  return standardTest({
-    fullyQualifiedApiName: 'workflow.triggerSignalActivity',
-    apiParameters,
-    apiOptions,
-    sdkArgs
-  })
+  // this API function does not go through Swagger Client at all,
+  // and goes through node-fetch
+  const client = await createSdkClient()
+  const triggerSuccess = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
+
+  expect(fetch.mock.calls.length).toEqual(1)
+  // [0][0] -> [call-index][argument-index], so first call's first argument
+  expect(fetch.mock.calls[0][0]).toEqual(workflowTriggerUrl)
+  return expect(triggerSuccess).resolves.toEqual(expectedResult)
+})
+
+test('triggerSignalActivity - error', async () => {
+  const workflowTriggerUrl = 'https://fake.site'
+  const workflowParameters = {
+    'source:': 'API',
+    parameters: {
+      audience: 'audience',
+      email: 'anna.anna@gibberishxyz.com',
+      template: '05',
+      contentURL: 'http://www.adobe.com',
+      test: 'true',
+      segmentCode: 'my segment',
+      attribute: '2019-04-03 08:17:19.100Z'
+    }
+  }
+
+  const expectedError = new Error('Foo')
+  fetch.mockRejectOnce(expectedError)
+
+  // this API function does not go through Swagger Client at all,
+  // and goes through node-fetch
+  const client = await createSdkClient()
+
+  const triggerFail = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
+  expect(fetch.mock.calls.length).toEqual(1)
+  // [0][0] -> [call-index][argument-index], so first call's first argument
+  expect(fetch.mock.calls[0][0]).toEqual(workflowTriggerUrl)
+  return expect(triggerFail).rejects.toEqual(new Error(`Error while calling Adobe Campaign Standard triggerSignalActivity - ${expectedError}`))
 })
 
 test('controlWorkflow', async () => {

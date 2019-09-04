@@ -4,6 +4,7 @@
   "globals": {
     "fixtureFile": true,
     "fixtureJson": true,
-    "fakeFileSystem": true
+    "fakeFileSystem": true,
+    "fetch": true
   }
 }
