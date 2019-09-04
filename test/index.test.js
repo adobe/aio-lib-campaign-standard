@@ -26,7 +26,8 @@ const createSwaggerOptions = ({ body } = {}) => {
     tenantId: gTenantId,
     apiKey: gApiKey,
     accessToken: gAccessToken,
-    body })
+    body
+  })
 }
 
 const createSdkClient = async () => {
