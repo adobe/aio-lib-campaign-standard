@@ -437,51 +437,6 @@
         }
       }
     },
-    "/{PRIVACY_REQUEST_DATA_URL}": {
-      "parameters": [
-        {
-          "in": "path",
-          "schema": {
-            "type": "string"
-          },
-          "name": "PRIVACY_REQUEST_DATA_URL",
-          "required": true
-        },
-        {
-          "$ref": "#/components/parameters/Cache-Control"
-        },
-        {
-          "$ref": "#/components/parameters/Content-Type"
-        }
-      ],
-      "post": {
-        "summary": "Get a GDPR data file",
-        "description": "",
-        "operationId": "getGDPRDataFile",
-        "tags": ["gdpr"],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  }
-                },
-                "required": ["name"]
-              }
-            }
-          }
-        }
-      }
-    },
     "/mc{ORGANIZATION}/{EVENT_ID}": {
       "parameters": [
         {
@@ -618,37 +573,6 @@
         },
         "requestBody": {
           "$ref": "#/components/requestBodies/WorkflowCommand"
-        }
-      }
-    },
-    "/{TRIGGER_URL}": {
-      "parameters": [
-        {
-          "in": "path",
-          "schema": {
-            "type": "string"
-          },
-          "name": "TRIGGER_URL",
-          "required": true
-        },
-        {
-          "$ref": "#/components/parameters/Cache-Control"
-        },
-        {
-          "$ref": "#/components/parameters/Content-Type"
-        }
-      ],
-      "post": {
-        "summary": "Trigger a signal activity",
-        "operationId": "triggerSignalActivity",
-        "tags": ["workflow"],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        },
-        "requestBody": {
-          "$ref": "#/components/requestBodies/WorkflowParameters"
         }
       }
     },
