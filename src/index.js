@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
 const Swagger = require('swagger-client')
 const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
-const fetch = require('node-fetch')
+const { fetch, Request } = require('cross-fetch')
 const { requestInterceptor, responseInterceptor, wrapGeneralError, createRequestOptions } = require('./helpers')
 
 /**
@@ -363,7 +363,7 @@ class CampaignStandardCoreAPI {
   getGDPRDataFile (privacyRequestDataUrl, requestInternalName) {
     return new Promise((resolve, reject) => {
       this.postDataToUrl(privacyRequestDataUrl, { name: requestInternalName })
-        .then(res => res.json())
+        .then(res => responseInterceptor(res).json())
         .then(json => resolve(json))
         .catch(err => reject(wrapGeneralError('getGDPRDataFile', err)))
     })
@@ -444,7 +444,7 @@ class CampaignStandardCoreAPI {
   triggerSignalActivity (workflowTriggerUrl, workflowParameters) {
     return new Promise((resolve, reject) => {
       this.postDataToUrl(workflowTriggerUrl, workflowParameters)
-        .then(res => res.json())
+        .then(res => responseInterceptor(res).json())
         .then(json => resolve(json))
         .catch(err => reject(wrapGeneralError('triggerSignalActivity', err)))
     })
@@ -572,7 +572,7 @@ class CampaignStandardCoreAPI {
   postDataToUrl (url, body) {
     const options = this.__createRequestOptions()
 
-    return fetch(url, {
+    const request = new Request(url, {
       method: 'post',
       body: JSON.stringify(body),
       headers: {
@@ -582,6 +582,8 @@ class CampaignStandardCoreAPI {
         'X-Api-Key': options.apiKey
       }
     })
+
+    return fetch(requestInterceptor(request))
   }
 
   /**
