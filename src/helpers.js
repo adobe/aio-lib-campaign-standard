@@ -32,12 +32,12 @@ function wrapGeneralError (functionName, error) {
 }
 
 function requestInterceptor (req) {
-  debug('REQUEST', JSON.stringify(req, null, 2))
+  debug('REQUEST', req)
   return req
 }
 
 function responseInterceptor (res) {
-  debug('RESPONSE', JSON.stringify(res, null, 2))
+  debug('RESPONSE', res)
   if (res.ok) {
     const text = res.text.toString('utf-8')
     try {
