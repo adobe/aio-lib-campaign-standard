@@ -39,8 +39,12 @@ function requestInterceptor (req) {
 function responseInterceptor (res) {
   debug('RESPONSE', JSON.stringify(res, null, 2))
   if (res.ok) {
-    const json = JSON.parse(res.text.toString('utf-8'))
-    debug('DATA\n', JSON.stringify(json, null, 2))
+    const text = res.text.toString('utf-8')
+    try {
+      debug('DATA\n', JSON.stringify(JSON.parse(text), null, 2))
+    } catch (e) {
+      debug('DATA\n', JSON.stringify(text, null, 2))
+    }
   }
   return res
 }
