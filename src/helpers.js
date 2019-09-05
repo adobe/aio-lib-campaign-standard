@@ -43,7 +43,7 @@ function responseInterceptor (res) {
     try {
       debug('DATA\n', JSON.stringify(JSON.parse(text), null, 2))
     } catch (e) {
-      debug('DATA\n', JSON.stringify(text, null, 2))
+      debug('DATA\n', text)
     }
   }
   return res
