@@ -333,7 +333,7 @@ test('getGDPRRequest', async () => {
 })
 
 test('getGDPRDataFile - success', async () => {
-  const privacyDataRequestUrl = 'https://fake.site'
+  const privacyDataRequestUrl = 'https://fake.site/'
   const requestInternalName = 'my-name'
 
   const expectedResult = { data: '12345' }
@@ -346,12 +346,15 @@ test('getGDPRDataFile - success', async () => {
 
   expect(fetch.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
-  expect(fetch.mock.calls[0][0]).toEqual(privacyDataRequestUrl)
+  const requestObject = fetch.mock.calls[0][0]
+  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+
+  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(privacyDataRequestUrl)
   return expect(triggerSuccess).resolves.toEqual(expectedResult)
 })
 
 test('getGDPRDataFile - error', async () => {
-  const privacyDataRequestUrl = 'https://fake.site'
+  const privacyDataRequestUrl = 'https://fake.site/'
   const requestInternalName = 'my-name'
 
   const expectedError = new Error('Foo')
@@ -364,7 +367,10 @@ test('getGDPRDataFile - error', async () => {
   const triggerFail = client.getGDPRDataFile(privacyDataRequestUrl, requestInternalName)
   expect(fetch.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
-  expect(fetch.mock.calls[0][0]).toEqual(privacyDataRequestUrl)
+  const requestObject = fetch.mock.calls[0][0]
+  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+
+  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(privacyDataRequestUrl)
   return expect(triggerFail).rejects.toEqual(new Error(`Error while calling Adobe Campaign Standard getGDPRDataFile - ${expectedError}`))
 })
 
@@ -427,7 +433,7 @@ test('getWorkflow', async () => {
 })
 
 test('triggerSignalActivity - success', async () => {
-  const workflowTriggerUrl = 'https://fake.site'
+  const workflowTriggerUrl = 'https://fake.site/'
   const workflowParameters = {
     'source:': 'API',
     parameters: {
@@ -451,12 +457,15 @@ test('triggerSignalActivity - success', async () => {
 
   expect(fetch.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
-  expect(fetch.mock.calls[0][0]).toEqual(workflowTriggerUrl)
+  const requestObject = fetch.mock.calls[0][0]
+  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+
+  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
   return expect(triggerSuccess).resolves.toEqual(expectedResult)
 })
 
 test('triggerSignalActivity - error', async () => {
-  const workflowTriggerUrl = 'https://fake.site'
+  const workflowTriggerUrl = 'https://fake.site/'
   const workflowParameters = {
     'source:': 'API',
     parameters: {
@@ -480,7 +489,10 @@ test('triggerSignalActivity - error', async () => {
   const triggerFail = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
   expect(fetch.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
-  expect(fetch.mock.calls[0][0]).toEqual(workflowTriggerUrl)
+  const requestObject = fetch.mock.calls[0][0]
+  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+
+  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
   return expect(triggerFail).rejects.toEqual(new Error(`Error while calling Adobe Campaign Standard triggerSignalActivity - ${expectedError}`))
 })
 
