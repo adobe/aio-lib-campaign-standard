@@ -74,7 +74,7 @@ sdkPromise
 .then(acsClient => {
   return acsClient.getAllProfiles({
     filters: [
-      'byLinkedin'
+      'byCRMId'
     ],
     hasCustomFilter: true
   })
