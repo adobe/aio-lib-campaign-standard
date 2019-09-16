@@ -45,7 +45,7 @@ const main = async () => {
     // get profiles by custom filters
     result = await acsClient.getAllProfiles({
       filters: [
-        'byLinkedin'
+        'byCRMId'
       ],
       hasCustomFilter: true
     })
