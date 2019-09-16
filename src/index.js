@@ -19,8 +19,8 @@ const Swagger = require('swagger-client')
 const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
 const { fetch, Request } = require('cross-fetch')
-const { requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
-const { codes } = require('./SDKErrors')
+const { requestInterceptor, responseInterceptor, wrapGeneralError, createRequestOptions } = require('./helpers')
+
 /**
  * Initializes a CampaignStandardCoreAPI object and returns it.
  *
@@ -83,10 +83,8 @@ class CampaignStandardCoreAPI {
     }
 
     if (initErrors.length) {
-      const sdkDetails = { tenantId, apiKey, accessToken }
-      throw new codes.ERROR_SDK_INITIALIZATION({ sdkDetails, messageValues: `${initErrors.join(', ')}` })
+      throw new Error(`SDK initialization error(s). Missing arguments: ${initErrors.join(', ')}`)
     }
-
     /** the tenant id (your personal organization in Campaign Standard) */
     this.tenantId = tenantId
     /** the api key from your Adobe I/O Campaign Standard integration */
@@ -146,15 +144,13 @@ class CampaignStandardCoreAPI {
    * @see getMetadataForResource
    */
   getAllProfiles (parameters) {
-    const sdkDetails = { parameters }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.profile.getAllProfiles(this.__createFilterParams(parameters), this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_PROFILES({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getAllProfiles', err))
         })
     })
   }
@@ -165,15 +161,13 @@ class CampaignStandardCoreAPI {
    * @param {Object} profileObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|profile properties}
    */
   createProfile (profileObject) {
-    const sdkDetails = { profileObject }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.profile.createProfile({}, this.__createRequestOptions({ body: profileObject }))
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_CREATE_PROFILE({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('createProfile', err))
         })
     })
   }
@@ -185,15 +179,13 @@ class CampaignStandardCoreAPI {
    * @param {Object} profileObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|profile properties}. Only set the properties you want to update.
    */
   updateProfile (profilePKey, profileObject) {
-    const sdkDetails = { profileObject, profilePKey }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.profile.updateProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions({ body: profileObject }))
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_UPDATE_PROFILE({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('updateProfile', err))
         })
     })
   }
@@ -204,15 +196,13 @@ class CampaignStandardCoreAPI {
    * @param {string} profilePKey the PKey property of a Profile record
    */
   getProfile (profilePKey) {
-    const sdkDetails = { profilePKey }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.profile.getProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_PROFILE({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getProfile', err))
         })
     })
   }
@@ -230,15 +220,13 @@ class CampaignStandardCoreAPI {
    * @see getMetadataForResource
    */
   getAllServices (parameters) {
-    const sdkDetails = { parameters }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.service.getAllServices(this.__createFilterParams(parameters), this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_SERVICES({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getAllServices', err))
         })
     })
   }
@@ -249,15 +237,13 @@ class CampaignStandardCoreAPI {
    * @param {Object} serviceObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#service|service properties}
    */
   createService (serviceObject) {
-    const sdkDetails = { serviceObject }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.service.createService({}, this.__createRequestOptions({ body: serviceObject }))
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_CREATE_SERVICE({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('createService', err))
         })
     })
   }
@@ -268,15 +254,13 @@ class CampaignStandardCoreAPI {
    * @param {string} servicePKey the PKey property of a Service record
    */
   getService (servicePKey) {
-    const sdkDetails = { servicePKey }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.service.getService({ SERVICE_PKEY: servicePKey }, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_SERVICE({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getService', err))
         })
     })
   }
@@ -287,15 +271,13 @@ class CampaignStandardCoreAPI {
    * @param {string} profilePKey the PKey property of a Profile record
    */
   getHistoryOfProfile (profilePKey) {
-    const sdkDetails = { profilePKey }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.history.getHistoryOfProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_HISTORY_OF_PROFILE({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getHistoryOfProfile', err))
         })
     })
   }
@@ -306,12 +288,11 @@ class CampaignStandardCoreAPI {
    * @param {string} resource one of profile, service, history, orgUnitBase
    */
   getMetadataForResource (resource) {
-    const sdkDetails = { resource }
-
     return new Promise((resolve, reject) => {
       const acceptedResources = ['profile', 'service', 'history', 'orgunitbase']
       if (!acceptedResources.includes(resource.toLowerCase())) {
-        reject(new codes.ERROR_INVALID_RESOURCE_TYPE({ sdkDetails, messageValues: `${acceptedResources.join(', ')}` }))
+        reject(wrapGeneralError('getMetadataForResource',
+          new Error(`resource values can only be: ${acceptedResources.join(', ')}`)))
       }
 
       this.sdk.apis.metadata.getMetadataForResource({ RESOURCE: resource }, this.__createRequestOptions())
@@ -319,7 +300,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_METADATA_FOR_RESOURCE({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getMetadataForResource', err))
         })
     })
   }
@@ -334,7 +315,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_CUSTOM_RESOURCES({ messageValues: err }))
+          reject(wrapGeneralError('getCustomResources', err))
         })
     })
   }
@@ -345,15 +326,13 @@ class CampaignStandardCoreAPI {
    * @param {Object} gdprRequest see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#create-a-new-gdpr-request|the properties} that are needed.
    */
   createGDPRRequest (gdprRequest) {
-    const sdkDetails = { gdprRequest }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.gdpr.createGDPRRequest({}, this.__createRequestOptions({ body: gdprRequest }))
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_CREATE_GDPR_REQUEST({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('createGDPRRequest', err))
         })
     })
   }
@@ -368,7 +347,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_GDPR_REQUEST({ messageValues: err }))
+          reject(wrapGeneralError('getGDPRRequest', err))
         })
     })
   }
@@ -382,13 +361,11 @@ class CampaignStandardCoreAPI {
    * @see getGDPRRequest
    */
   getGDPRDataFile (privacyRequestDataUrl, requestInternalName) {
-    const sdkDetails = { privacyRequestDataUrl, requestInternalName }
-
     return new Promise((resolve, reject) => {
       this.postDataToUrl(privacyRequestDataUrl, { name: requestInternalName })
         .then(res => responseInterceptor(res).json())
         .then(json => resolve(json))
-        .catch(err => reject(new codes.ERROR_GET_GDPR_DATA_FILE({ sdkDetails, messageValues: err })))
+        .catch(err => reject(wrapGeneralError('getGDPRDataFile', err)))
     })
   }
 
@@ -399,8 +376,6 @@ class CampaignStandardCoreAPI {
    * @param {Object} eventBody the event data to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
    */
   sendTransactionalEvent (eventId, eventBody) {
-    const sdkDetails = { eventId, eventBody }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.messaging.sendTransactionalEvent(
         {
@@ -411,7 +386,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_SEND_TRANSACTIONAL_EVENT({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('sendTransactionalEvent', err))
         })
     })
   }
@@ -424,8 +399,6 @@ class CampaignStandardCoreAPI {
    * @see sendTransactionalEvent
    */
   getTransactionalEvent (eventId, eventPKey) {
-    const sdkDetails = { eventId, eventPKey }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.messaging.getTransactionalEvent(
         {
@@ -437,7 +410,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_TRANSACTIONAL_EVENT({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getTransactionalEvent', err))
         })
     })
   }
@@ -448,15 +421,13 @@ class CampaignStandardCoreAPI {
    * @param {string} workflowId the id of the workflow
    */
   getWorkflow (workflowId) {
-    const sdkDetails = { workflowId }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.workflow.getWorkflow({ WORKFLOW_ID: workflowId }, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_WORKFLOW({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getWorkflow', err))
         })
     })
   }
@@ -471,13 +442,11 @@ class CampaignStandardCoreAPI {
    * @see getWorkflow
    */
   triggerSignalActivity (workflowTriggerUrl, workflowParameters) {
-    const sdkDetails = { workflowTriggerUrl, workflowParameters }
-
     return new Promise((resolve, reject) => {
       this.postDataToUrl(workflowTriggerUrl, workflowParameters)
         .then(res => responseInterceptor(res).json())
         .then(json => resolve(json))
-        .catch(err => reject(new codes.ERROR_TRIGGER_SIGNAL_ACTIVITY({ sdkDetails, messageValues: err })))
+        .catch(err => reject(wrapGeneralError('triggerSignalActivity', err)))
     })
   }
 
@@ -488,12 +457,11 @@ class CampaignStandardCoreAPI {
    * @param {string} command the command to execute for the workflow. one of start, pause, resume, stop
    */
   controlWorkflow (workflowId, command) {
-    const sdkDetails = { workflowId, command }
-
     return new Promise((resolve, reject) => {
       const acceptedCommands = ['start', 'pause', 'resume', 'stop']
       if (!acceptedCommands.includes(command.toLowerCase())) {
-        reject(new codes.ERROR_INVALID_WORKFLOW_CONTROL_COMMAND({ sdkDetails, messageValues: `${acceptedCommands.join(', ')}` }))
+        reject(wrapGeneralError('controlWorkflow',
+          new Error(`command values can only be: ${acceptedCommands.join(', ')}`)))
       }
 
       this.sdk.apis.workflow.controlWorkflow({ WORKFLOW_ID: workflowId },
@@ -506,7 +474,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_CONTROL_WORKFLOW({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('controlWorkflow', err))
         })
     })
   }
@@ -523,15 +491,13 @@ class CampaignStandardCoreAPI {
    * @see getMetadataForResource
    */
   getAllOrgUnits (parameters) {
-    const sdkDetails = { parameters }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.organization.getAllOrgUnits(this.__createFilterParams(parameters), this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_ORG_UNITS({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getAllOrgUnits', err))
         })
     })
   }
@@ -542,15 +508,13 @@ class CampaignStandardCoreAPI {
    * @param {string} profilePKey the PKey property of a Profile record
    */
   getProfileWithOrgUnit (profilePKey) {
-    const sdkDetails = { profilePKey }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.organization.getProfileWithOrgUnit({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_PROFILE_WITH_ORG_UNIT({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getProfileWithOrgUnit', err))
         })
     })
   }
@@ -562,8 +526,6 @@ class CampaignStandardCoreAPI {
    * @param {string} orgUnitPKey the PKey property of a OrgUnitBase record
    */
   updateProfileOrgUnit (profilePKey, orgUnitPKey) {
-    const sdkDetails = { profilePKey, orgUnitPKey }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.organization.updateProfileOrgUnit({ PROFILE_PKEY: profilePKey },
         this.__createRequestOptions({
@@ -577,7 +539,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_UPDATE_PROFILE_ORG_UNIT({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('updateProfileOrgUnit', err))
         })
     })
   }
@@ -589,8 +551,6 @@ class CampaignStandardCoreAPI {
    * @param {Object} orgUnitObject see {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#orgunitbase|orgUnitBase properties}. Only set the properties you want to update.
    */
   updateOrgUnit (orgUnitPKey, orgUnitObject) {
-    const sdkDetails = { orgUnitPKey, orgUnitObject }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.organization.updateOrgUnit({ ORGUNIT_PKEY: orgUnitPKey },
         this.__createRequestOptions({ body: orgUnitObject }))
@@ -598,7 +558,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_UPDATE_ORG_UNIT({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('updateOrgUnit', err))
         })
     })
   }
@@ -632,15 +592,13 @@ class CampaignStandardCoreAPI {
    * @param {string} relativeUrl the relative url (returned from some ACS API calls)
    */
   getDataFromRelativeUrl (relativeUrl) {
-    const sdkDetails = { relativeUrl }
-
     return new Promise((resolve, reject) => {
       this.sdk.apis.util.getDataFromRelativeUrl({ RELATIVE_URL: relativeUrl }, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_DATA_FROM_RELATIVE_URL({ sdkDetails, messageValues: err }))
+          reject(wrapGeneralError('getDataFromRelativeUrl', err))
         })
     })
   }

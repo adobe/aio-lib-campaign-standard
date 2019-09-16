@@ -11,8 +11,7 @@ governing permissions and limitations under the License.
 
 const sdk = require('../src')
 const fetch = require('node-fetch')
-const { createRequestOptions } = require('../src/helpers')
-const { codes } = require('../src/SDKErrors')
+const { wrapGeneralError, createRequestOptions } = require('../src/helpers')
 
 // /////////////////////////////////////////////
 
@@ -51,34 +50,29 @@ test('sdk init test', async () => {
 
 test('sdk init test - no tenantId', async () => {
   return expect(sdk.init(null, gApiKey, gAccessToken)).rejects.toEqual(
-    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'tenantId' })
+    new Error('SDK initialization error(s). Missing arguments: tenantId')
   )
 })
 
 test('sdk init test - no apiKey', async () => {
   return expect(sdk.init(gTenantId, null, gAccessToken)).rejects.toEqual(
-    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'apiKey' })
+    new Error('SDK initialization error(s). Missing arguments: apiKey')
   )
 })
 
 test('sdk init test - no accessToken', async () => {
   return expect(sdk.init(gTenantId, gApiKey, null)).rejects.toEqual(
-    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'accessToken' })
+    new Error('SDK initialization error(s). Missing arguments: accessToken')
   )
 })
 
 async function standardTest ({
   fullyQualifiedApiName, apiParameters, apiOptions,
   sdkFunctionName, sdkArgs,
-  successReturnValue = {},
-  ErrorClass
+  successReturnValue = {}
 }) {
   const sdkClient = await createSdkClient()
   const [, apiFunction] = fullyQualifiedApiName.split('.')
-
-  if (!ErrorClass) {
-    throw new Error('ErrorClass not defined for standardTest')
-  }
 
   // sdk function name is the same as the apiname (without the namespace) by default
   // so if it is not set, we set it
@@ -98,8 +92,7 @@ async function standardTest ({
   const err = new Error('some API error')
   mockFn = sdkClient.sdk.mockRejected(fullyQualifiedApiName, err)
   await expect(fn.apply(sdkClient, sdkArgs)).rejects.toEqual(
-    new ErrorClass({ sdkDetails: { ...sdkArgs }, messageValues: err })
-    // wrapGeneralError(apiFunction, err)
+    wrapGeneralError(apiFunction, err)
   )
   expect(mockFn).toHaveBeenCalledWith(apiParameters, apiOptions)
 }
@@ -113,8 +106,7 @@ test('getAllProfiles', async () => {
     fullyQualifiedApiName: 'profile.getAllProfiles',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_ALL_PROFILES
+    sdkArgs
   })
 })
 
@@ -147,8 +139,7 @@ test('getAllProfiles - with filters', async () => {
     fullyQualifiedApiName: 'profile.getAllProfiles',
     apiParameters: createApiParameters({ descendingSort: true }),
     apiOptions,
-    sdkArgs: createSdkArgs({ descendingSort: true }),
-    ErrorClass: codes.ERROR_GET_ALL_PROFILES
+    sdkArgs: createSdkArgs({ descendingSort: true })
   })
 
   // ascending sort
@@ -156,8 +147,7 @@ test('getAllProfiles - with filters', async () => {
     fullyQualifiedApiName: 'profile.getAllProfiles',
     apiParameters: createApiParameters({ descendingSort: false }),
     apiOptions,
-    sdkArgs: createSdkArgs({ descendingSort: false }),
-    ErrorClass: codes.ERROR_GET_ALL_PROFILES
+    sdkArgs: createSdkArgs({ descendingSort: false })
   })
 })
 
@@ -172,8 +162,7 @@ test('createProfile', async () => {
     fullyQualifiedApiName: 'profile.createProfile',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_CREATE_PROFILE
+    sdkArgs
   })
 })
 
@@ -189,8 +178,7 @@ test('updateProfile', async () => {
     fullyQualifiedApiName: 'profile.updateProfile',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_UPDATE_PROFILE
+    sdkArgs
   })
 })
 
@@ -205,8 +193,7 @@ test('getProfile', async () => {
     fullyQualifiedApiName: 'profile.getProfile',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_PROFILE
+    sdkArgs
   })
 })
 
@@ -219,8 +206,7 @@ test('getAllServices', async () => {
     fullyQualifiedApiName: 'service.getAllServices',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_ALL_SERVICES
+    sdkArgs
   })
 })
 
@@ -241,8 +227,7 @@ test('createService', async () => {
     fullyQualifiedApiName: 'service.createService',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_CREATE_SERVICE
+    sdkArgs
   })
 })
 
@@ -257,8 +242,7 @@ test('getService', async () => {
     fullyQualifiedApiName: 'service.getService',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_SERVICE
+    sdkArgs
   })
 })
 
@@ -273,8 +257,7 @@ test('getHistoryOfProfile', async () => {
     fullyQualifiedApiName: 'history.getHistoryOfProfile',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_HISTORY_OF_PROFILE
+    sdkArgs
   })
 })
 
@@ -289,9 +272,7 @@ test('getMetadataForResource', async () => {
     fullyQualifiedApiName: 'metadata.getMetadataForResource',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_METADATA_FOR_RESOURCE
-
+    sdkArgs
   })
 })
 
@@ -300,7 +281,7 @@ test('getMetadataForResource - invalid resource', async () => {
   const sdkClient = await createSdkClient()
 
   return expect(sdkClient.getMetadataForResource(resource)).rejects.toEqual(
-    new codes.ERROR_INVALID_RESOURCE_TYPE({ messageValues: 'profile, service, history, orgunitbase' })
+    new Error('Error while calling Adobe Campaign Standard getMetadataForResource - Error: resource values can only be: profile, service, history, orgunitbase')
   )
 })
 
@@ -313,8 +294,7 @@ test('getCustomResources', async () => {
     fullyQualifiedApiName: 'metadata.getCustomResources',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_CUSTOM_RESOURCES
+    sdkArgs
   })
 })
 
@@ -335,8 +315,7 @@ test('createGDPRRequest', async () => {
     fullyQualifiedApiName: 'gdpr.createGDPRRequest',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_CREATE_GDPR_REQUEST
+    sdkArgs
   })
 })
 
@@ -349,8 +328,7 @@ test('getGDPRRequest', async () => {
     fullyQualifiedApiName: 'gdpr.getGDPRRequest',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_GDPR_REQUEST
+    sdkArgs
   })
 })
 
@@ -387,15 +365,13 @@ test('getGDPRDataFile - error', async () => {
   const client = await createSdkClient()
 
   const triggerFail = client.getGDPRDataFile(privacyDataRequestUrl, requestInternalName)
-  const sdkDetails = { privacyDataRequestUrl, requestInternalName }
-
   expect(fetch.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
   const requestObject = fetch.mock.calls[0][0]
   const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
 
   expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(privacyDataRequestUrl)
-  return expect(triggerFail).rejects.toEqual(new codes.ERROR_GET_GDPR_DATA_FILE({ sdkDetails, messageValues: expectedError }))
+  return expect(triggerFail).rejects.toEqual(new Error(`Error while calling Adobe Campaign Standard getGDPRDataFile - ${expectedError}`))
 })
 
 test('sendTransactionalEvent', async () => {
@@ -421,8 +397,7 @@ test('sendTransactionalEvent', async () => {
     fullyQualifiedApiName: 'messaging.sendTransactionalEvent',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_SEND_TRANSACTIONAL_EVENT
+    sdkArgs
   })
 })
 
@@ -438,8 +413,7 @@ test('getTransactionalEvent', async () => {
     fullyQualifiedApiName: 'messaging.getTransactionalEvent',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_TRANSACTIONAL_EVENT
+    sdkArgs
   })
 })
 
@@ -454,8 +428,7 @@ test('getWorkflow', async () => {
     fullyQualifiedApiName: 'workflow.getWorkflow',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_WORKFLOW
+    sdkArgs
   })
 })
 
@@ -514,15 +487,13 @@ test('triggerSignalActivity - error', async () => {
   const client = await createSdkClient()
 
   const triggerFail = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
-  const sdkDetails = { workflowTriggerUrl, workflowParameters }
-
   expect(fetch.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
   const requestObject = fetch.mock.calls[0][0]
   const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
 
   expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
-  return expect(triggerFail).rejects.toEqual(new codes.ERROR_TRIGGER_SIGNAL_ACTIVITY({ sdkDetails, messageValues: expectedError }))
+  return expect(triggerFail).rejects.toEqual(new Error(`Error while calling Adobe Campaign Standard triggerSignalActivity - ${expectedError}`))
 })
 
 test('controlWorkflow', async () => {
@@ -541,8 +512,7 @@ test('controlWorkflow', async () => {
     fullyQualifiedApiName: 'workflow.controlWorkflow',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_CONTROL_WORKFLOW
+    sdkArgs
   })
 })
 
@@ -550,10 +520,9 @@ test('controlWorkflow - invalid resource', async () => {
   const workflowId = 'wfoo-bar-321'
   const command = 'gibberish'
   const sdkClient = await createSdkClient()
-  const sdkDetails = { workflowId, command }
 
   return expect(sdkClient.controlWorkflow(workflowId, command)).rejects.toEqual(
-    new codes.ERROR_INVALID_WORKFLOW_CONTROL_COMMAND({ sdkDetails, messageValues: 'start, pause, resume, stop' })
+    new Error('Error while calling Adobe Campaign Standard controlWorkflow - Error: command values can only be: start, pause, resume, stop')
   )
 })
 
@@ -566,8 +535,7 @@ test('getAllOrgUnits', async () => {
     fullyQualifiedApiName: 'organization.getAllOrgUnits',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_ALL_ORG_UNITS
+    sdkArgs
   })
 })
 
@@ -582,8 +550,7 @@ test('getProfileWithOrgUnit', async () => {
     fullyQualifiedApiName: 'organization.getProfileWithOrgUnit',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_PROFILE_WITH_ORG_UNIT
+    sdkArgs
   })
 })
 
@@ -605,8 +572,7 @@ test('updateProfileOrgUnit', async () => {
     fullyQualifiedApiName: 'organization.updateProfileOrgUnit',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_UPDATE_PROFILE_ORG_UNIT
+    sdkArgs
   })
 })
 
@@ -625,8 +591,7 @@ test('updateOrgUnit', async () => {
     fullyQualifiedApiName: 'organization.updateOrgUnit',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_UPDATE_ORG_UNIT
+    sdkArgs
   })
 })
 
@@ -641,7 +606,6 @@ test('getDataFromRelativeUrl', async () => {
     fullyQualifiedApiName: 'util.getDataFromRelativeUrl',
     apiParameters,
     apiOptions,
-    sdkArgs,
-    ErrorClass: codes.ERROR_GET_DATA_FROM_RELATIVE_URL
+    sdkArgs
   })
 })

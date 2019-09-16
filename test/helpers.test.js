@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { requestInterceptor, responseInterceptor, createRequestOptions } = require('../src/helpers')
+const { requestInterceptor, responseInterceptor, wrapGeneralError, createRequestOptions } = require('../src/helpers')
 
 test('createRequestOptions', () => {
   const tenantId = 'my-tenant'
@@ -34,6 +34,15 @@ test('createRequestOptions', () => {
       ORGANIZATION: tenantId
     }
   })
+})
+
+test('wrapGeneralError', () => {
+  const err = new Error('bar')
+  const functionName = 'foo'
+
+  const wrappedErr = wrapGeneralError(functionName, err)
+
+  expect(wrappedErr.message).toEqual(`Error while calling Adobe Campaign Standard ${functionName} - ${err}`)
 })
 
 test('requestInterceptor', () => {

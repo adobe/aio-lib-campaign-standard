@@ -27,6 +27,10 @@ function createRequestOptions ({ tenantId, apiKey, accessToken, body = {} }) {
   }
 }
 
+function wrapGeneralError (functionName, error) {
+  return new Error(`Error while calling Adobe Campaign Standard ${functionName} - ${error}`)
+}
+
 function requestInterceptor (req) {
   debug('REQUEST', req)
   return req
@@ -47,6 +51,7 @@ function responseInterceptor (res) {
 
 module.exports = {
   createRequestOptions,
+  wrapGeneralError,
   requestInterceptor,
   responseInterceptor
 }
