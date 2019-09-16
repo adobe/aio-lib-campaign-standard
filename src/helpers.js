@@ -12,6 +12,18 @@ governing permissions and limitations under the License.
 const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
 
+/** Reduce an Error to a string */
+function reduceError (error = {}) {
+  const response = error.response
+  if (response) {
+    if (response.status && response.statusText && response.body) {
+      return `${response.status} - ${response.statusText} (${JSON.stringify(response.body)})`
+    }
+  }
+
+  return error
+}
+
 function createRequestOptions ({ tenantId, apiKey, accessToken, body = {} }) {
   return {
     requestBody: body,
@@ -48,5 +60,6 @@ function responseInterceptor (res) {
 module.exports = {
   createRequestOptions,
   requestInterceptor,
-  responseInterceptor
+  responseInterceptor,
+  reduceError
 }

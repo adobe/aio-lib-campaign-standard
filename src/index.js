@@ -19,7 +19,7 @@ const Swagger = require('swagger-client')
 const debugNamespace = 'adobeio-cna-core-campaign-standard'
 const debug = require('debug')(debugNamespace)
 const { fetch, Request } = require('cross-fetch')
-const { requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
+const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
 const { codes } = require('./SDKErrors')
 /**
  * Initializes a CampaignStandardCoreAPI object and returns it.
@@ -154,7 +154,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_PROFILES({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_ALL_PROFILES({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -173,7 +173,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_CREATE_PROFILE({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_CREATE_PROFILE({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -193,7 +193,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_UPDATE_PROFILE({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_UPDATE_PROFILE({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -212,7 +212,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_PROFILE({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_PROFILE({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -238,7 +238,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_SERVICES({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_ALL_SERVICES({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -257,7 +257,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_CREATE_SERVICE({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_CREATE_SERVICE({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -276,7 +276,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_SERVICE({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_SERVICE({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -295,7 +295,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_HISTORY_OF_PROFILE({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_HISTORY_OF_PROFILE({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -319,7 +319,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_METADATA_FOR_RESOURCE({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_METADATA_FOR_RESOURCE({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -334,7 +334,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_CUSTOM_RESOURCES({ messageValues: err }))
+          reject(new codes.ERROR_GET_CUSTOM_RESOURCES({ messageValues: reduceError(err) }))
         })
     })
   }
@@ -353,7 +353,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_CREATE_GDPR_REQUEST({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_CREATE_GDPR_REQUEST({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -368,7 +368,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_GDPR_REQUEST({ messageValues: err }))
+          reject(new codes.ERROR_GET_GDPR_REQUEST({ messageValues: reduceError(err) }))
         })
     })
   }
@@ -388,7 +388,7 @@ class CampaignStandardCoreAPI {
       this.postDataToUrl(privacyRequestDataUrl, { name: requestInternalName })
         .then(res => responseInterceptor(res).json())
         .then(json => resolve(json))
-        .catch(err => reject(new codes.ERROR_GET_GDPR_DATA_FILE({ sdkDetails, messageValues: err })))
+        .catch(err => reject(new codes.ERROR_GET_GDPR_DATA_FILE({ sdkDetails, messageValues: reduceError(err) })))
     })
   }
 
@@ -411,7 +411,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_SEND_TRANSACTIONAL_EVENT({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_SEND_TRANSACTIONAL_EVENT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -437,7 +437,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_TRANSACTIONAL_EVENT({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_TRANSACTIONAL_EVENT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -456,7 +456,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_WORKFLOW({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_WORKFLOW({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -477,7 +477,7 @@ class CampaignStandardCoreAPI {
       this.postDataToUrl(workflowTriggerUrl, workflowParameters)
         .then(res => responseInterceptor(res).json())
         .then(json => resolve(json))
-        .catch(err => reject(new codes.ERROR_TRIGGER_SIGNAL_ACTIVITY({ sdkDetails, messageValues: err })))
+        .catch(err => reject(new codes.ERROR_TRIGGER_SIGNAL_ACTIVITY({ sdkDetails, messageValues: reduceError(err) })))
     })
   }
 
@@ -506,7 +506,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_CONTROL_WORKFLOW({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_CONTROL_WORKFLOW({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -531,7 +531,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_ORG_UNITS({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_ALL_ORG_UNITS({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -550,7 +550,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_PROFILE_WITH_ORG_UNIT({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_PROFILE_WITH_ORG_UNIT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -577,7 +577,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_UPDATE_PROFILE_ORG_UNIT({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_UPDATE_PROFILE_ORG_UNIT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -598,7 +598,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_UPDATE_ORG_UNIT({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_UPDATE_ORG_UNIT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -640,7 +640,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_DATA_FROM_RELATIVE_URL({ sdkDetails, messageValues: err }))
+          reject(new codes.ERROR_GET_DATA_FROM_RELATIVE_URL({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
