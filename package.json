@@ -15,7 +15,7 @@
     "md-docs": "jsdoc2md ./src/index.js > ./docs/SDK.md"
   },
   "dependencies": {
-    "@adobe/aio-lib-core-errors": "file:../aio-lib-core-errors",
+    "@adobe/aio-lib-core-errors": "^1.0.0",
     "cross-fetch": "^3.0.4",
     "debug": "^4.1.1",
     "swagger-client": "^3.9.0"
