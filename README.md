@@ -10,16 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 -->
 
-[![Version](https://img.shields.io/npm/v/@adobe/adobeio-cna-core-campaign-standard.svg)](https://npmjs.org/package/@adobe/adobeio-cna-core-campaign-standard)
-[![Downloads/week](https://img.shields.io/npm/dw/@adobe/adobeio-cna-core-campaign-standard.svg)](https://npmjs.org/package/@adobe/adobeio-cna-core-campaign-standard)
-[![Build Status](https://travis-ci.com/adobe/adobeio-cna-core-campaign-standard.svg?branch=master)](https://travis-ci.com/adobe/adobeio-cna-core-campaign-standard)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Greenkeeper badge](https://badges.greenkeeper.io/adobe/adobeio-cna-core-campaign-standard.svg)](https://greenkeeper.io/)
-[![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/adobeio-cna-core-campaign-standard/master.svg?style=flat-square)](https://codecov.io/gh/adobe/adobeio-cna-core-campaign-standard/)
+[![Version](https://img.shields.io/npm/v/@adobe/aio-lib-campaign-standard.svg)](https://npmjs.org/package/@adobe/aio-lib-core-campaign-standard)
+[![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-lib-core-campaign-standard.svg)](https://npmjs.org/package/@adobe/aio-lib-core-campaign-standard)
+[![Build Status](https://travis-ci.com/adobe/aio-lib-core-campaign-standard.svg?branch=master)](https://travis-ci.com/adobe/aio-lib-core-campaign-standard)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Greenkeeper badge](https://badges.greenkeeper.io/adobe/aio-lib-core-campaign-standard.svg)](https://greenkeeper.io/)
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-core-campaign-standard/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-core-campaign-standard/)
 
 # Adobe I/O CNA Adobe Campaign Standard Core SDK
 Javascript Core SDK wrapping [Adobe Campaign Standard APIs](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#introduction).
 
-- [JSDoc (HTML)](https://opensource.adobe.com/adobeio-cna-core-campaign-standard/index.html)
+- [JSDoc (HTML)](https://opensource.adobe.com/aio-lib-core-campaign-standard/index.html)
 - [JSDoc (Markdown)](./docs/SDK.md)
 
 
@@ -91,7 +91,7 @@ sdkPromise
 ### Debug Logs
 
 ```bash
-DEBUG=adobeio-cna-core-campaign-standard  <your_call_here>
+DEBUG=aio-lib-core-campaign-standard  <your_call_here>
 ```
 
 Prepend the `DEBUG` environment variable and value to the call that invokes your function, on the command line. This should output a lot of debug data for your SDK calls.
