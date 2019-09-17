@@ -33,7 +33,7 @@ $ npm install
 
 async/await (preferred)
 ```javascript
-const sdk = require('@adobe/adobeio-cna-core-campaign-standard');
+const sdk = require('@adobe/aio-lib-campaign-standard');
 
 const main = async () => {
   // initialize sdk
@@ -65,7 +65,7 @@ main()
 
 Promises
 ```javascript
-const sdk = require('@adobe/adobeio-cna-core-campaign-standard');
+const sdk = require('@adobe/aio-lib-campaign-standard');
 
 // initialize sdk
 const sdkPromise = sdk.init('<tenant>', 'x-api-key', '<valid auth token>')
