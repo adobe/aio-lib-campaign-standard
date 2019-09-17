@@ -10,13 +10,13 @@ governing permissions and limitations under the License.
 */
 /**
  * Adobe Campaign Standard Core SDK
- * @module @adobe/adobeio-cna-core-campaign-standard
+ * @module @adobe/aio-lib-campaign-standard
  */
 
 'use strict'
 
 const Swagger = require('swagger-client')
-const debugNamespace = 'adobeio-cna-core-campaign-standard'
+const debugNamespace = 'aio-lib-campaign-standard'
 const debug = require('debug')(debugNamespace)
 const { fetch, Request } = require('cross-fetch')
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')

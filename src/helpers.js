@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const debugNamespace = 'adobeio-cna-core-campaign-standard'
+const debugNamespace = 'aio-lib-campaign-standard'
 const debug = require('debug')(debugNamespace)
 
 /** Reduce an Error to a string */
