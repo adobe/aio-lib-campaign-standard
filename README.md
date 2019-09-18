@@ -16,7 +16,7 @@ governing permissions and limitations under the License.
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Greenkeeper badge](https://badges.greenkeeper.io/adobe/aio-lib-core-campaign-standard.svg)](https://greenkeeper.io/)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-core-campaign-standard/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-core-campaign-standard/)
 
-# Adobe I/O CNA Adobe Campaign Standard Core SDK
+# Adobe I/O Adobe Campaign Standard Core SDK
 Javascript Core SDK wrapping [Adobe Campaign Standard APIs](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#introduction).
 
 - [JSDoc (HTML)](https://opensource.adobe.com/aio-lib-core-campaign-standard/index.html)
