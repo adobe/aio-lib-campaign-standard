@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { ErrorWrapper, createUpdater } = require('@adobe/aio-lib-core-errors').CNACoreSDKErrorWrapper
+const { ErrorWrapper, createUpdater } = require('@adobe/aio-lib-core-errors').AioCoreSDKErrorWrapper
 
 const codes = {}
 const messages = new Map()
@@ -34,8 +34,8 @@ const E = ErrorWrapper(
   'CampaignStandardSDK',
   // the object returned from the CreateUpdater call above
   Updater
-  // the base class that your Error class is extending. CNACoreSDKError is the default
-  /* CNACoreSDKError, */
+  // the base class that your Error class is extending. AioCoreSDKError is the default
+  /* AioCoreSDKError, */
 )
 
 module.exports = {
