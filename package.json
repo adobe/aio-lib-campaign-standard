@@ -12,7 +12,7 @@
     "unit-tests": "jest --ci -w=2",
     "docs": "npm run md-docs && npm run html-docs",
     "html-docs": "jsdoc src/index.js --destination docs",
-    "md-docs": "jsdoc2md ./src/index.js > ./docs/SDK.md"
+    "md-docs": "jsdoc2md ./src/index.js > ./docs/api.md"
   },
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^2.0.0",

@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
 Javascript Core SDK wrapping [Adobe Campaign Standard APIs](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#introduction).
 
 - [JSDoc (HTML)](https://opensource.adobe.com/aio-lib-core-campaign-standard/index.html)
-- [JSDoc (Markdown)](./docs/SDK.md)
+- [JSDoc (Markdown)](./docs/api.md)
 
 
 ### Installing
