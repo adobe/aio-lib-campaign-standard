@@ -758,6 +758,16 @@
             "description": ""
           }
         }
+      },
+      "post": {
+        "summary": "Create a Custom Resource Record",
+        "operationId": "createCustomResource",
+        "tags": ["customresource"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/profileAndServicesExt/{CUSTOMRESOURCE}/{PKEY}": {

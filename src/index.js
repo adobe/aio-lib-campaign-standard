@@ -644,4 +644,93 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+
+/**
+   * Get all Custom Resource records
+   *
+   * @param {Object} [parameters={}] parameters to pass
+   * @param {string} [parameters.customResource] the custom resource to get records from
+   * @param {Array} [parameters.filters=[]] apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {Boolean} [parameters.hasCustomFilter=false] set to true if you have a custom filter. Defaults to false.
+   * @param {integer} [parameters.lineCount=25] limit the number of records to return (default is 25)
+   * @param {string} [parameters.order] the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|Profile})
+   * @param {boolean} [parameters.descendingSort=false] set to true to get results in descending order (default is ascending)
+   *
+   * @see getMetadataForResource
+   */
+  getAllCustomResources (parameters) {
+    const sdkDetails = { parameters }
+
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.customresource.getAllCustomResources(this.__createFilterParams(parameters), this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+/**
+   * Update a Custom Resource record
+   *
+   * @param {string} customResource the custom resource
+   * @param {string} customResourcePKey the PKey property of a Custom Resource record
+   * @param {Object} customResourceObject A Custom Resource object. Only set the properties you want to update.
+   */
+  updateCustomResource (customResource, customResourcePKey, customResourceObject) {
+    const sdkDetails = { customResource, customResourceObject, customResourcePKey }
+
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.customresource.updateCustomResource({ CUSTOMRESOURCE: customResource, PKEY: customResourcePKey }, this.__createRequestOptions({ body: customResourceObject }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_UPDATE_CUSTOMRESOURCE({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+/**
+   * Create a Custom Resource record
+   *
+   * @param {string} customResource the custom resource
+   * @param {Object} customResourceObject a Custom Resource object
+   */
+  createCustomResource (customResource, customResourceObject) {
+    const sdkDetails = { customResource, customResourceObject }
+
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.customresource.createCustomResource({ CUSTOMRESOURCE: customResource }, this.__createRequestOptions({ body: customResourceObject }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_CREATE_CUSTOM_RESOURCE({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+/**
+   * Delete a Custom Resource record
+   *
+   * @param {string} customResource the custom resource
+   * @param {string} customResourcePKey the PKey property of a Custom Resource record   
+   * @param {Object} customResourceObject a Custom Resource object
+   */
+  deleteCustomResource (customResource, customResourcePKey, customResourceObject) {
+    const sdkDetails = { customResource, customResourcePKey, customResourceObject }
+
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.customresource.createCustomResource({ CUSTOMRESOURCE: customResource, PKEY: customResourcePKey }, this.__createRequestOptions({ body: customResourceObject }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_DELETE_CUSTOM_RESOURCE({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
 }
