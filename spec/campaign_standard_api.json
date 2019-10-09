@@ -723,7 +723,7 @@
         }
       }
     },
-    "/profileAndServicesExt/{CUSTOMRESOURCE}": {
+    "/profileAndServicesExt/{CUSTOMRESOURCE}/{FILTERS}": {
       "parameters": [
         {
           "in": "path",
@@ -734,13 +734,14 @@
           }
         },
         {
-          "in": "path",
-          "name": "PKEY",
-          "required": false,
-          "schema": {
-            "type": "string"
-          }
+          "$ref": "#/components/parameters/Filters"
         },
+        {
+          "$ref": "#/components/parameters/LineCount"
+        },
+        {
+          "$ref": "#/components/parameters/Order"
+        },        
         {
           "$ref": "#/components/parameters/Cache-Control"
         },
