@@ -722,6 +722,98 @@
           }
         }
       }
+    },
+    "/profileAndServicesExt/{CUSTOMRESOURCE}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "CUSTOMRESOURCE",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "PKEY",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieve all the Custom Resource records",
+        "operationId": "getAllCustomResources",
+        "tags": ["customresource"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profileAndServicesExt/{CUSTOMRESOURCE}/{PKEY}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "CUSTOMRESOURCE",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "PKEY",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieve a Custom Resource Record",
+        "operationId": "getCustomResource",
+        "tags": ["customresource"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a Custom Resource Record",
+        "operationId": "updateCustomResource",
+        "tags": ["customresource"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Custom Resource Record",
+        "operationId": "deleteCustomResource",
+        "tags": ["customresource"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
     }
   }
 }
