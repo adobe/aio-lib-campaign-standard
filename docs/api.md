@@ -37,6 +37,10 @@ Adobe Campaign Standard Core SDK
             * [.updateOrgUnit(orgUnitPKey, orgUnitObject)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+updateOrgUnit)
             * [.postDataToUrl(url, body)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+postDataToUrl)
             * [.getDataFromRelativeUrl(relativeUrl)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+getDataFromRelativeUrl)
+            * [.getAllCustomResources([parameters])](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+getAllCustomResources)
+            * [.updateCustomResource(customResource, customResourcePKey, customResourceObject)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+updateCustomResource)
+            * [.createCustomResource(customResource, customResourceObject)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+createCustomResource)
+            * [.deleteCustomResource(customResource, customResourcePKey, customResourceObject)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+deleteCustomResource)
 
 <a name="module_@adobe/aio-lib-campaign-standard.init"></a>
 
@@ -87,6 +91,10 @@ Wrapper for the Adobe Campaign Standard REST API.
     * [.updateOrgUnit(orgUnitPKey, orgUnitObject)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+updateOrgUnit)
     * [.postDataToUrl(url, body)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+postDataToUrl)
     * [.getDataFromRelativeUrl(relativeUrl)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+getDataFromRelativeUrl)
+    * [.getAllCustomResources([parameters])](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+getAllCustomResources)
+    * [.updateCustomResource(customResource, customResourcePKey, customResourceObject)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+updateCustomResource)
+    * [.createCustomResource(customResource, customResourceObject)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+createCustomResource)
+    * [.deleteCustomResource(customResource, customResourcePKey, customResourceObject)](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+deleteCustomResource)
 
 <a name="module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+tenantId"></a>
 
@@ -407,4 +415,60 @@ Gets data from a relative url. Helper function.
 | Param | Type | Description |
 | --- | --- | --- |
 | relativeUrl | <code>string</code> | the relative url (returned from some ACS API calls) |
+
+<a name="module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+getAllCustomResources"></a>
+
+#### campaignStandardCoreAPI.getAllCustomResources([parameters])
+Get all Custom Resource records
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI)  
+**See**: getMetadataForResource  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [parameters] | <code>Object</code> | <code>{}</code> | parameters to pass |
+| [parameters.customResource] | <code>string</code> |  | the custom resource to get records from |
+| [parameters.filters] | <code>Array</code> | <code>[]</code> | apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call |
+| [parameters.hasCustomFilter] | <code>Boolean</code> | <code>false</code> | set to true if you have a custom filter. Defaults to false. |
+| [parameters.lineCount] | <code>integer</code> | <code>25</code> | limit the number of records to return (default is 25) |
+| [parameters.order] | <code>string</code> |  | the field to order your records by (see the fields of a [Profile](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile)) |
+| [parameters.descendingSort] | <code>boolean</code> | <code>false</code> | set to true to get results in descending order (default is ascending) |
+
+<a name="module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+updateCustomResource"></a>
+
+#### campaignStandardCoreAPI.updateCustomResource(customResource, customResourcePKey, customResourceObject)
+Update a Custom Resource record
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| customResource | <code>string</code> | the custom resource |
+| customResourcePKey | <code>string</code> | the PKey property of a Custom Resource record |
+| customResourceObject | <code>Object</code> | A Custom Resource object. Only set the properties you want to update. |
+
+<a name="module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+createCustomResource"></a>
+
+#### campaignStandardCoreAPI.createCustomResource(customResource, customResourceObject)
+Create a Custom Resource record
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| customResource | <code>string</code> | the custom resource |
+| customResourceObject | <code>Object</code> | a Custom Resource object |
+
+<a name="module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI+deleteCustomResource"></a>
+
+#### campaignStandardCoreAPI.deleteCustomResource(customResource, customResourcePKey, customResourceObject)
+Delete a Custom Resource record
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#module_@adobe/aio-lib-campaign-standard..CampaignStandardCoreAPI)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| customResource | <code>string</code> | the custom resource |
+| customResourcePKey | <code>string</code> | the PKey property of a Custom Resource record |
+| customResourceObject | <code>Object</code> | a Custom Resource object |
 

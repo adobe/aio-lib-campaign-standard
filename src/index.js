@@ -718,7 +718,7 @@ class CampaignStandardCoreAPI {
    *
    * @param {string} customResource the custom resource
    * @param {string} customResourcePKey the PKey property of a Custom Resource record
-   * @param {Object} customResourceObject a ustom Resource object
+   * @param {Object} customResourceObject a Custom Resource object
    */
   deleteCustomResource (customResource, customResourcePKey) {
     const sdkDetails = { customResource, customResourcePKey }
