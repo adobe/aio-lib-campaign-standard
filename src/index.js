@@ -10,7 +10,6 @@ governing permissions and limitations under the License.
 */
 /**
  * Adobe Campaign Standard Core SDK
- * @module @adobe/aio-lib-campaign-standard
  */
 
 'use strict'
@@ -21,15 +20,8 @@ const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: 
 const { fetch, Request } = require('cross-fetch')
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
 const { codes } = require('./SDKErrors')
-/**
- * Initializes a CampaignStandardCoreAPI object and returns it.
- *
- * @param {string} tenantId the tenant id (your personal organization in Campaign Standard)
- * @param {string} apiKey the API key for your Adobe I/O Campaign Standard Integration
- * @param {string} accessToken the access token for your Adobe I/O Campaign Standard Integration
- * @returns {CampaignStandardCoreAPI}
- */
-module.exports.init = function (tenantId, apiKey, accessToken) {
+
+function init (tenantId, apiKey, accessToken) {
   return new Promise((resolve, reject) => {
     const clientWrapper = new CampaignStandardCoreAPI()
 
@@ -46,20 +38,19 @@ module.exports.init = function (tenantId, apiKey, accessToken) {
 }
 
 /**
- * Wrapper for the Adobe Campaign Standard REST API.
- *
- */
+* This class provides methods to call Adobe Campaign Standard APIs.
+* Before calling any method initialize the instance by calling the `init` method on it
+* with valid values for tenantId, apiKey and accessToken
+*/
 class CampaignStandardCoreAPI {
   /**
-   * Initializes the object.
+   * Initializes a CampaignStandardCoreAPI object and returns it.
    *
    * @param {string} tenantId the tenant id (your personal organization in Campaign Standard)
    * @param {string} apiKey the API key for your Adobe I/O Campaign Standard Integration
    * @param {string} accessToken the access token for your Adobe I/O Campaign Standard Integration
-   * @throws {Error} when any of the arguments tenantId, apiKey, or accessToken is missing
-   * @async
+   * @returns {CampaignStandardCoreAPI}
    */
-
   async init (tenantId, apiKey, accessToken) {
     // init swagger client
     const spec = require('../spec/campaign_standard_api.json')
@@ -733,4 +724,7 @@ class CampaignStandardCoreAPI {
         })
     })
   }
+}
+module.exports = {
+  init: init
 }
