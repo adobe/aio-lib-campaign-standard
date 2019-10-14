@@ -645,3 +645,69 @@ test('getDataFromRelativeUrl', async () => {
     ErrorClass: codes.ERROR_GET_DATA_FROM_RELATIVE_URL
   })
 })
+
+test('getAllCustomResources', async () => {
+  const sdkArgs = []
+  const apiParameters = { EXT: '', FILTERS: [] } // equiv to default
+  const apiOptions = createSwaggerOptions()
+
+  return standardTest({
+    fullyQualifiedApiName: 'customresource.getAllCustomResources',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_GET_ALL_CUSTOM_RESOURCES
+  })
+})
+
+test('createCustomResource', async () => {
+  const customResourceObject = { firstName: 'Jack', lastName: 'Smith', email: 'foo@bar.com' }
+  const customResource = 'mycustomresource'
+
+  const sdkArgs = [customResource, customResourceObject]
+  const apiParameters = { CUSTOMRESOURCE: customResource }
+  const apiOptions = createSwaggerOptions({ body: customResourceObject })
+
+  return standardTest({
+    fullyQualifiedApiName: 'customresource.createCustomResource',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_CREATE_CUSTOM_RESOURCE
+  })
+})
+
+test('deleteCustomResource', async () => {
+  const customResource = 'mycustomresource'
+  const customResourcePKey = '12919119HH'
+
+  const sdkArgs = [customResource, customResourcePKey]
+  const apiParameters = { CUSTOMRESOURCE: customResource, PKEY: customResourcePKey }
+  const apiOptions = createSwaggerOptions({})
+
+  return standardTest({
+    fullyQualifiedApiName: 'customresource.deleteCustomResource',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_DELETE_CUSTOM_RESOURCE
+  })
+})
+
+test('updateCustomResource', async () => {
+  const customResource = 'mycustomresource'
+  const customResourceObject = { foo: 'bar' }
+  const customResourcePKey = '12919119HH'
+
+  const sdkArgs = [customResource, customResourcePKey, customResourceObject]
+  const apiParameters = { CUSTOMRESOURCE: customResource, PKEY: customResourcePKey }
+  const apiOptions = createSwaggerOptions({ body: customResourceObject })
+
+  return standardTest({
+    fullyQualifiedApiName: 'customresource.updateCustomResource',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_UPDATE_CUSTOM_RESOURCE
+  })
+})

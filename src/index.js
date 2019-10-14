@@ -645,7 +645,7 @@ class CampaignStandardCoreAPI {
     })
   }
 
-/**
+  /**
    * Get all Custom Resource records
    *
    * @param {Object} [parameters={}] parameters to pass
@@ -672,7 +672,7 @@ class CampaignStandardCoreAPI {
     })
   }
 
-/**
+  /**
    * Update a Custom Resource record
    *
    * @param {string} customResource the custom resource
@@ -688,12 +688,12 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_UPDATE_CUSTOMRESOURCE({ sdkDetails, messageValues: reduceError(err) }))
+          reject(new codes.ERROR_UPDATE_CUSTOM_RESOURCE({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
 
-/**
+  /**
    * Create a Custom Resource record
    *
    * @param {string} customResource the custom resource
@@ -713,18 +713,18 @@ class CampaignStandardCoreAPI {
     })
   }
 
-/**
+  /**
    * Delete a Custom Resource record
    *
    * @param {string} customResource the custom resource
-   * @param {string} customResourcePKey the PKey property of a Custom Resource record   
-   * @param {Object} customResourceObject a Custom Resource object
+   * @param {string} customResourcePKey the PKey property of a Custom Resource record
+   * @param {Object} customResourceObject a ustom Resource object
    */
-  deleteCustomResource (customResource, customResourcePKey, customResourceObject) {
-    const sdkDetails = { customResource, customResourcePKey, customResourceObject }
+  deleteCustomResource (customResource, customResourcePKey) {
+    const sdkDetails = { customResource, customResourcePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.customresource.createCustomResource({ CUSTOMRESOURCE: customResource, PKEY: customResourcePKey }, this.__createRequestOptions({ body: customResourceObject }))
+      this.sdk.apis.customresource.deleteCustomResource({ CUSTOMRESOURCE: customResource, PKEY: customResourcePKey }, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
