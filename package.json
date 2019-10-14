@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^2.0.0",
+    "@adobe/aio-lib-core-logging": "0.0.4",
     "cross-fetch": "^3.0.4",
-    "debug": "^4.1.1",
     "swagger-client": "^3.9.0"
   },
   "devDependencies": {

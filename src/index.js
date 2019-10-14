@@ -16,8 +16,8 @@ governing permissions and limitations under the License.
 'use strict'
 
 const Swagger = require('swagger-client')
-const debugNamespace = 'aio-lib-campaign-standard'
-const debug = require('debug')(debugNamespace)
+const loggerNamespace = 'aio-lib-campaign-standard'
+const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: process.env.LOG_LEVEL })
 const { fetch, Request } = require('cross-fetch')
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
 const { codes } = require('./SDKErrors')
@@ -35,11 +35,11 @@ module.exports.init = function (tenantId, apiKey, accessToken) {
 
     clientWrapper.init(tenantId, apiKey, accessToken)
       .then(initializedSDK => {
-        debug('sdk initialized successfully')
+        logger.debug('sdk initialized successfully')
         resolve(initializedSDK)
       })
       .catch(err => {
-        debug(`sdk init error: ${err}`)
+        logger.debug(`sdk init error: ${err}`)
         reject(err)
       })
   })

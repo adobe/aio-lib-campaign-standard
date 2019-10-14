@@ -9,8 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const debugNamespace = 'aio-lib-campaign-standard'
-const debug = require('debug')(debugNamespace)
+const loggerNamespace = 'aio-lib-campaign-standard'
+const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: process.env.LOG_LEVEL })
 
 /** Reduce an Error to a string */
 function reduceError (error = {}) {
@@ -40,18 +40,18 @@ function createRequestOptions ({ tenantId, apiKey, accessToken, body = {} }) {
 }
 
 function requestInterceptor (req) {
-  debug('REQUEST', req)
+  logger.debug(`REQUEST:\n ${JSON.stringify(req, null, 2)}`)
   return req
 }
 
 function responseInterceptor (res) {
-  debug('RESPONSE', res)
+  logger.debug(`RESPONSE:\n ${JSON.stringify(res, null, 2)}`)
   if (res.ok) {
     const text = res.text.toString('utf-8')
     try {
-      debug('DATA\n', JSON.stringify(JSON.parse(text), null, 2))
+      logger.debug(`DATA\n, ${JSON.stringify(JSON.parse(text), null, 2)}`)
     } catch (e) {
-      debug('DATA\n', text)
+      logger.debug(`DATA\n ${text}`)
     }
   }
   return res
