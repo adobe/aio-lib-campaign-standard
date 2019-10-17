@@ -1,0 +1,9 @@
+{
+  "testPathIgnorePatterns": [
+    "./jest.setup.js"
+  ],
+  "testEnvironment": "node",
+  "setupFilesAfterEnv": [
+    "./jest.setup.js"
+  ]
+}
