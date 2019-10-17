@@ -758,7 +758,25 @@
             "description": ""
           }
         }
-      },
+      }
+    },
+    "/profileAndServicesExt/{CUSTOMRESOURCE}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "CUSTOMRESOURCE",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
       "post": {
         "summary": "Create a Custom Resource Record",
         "operationId": "createCustomResource",
