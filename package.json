@@ -10,7 +10,7 @@
     "test": "npm run validate && npm run lint && npm run unit-tests",
     "lint": "eslint src test",
     "unit-tests": "jest --ci -w=2",
-    "e2e": "jest --config e2e/jest.setup.js --testRegex './e2e/e2e.js'",
+    "e2e": "jest --config e2e/jest.config.json --testRegex './e2e/e2e.js'",
     "generate-docs": "jsdoc2md -t ./docs/readme_template.md ./src/index.js > README.md"
   },
   "dependencies": {
