@@ -55,12 +55,15 @@ test('test getCustomResources API', async () => {
   expect(res.ok).toBeTruthy()
 })
 
-// test('test getAllCustomResources API', async () => {
-//   // check success response
-//   const res = await sdkClient.getAllCustomResources()
-//   console.log(res)
-//   expect(res.ok).toBeTruthy()
-// })
+test('test getAllCustomResources API', async () => {
+  // create random string for custom resource (should 404 Not Found)
+  const customResource = crypto.randomBytes(16).toString('hex')
+
+  const promise = sdkClient.getAllCustomResources({ customResource })
+
+  // just match the error message
+  return expect(promise).rejects.toThrow('404')
+})
 
 test('test createCustomResource API', async () => {
   // create random string for custom resource (should 404 Not Found)
@@ -74,7 +77,7 @@ test('test createCustomResource API', async () => {
 })
 
 test('test updateCustomResource API', async () => {
-  // create random string for custom resource (should 404 Not Found)
+  // create random string for custom resource (should error on invalid pkey)
   const customResource = crypto.randomBytes(16).toString('hex')
   const customResourceObject = {}
   const customResourcePKey = '@gibberish' // not a valid PKey

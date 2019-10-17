@@ -96,10 +96,15 @@ class CampaignStandardCoreAPI {
     })
   }
 
-  __createFilterParams ({ filters, hasCustomFilter, lineCount, order, descendingSort } = {}) {
+  __createFilterParams ({ customResource, filters, hasCustomFilter, lineCount, order, descendingSort } = {}) {
     const params = {
       EXT: '',
-      FILTERS: []
+      FILTERS: [],
+      CUSTOMRESOURCE: ''
+    }
+
+    if (customResource) {
+      params.CUSTOMRESOURCE = customResource
     }
 
     if (filters) {
