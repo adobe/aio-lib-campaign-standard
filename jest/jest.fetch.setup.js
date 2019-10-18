@@ -9,28 +9,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-module.exports = {
-  collectCoverage: true,
-  collectCoverageFrom: [
-    'src/**/*.js'
-  ],
-  coverageThreshold: {
-    global: {
-      branches: 100,
-      lines: 100,
-      statements: 100
-    }
-  },
-  reporters: [
-    'default',
-    'jest-junit'
-  ],
-  testEnvironment: 'node',
-  setupFilesAfterEnv: [
-    './jest/jest.setup.js',
-    './jest/jest.fetch.setup.js',
-    './jest/jest.fs.setup.js',
-    './jest/jest.swagger.setup.js',
-    './jest/jest.fixture.setup.js'
-  ]
-}
+const fetch = require('jest-fetch-mock')
+
+jest.setMock('node-fetch', fetch)
