@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 
 module.exports = {
   testPathIgnorePatterns: [
-    './jest.setup.js'
+    '../jest/jest.setup.js'
   ],
   testEnvironment: 'node',
   setupFilesAfterEnv: [
-    './jest.setup.js'
+    '../jest/jest.setup.js'
   ]
 }
