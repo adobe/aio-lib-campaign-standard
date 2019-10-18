@@ -10,7 +10,7 @@
     "test": "npm run validate && npm run lint && npm run unit-tests",
     "lint": "eslint src test",
     "unit-tests": "jest --ci -w=2",
-    "e2e": "jest --config e2e/jest.config.json --testRegex './e2e/e2e.js'",
+    "e2e": "jest --config e2e/jest.config.js --testRegex './e2e/e2e.js'",
     "generate-docs": "jsdoc2md -t ./docs/readme_template.md ./src/index.js > README.md"
   },
   "dependencies": {
@@ -39,29 +39,5 @@
     "jsdoc-to-markdown": "^5.0.0",
     "openapi-schema-validator": "^3.0.3",
     "stdout-stderr": "^0.1.9"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    },
-    "testPathIgnorePatterns": [
-      "<rootDir>/jest.setup.js"
-    ],
-    "reporters": [
-      "default",
-      "jest-junit"
-    ],
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "./test/jest.setup.js"
-    ]
   }
 }
