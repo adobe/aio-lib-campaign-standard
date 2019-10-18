@@ -99,7 +99,6 @@ async function standardTest ({
   mockFn = sdkClient.sdk.mockRejected(fullyQualifiedApiName, err)
   await expect(fn.apply(sdkClient, sdkArgs)).rejects.toEqual(
     new ErrorClass({ sdkDetails: { ...sdkArgs }, messageValues: err })
-    // wrapGeneralError(apiFunction, err)
   )
   expect(mockFn).toHaveBeenCalledWith(apiParameters, apiOptions)
 }
@@ -300,7 +299,7 @@ test('getMetadataForResource - invalid resource', async () => {
   const sdkClient = await createSdkClient()
 
   return expect(sdkClient.getMetadataForResource(resource)).rejects.toEqual(
-    new codes.ERROR_INVALID_RESOURCE_TYPE({ messageValues: 'profile, service, history, orgunitbase' })
+    new codes.ERROR_INVALID_RESOURCE_TYPE({ messageValues: 'profile, service, history' })
   )
 })
 
@@ -647,8 +646,10 @@ test('getDataFromRelativeUrl', async () => {
 })
 
 test('getAllCustomResources', async () => {
-  const sdkArgs = []
-  const apiParameters = { EXT: '', FILTERS: [] } // equiv to default
+  const customResource = 'mycustomresource'
+
+  const sdkArgs = [{ customResource }]
+  const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [] } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({

@@ -254,7 +254,7 @@ Get the metadata information for a resource.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resource | <code>string</code> | one of profile, service, history, orgUnitBase |
+| resource | <code>string</code> | one of profile, service, history |
 
 <a name="CampaignStandardCoreAPI+getCustomResources"></a>
 

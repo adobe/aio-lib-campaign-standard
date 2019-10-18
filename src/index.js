@@ -294,13 +294,13 @@ class CampaignStandardCoreAPI {
   /**
    * Get the metadata information for a resource.
    *
-   * @param {string} resource one of profile, service, history, orgUnitBase
+   * @param {string} resource one of profile, service, history
    */
   getMetadataForResource (resource) {
     const sdkDetails = { resource }
 
     return new Promise((resolve, reject) => {
-      const acceptedResources = ['profile', 'service', 'history', 'orgunitbase']
+      const acceptedResources = ['profile', 'service', 'history']
       if (!acceptedResources.includes(resource.toLowerCase())) {
         reject(new codes.ERROR_INVALID_RESOURCE_TYPE({ sdkDetails, messageValues: `${acceptedResources.join(', ')}` }))
       }
@@ -653,7 +653,8 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { parameters }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.customresource.getAllCustomResources(this.__createFilterParams(parameters), this.__createRequestOptions())
+      const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: parameters.customResource }
+      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
