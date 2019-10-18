@@ -49,6 +49,18 @@ test('test getAllOrgUnits API', async () => {
   expect(res.ok).toBeTruthy()
 })
 
+test('test getMetadataForResource API', async () => {
+  let res
+
+  // check success responses
+  res = await sdkClient.getMetadataForResource('profile')
+  expect(res.ok).toBeTruthy()
+  res = await sdkClient.getMetadataForResource('service')
+  expect(res.ok).toBeTruthy()
+  res = await sdkClient.getMetadataForResource('history')
+  expect(res.ok).toBeTruthy()
+})
+
 test('test getCustomResources API', async () => {
   // check success response
   const res = await sdkClient.getCustomResources({ limit: 5, page: 0 })
