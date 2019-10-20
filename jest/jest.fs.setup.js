@@ -37,6 +37,7 @@ global.fakeFileSystem = {
   },
   reset: () => {
     // reset file system
+    // TODO: add any defaults
     fileSystem.restore()
   },
   files: () => {

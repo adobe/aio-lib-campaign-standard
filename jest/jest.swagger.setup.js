@@ -11,3 +11,5 @@ governing permissions and limitations under the License.
 
 // ensure a mocked openwhisk module for unit-tests
 jest.mock('swagger-client')
+
+// put the `__mocks__/swagger-client.js` file in your test folder

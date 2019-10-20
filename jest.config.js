@@ -27,7 +27,7 @@ module.exports = {
   ],
   testEnvironment: 'node',
   setupFilesAfterEnv: [
-    './jest/jest.setup.js',
+    './jest.setup.js',
     './jest/jest.fetch.setup.js',
     './jest/jest.fs.setup.js',
     './jest/jest.swagger.setup.js',
