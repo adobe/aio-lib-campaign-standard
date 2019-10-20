@@ -31,6 +31,30 @@ test('sdk init test', async () => {
   expect(sdkClient.accessToken).toBe(accessToken)
 })
 
+test('test bad access token', async () => {
+  const _sdkClient = await sdk.init(tenantId, apiKey, 'bad_access_token')
+  const promise = _sdkClient.getAllProfiles()
+
+  // just match the error message
+  return expect(promise).rejects.toThrow('401')
+})
+
+test('test bad api key', async () => {
+  const _sdkClient = await sdk.init(tenantId, 'bad_api_key', accessToken)
+  const promise = _sdkClient.getAllProfiles()
+
+  // just match the error message
+  return expect(promise).rejects.toThrow('403')
+})
+
+test('test bad tenant id', async () => {
+  const _sdkClient = await sdk.init('bad_tenant_id', apiKey, accessToken)
+  const promise = _sdkClient.getAllProfiles()
+
+  // just match the error message
+  return expect(promise).rejects.toThrow('500')
+})
+
 test('test getAllProfiles API', async () => {
   // check success response
   const res = await sdkClient.getAllProfiles({ limit: 5, page: 0 })
