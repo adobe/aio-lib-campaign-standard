@@ -10,4 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+const { stdout } = require('stdout-stderr')
+
+process.env.CI = true
+
 jest.setTimeout(30000)
+jest.useFakeTimers()
+
+// trap console log
+beforeEach(() => { stdout.start() })
+afterEach(() => { stdout.stop() })
