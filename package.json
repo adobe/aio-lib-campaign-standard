@@ -14,7 +14,7 @@
     "generate-docs": "jsdoc2md -t ./docs/readme_template.md ./src/index.js > README.md"
   },
   "dependencies": {
-    "@adobe/aio-lib-core-errors": "^2.0.0",
+    "@adobe/aio-lib-core-errors": "^3.0.0",
     "@adobe/aio-lib-core-logging": "0.0.4",
     "cross-fetch": "^3.0.4",
     "swagger-client": "^3.9.0"
