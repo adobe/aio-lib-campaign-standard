@@ -13,18 +13,7 @@ governing permissions and limitations under the License.
 
 const mockSwaggerClient = {
   ...require.requireActual('swagger-client'), // we want the original implementation in there. Then we override the ones we want to mock below
-  apis: {
-    profile: {},
-    service: {},
-    history: {},
-    metadata: {},
-    gdpr: {},
-    messaging: {},
-    workflow: {},
-    util: {},
-    organization: {},
-    customresource: {}
-  },
+  apis: {},
   mockFn: function (methodName) {
     const cmd = methodName.split('.')
     let method = this.apis
