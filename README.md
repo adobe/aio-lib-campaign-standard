@@ -22,7 +22,7 @@ Javascript SDK wrapping the [Adobe Campaign Standard APIs](https://docs.campaign
 ### Installing
 
 ```bash
-$ npm install
+$ npm install @adobe/aio-lib-campaign-standard
 ```
 
 ### Usage
