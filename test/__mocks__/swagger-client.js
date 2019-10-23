@@ -20,7 +20,8 @@ const mockSwaggerClient = {
     messaging: {},
     workflow: {},
     util: {},
-    organization: {}
+    organization: {},
+    customresource: {}
   },
   mockFn: function (methodName) {
     const cmd = methodName.split('.')

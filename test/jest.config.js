@@ -10,9 +10,10 @@ governing permissions and limitations under the License.
 */
 
 module.exports = {
+  rootDir: '..',
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/**/*.js'
+    '<rootDir>/src/**/*.js'
   ],
   coverageThreshold: {
     global: {
@@ -27,10 +28,10 @@ module.exports = {
   ],
   testEnvironment: 'node',
   setupFilesAfterEnv: [
-    './jest.setup.js',
-    './jest/jest.fetch.setup.js',
-    './jest/jest.fs.setup.js',
-    './jest/jest.swagger.setup.js',
-    './jest/jest.fixture.setup.js'
+    '<rootDir>/jest/jest.setup.js',
+    '<rootDir>/jest/jest.fetch.setup.js',
+    '<rootDir>/jest/jest.fs.setup.js',
+    '<rootDir>/jest/jest.swagger.setup.js',
+    '<rootDir>/jest/jest.fixture.setup.js'
   ]
 }
