@@ -9,6 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/* global fixtureFile */
+
 const mockSwaggerClient = {
   ...require.requireActual('swagger-client'), // we want the original implementation in there. Then we override the ones we want to mock below
   apis: {
