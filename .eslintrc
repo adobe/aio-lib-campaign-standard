@@ -1,13 +1,7 @@
 {
   "plugins": ["jest"],
   "extends": ["standard", "plugin:jest/recommended"],
-  "globals": {
-    "fixtureFile": true,
-    "fixtureJson": true,
-    "fakeFileSystem": true,
-    "fetch": true
-  },
-  "parserOptions": {
+    "parserOptions": {
     "ecmaVersion": 2018
   }  
 }
