@@ -104,7 +104,7 @@ class CampaignStandardCoreAPI {
     })
   }
 
-  __createFilterParams (params) {
+  __createFilterParams (params = {}) {
     const { filters, hasCustomFilter, lineCount, order, descendingSort } = params
     const fixedParams = ['filters', 'hasCustomFilter', 'lineCount', 'order', 'descendingSort']
 
@@ -676,7 +676,9 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { parameters }
 
     return new Promise((resolve, reject) => {
-      const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: parameters.customResource }
+      const customResource = parameters.customResource ? String(parameters.customResource) : ''
+      delete parameters.customResource
+      const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
       this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
         .then(response => {
           resolve(response)

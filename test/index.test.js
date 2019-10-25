@@ -105,7 +105,7 @@ async function standardTest ({
 
 test('getAllProfiles', async () => {
   const sdkArgs = []
-  const apiParameters = { EXT: '', FILTERS: [] } // equiv to default
+  const apiParameters = { EXT: '', FILTERS: [], freeForm: {} } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({
@@ -135,7 +135,8 @@ test('getAllProfiles - with filters', async () => {
       FILTERS: 'byEmail/byText/myCustomFilter',
       EXT: 'Ext',
       _lineCount: 10,
-      _order: descendingSort ? 'email%20desc' : 'email'
+      _order: descendingSort ? 'email%20desc' : 'email',
+      freeForm: {}
     }
   }
 
@@ -211,7 +212,7 @@ test('getProfile', async () => {
 
 test('getAllServices', async () => {
   const sdkArgs = []
-  const apiParameters = { EXT: '', FILTERS: [] } // equiv to default
+  const apiParameters = { EXT: '', FILTERS: [], freeForm: {} } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({
@@ -558,7 +559,7 @@ test('controlWorkflow - invalid resource', async () => {
 
 test('getAllOrgUnits', async () => {
   const sdkArgs = []
-  const apiParameters = { EXT: '', FILTERS: [] } // equiv to default
+  const apiParameters = { EXT: '', FILTERS: [], freeForm: {} } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({
@@ -649,7 +650,7 @@ test('getAllCustomResources', async () => {
   const customResource = 'mycustomresource'
 
   const sdkArgs = [{ customResource }]
-  const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [] } // equiv to default
+  const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [], freeForm: {} } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({
