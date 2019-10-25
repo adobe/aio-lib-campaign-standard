@@ -2,7 +2,7 @@
 
 const path = require('path')
 
-let arg = '../spec/campaign_standard_api.json'
+let arg = '../spec/api.json'
 if (process.argv.length > 2) {
   arg = path.resolve(process.argv[2])
 }

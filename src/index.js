@@ -61,7 +61,7 @@ class CampaignStandardCoreAPI {
    */
   async init (tenantId, apiKey, accessToken) {
     // init swagger client
-    const spec = require('../spec/campaign_standard_api.json')
+    const spec = require('../spec/api.json')
     const swagger = new Swagger({
       spec: spec,
       requestInterceptor,
@@ -104,32 +104,47 @@ class CampaignStandardCoreAPI {
     })
   }
 
-  __createFilterParams ({ filters, hasCustomFilter, lineCount, order, descendingSort } = {}) {
-    const params = {
+  __createFilterParams (params = {}) {
+    const { filters, hasCustomFilter, lineCount, order, descendingSort } = params
+    const fixedParams = ['filters', 'hasCustomFilter', 'lineCount', 'order', 'descendingSort']
+
+    const retParams = {
       EXT: '',
       FILTERS: []
     }
 
+    // filter for extra keys, set these to the 'freeForm' property (for free-form query parameters)
+    retParams.freeForm = Object.keys(params)
+      .filter(key => !fixedParams.includes(key))
+      .reduce((o, key) => {
+        o[key] = params[key]
+        return o
+      }, {})
+
     if (filters) {
-      params.FILTERS = filters.join('/')
+      // this is a fixed path param
+      retParams.FILTERS = filters.join('/')
     }
 
     if (hasCustomFilter) {
-      params.EXT = 'Ext'
+      // this is modifies the url (append to resource)
+      retParams.EXT = 'Ext'
     }
 
+    // this is a fixed query param
     if (lineCount) { // lineCount default is 25
-      params._lineCount = lineCount
+      retParams._lineCount = lineCount
     }
 
     if (order) {
-      params._order = order
+      // this is a fixed query param
+      retParams._order = order
       if (descendingSort) { // ascending is the default
-        params._order += '%20desc'
+        retParams._order += '%20desc'
       }
     }
 
-    return params
+    return retParams
   }
 
   /**
@@ -647,8 +662,8 @@ class CampaignStandardCoreAPI {
   /**
    * Get all Custom Resource records
    *
+   * @param {string} customResource the custom resource to get records from
    * @param {Object} [parameters={}] parameters to pass
-   * @param {string} [parameters.customResource] the custom resource to get records from
    * @param {Array} [parameters.filters=[]] apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
    * @param {Boolean} [parameters.hasCustomFilter=false] set to true if you have a custom filter. Defaults to false.
    * @param {integer} [parameters.lineCount=25] limit the number of records to return (default is 25)
@@ -657,11 +672,11 @@ class CampaignStandardCoreAPI {
    *
    * @see getMetadataForResource
    */
-  getAllCustomResources (parameters) {
-    const sdkDetails = { parameters }
+  getAllCustomResources (customResource, parameters) {
+    const sdkDetails = { customResource, parameters }
 
     return new Promise((resolve, reject) => {
-      const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: parameters.customResource }
+      const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
       this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
         .then(response => {
           resolve(response)
