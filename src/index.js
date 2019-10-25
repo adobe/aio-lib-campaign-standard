@@ -662,8 +662,8 @@ class CampaignStandardCoreAPI {
   /**
    * Get all Custom Resource records
    *
+   * @param {string} customResource the custom resource to get records from
    * @param {Object} [parameters={}] parameters to pass
-   * @param {string} [parameters.customResource] the custom resource to get records from
    * @param {Array} [parameters.filters=[]] apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
    * @param {Boolean} [parameters.hasCustomFilter=false] set to true if you have a custom filter. Defaults to false.
    * @param {integer} [parameters.lineCount=25] limit the number of records to return (default is 25)
@@ -672,12 +672,10 @@ class CampaignStandardCoreAPI {
    *
    * @see getMetadataForResource
    */
-  getAllCustomResources (parameters) {
-    const sdkDetails = { parameters }
+  getAllCustomResources (customResource, parameters) {
+    const sdkDetails = { customResource, parameters }
 
     return new Promise((resolve, reject) => {
-      const customResource = parameters.customResource ? String(parameters.customResource) : ''
-      delete parameters.customResource
       const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
       this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
         .then(response => {

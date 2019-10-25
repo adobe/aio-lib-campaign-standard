@@ -104,8 +104,8 @@ async function standardTest ({
 }
 
 test('getAllProfiles', async () => {
-  const sdkArgs = []
-  const apiParameters = { EXT: '', FILTERS: [], freeForm: {} } // equiv to default
+  const sdkArgs = [{ email: 'name@example.com' }]
+  const apiParameters = { EXT: '', FILTERS: [], freeForm: { email: 'name@example.com' } } // equiv to default
   const apiOptions = createSwaggerOptions()
 
   return standardTest({
@@ -649,7 +649,7 @@ test('getDataFromRelativeUrl', async () => {
 test('getAllCustomResources', async () => {
   const customResource = 'mycustomresource'
 
-  const sdkArgs = [{ customResource }]
+  const sdkArgs = [customResource]
   const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [], freeForm: {} } // equiv to default
   const apiOptions = createSwaggerOptions()
 
