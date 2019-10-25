@@ -126,7 +126,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.updateOrgUnit(orgUnitPKey, orgUnitObject)](#CampaignStandardCoreAPI+updateOrgUnit)
     * [.postDataToUrl(url, body)](#CampaignStandardCoreAPI+postDataToUrl)
     * [.getDataFromRelativeUrl(relativeUrl)](#CampaignStandardCoreAPI+getDataFromRelativeUrl)
-    * [.getAllCustomResources([parameters])](#CampaignStandardCoreAPI+getAllCustomResources)
+    * [.getAllCustomResources(customResource, [parameters])](#CampaignStandardCoreAPI+getAllCustomResources)
     * [.updateCustomResource(customResource, customResourcePKey, customResourceObject)](#CampaignStandardCoreAPI+updateCustomResource)
     * [.createCustomResource(customResource, customResourceObject)](#CampaignStandardCoreAPI+createCustomResource)
     * [.deleteCustomResource(customResource, customResourcePKey, customResourceObject)](#CampaignStandardCoreAPI+deleteCustomResource)
@@ -449,7 +449,7 @@ Gets data from a relative url. Helper function.
 
 <a name="CampaignStandardCoreAPI+getAllCustomResources"></a>
 
-### campaignStandardCoreAPI.getAllCustomResources([parameters])
+### campaignStandardCoreAPI.getAllCustomResources(customResource, [parameters])
 Get all Custom Resource records
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
@@ -457,8 +457,8 @@ Get all Custom Resource records
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
+| customResource | <code>string</code> |  | the custom resource to get records from |
 | [parameters] | <code>Object</code> | <code>{}</code> | parameters to pass |
-| [parameters.customResource] | <code>string</code> |  | the custom resource to get records from |
 | [parameters.filters] | <code>Array</code> | <code>[]</code> | apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call |
 | [parameters.hasCustomFilter] | <code>Boolean</code> | <code>false</code> | set to true if you have a custom filter. Defaults to false. |
 | [parameters.lineCount] | <code>integer</code> | <code>25</code> | limit the number of records to return (default is 25) |
