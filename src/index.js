@@ -61,7 +61,7 @@ class CampaignStandardCoreAPI {
    */
   async init (tenantId, apiKey, accessToken) {
     // init swagger client
-    const spec = require('../spec/campaign_standard_api.json')
+    const spec = require('../spec/api.json')
     const swagger = new Swagger({
       spec: spec,
       requestInterceptor,

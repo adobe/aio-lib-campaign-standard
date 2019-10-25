@@ -180,7 +180,18 @@
           "type": "string",
           "default": "application/json;charset=utf-8"
         }
-      }
+      },
+      "FreeFormQueryParameters": {
+        "in": "query",
+        "name": "freeForm",
+        "schema": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "style": "form"
+      }      
     }
   },
   "security": [
@@ -194,6 +205,9 @@
   "paths": {
     "/profileAndServices{EXT}/profile/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/FreeFormQueryParameters"
+        },
         {
           "$ref": "#/components/parameters/Ext"
         },
@@ -275,6 +289,9 @@
     },
     "/profileAndServices{EXT}/service/{FILTERS}": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/FreeFormQueryParameters"
+        },
         {
           "$ref": "#/components/parameters/Ext"
         },
@@ -697,6 +714,9 @@
     "/profileAndServicesExt/orgUnitBase/{FILTERS}": {
       "parameters": [
         {
+          "$ref": "#/components/parameters/FreeFormQueryParameters"
+        },
+        {
           "$ref": "#/components/parameters/Filters"
         },
         {
@@ -732,6 +752,9 @@
           "schema": {
             "type": "string"
           }
+        },
+        {
+          "$ref": "#/components/parameters/FreeFormQueryParameters"
         },
         {
           "$ref": "#/components/parameters/Filters"
