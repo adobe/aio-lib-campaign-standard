@@ -16,13 +16,13 @@ governing permissions and limitations under the License.
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Greenkeeper badge](https://badges.greenkeeper.io/adobe/aio-lib-campaign-standard.svg)](https://greenkeeper.io/)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-campaign-standard/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-campaign-standard/)
 
-# Adobe I/O - Adobe Campaign Standard SDK
+# Adobe I/O Adobe Campaign Standard SDK
 Javascript SDK wrapping the [Adobe Campaign Standard APIs](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#introduction).
 
 ### Installing
 
 ```bash
-$ npm install @adobe/aio-lib-campaign-standard
+$ npm install
 ```
 
 ### Usage
@@ -69,6 +69,24 @@ async function sdkTest() {
 }
 ```
 All methods available under the SDK are documented [<code>here</code>](#CampaignStandardCoreAPI)
+
+## Classes
+
+<dl>
+<dt><a href="#CampaignStandardCoreAPI">CampaignStandardCoreAPI</a></dt>
+<dd><p>This class provides methods to call Adobe Campaign Standard APIs.
+Before calling any method initialize the instance by calling the <code>init</code> method on it
+with valid values for tenantId, apiKey and accessToken</p>
+</dd>
+</dl>
+
+## Functions
+
+<dl>
+<dt><a href="#init">init(tenantId, apiKey, accessToken)</a> ⇒ <code><a href="#CampaignStandardCoreAPI">Promise.&lt;CampaignStandardCoreAPI&gt;</a></code></dt>
+<dd><p>Returns a Promise that resolves with a new CampaignStandardCoreAPI object.</p>
+</dd>
+</dl>
 
 <a name="CampaignStandardCoreAPI"></a>
 
@@ -134,7 +152,7 @@ the access token from your Adobe I/O Campaign Standard integration
 <a name="CampaignStandardCoreAPI+init"></a>
 
 ### campaignStandardCoreAPI.init(tenantId, apiKey, accessToken) ⇒ [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)
-Initializes a CampaignStandardCoreAPI object and returns it.
+Initializes this object.
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
 
@@ -484,6 +502,19 @@ Delete a Custom Resource record
 | customResource | <code>string</code> | the custom resource |
 | customResourcePKey | <code>string</code> | the PKey property of a Custom Resource record |
 | customResourceObject | <code>Object</code> | a Custom Resource object |
+
+<a name="init"></a>
+
+## init(tenantId, apiKey, accessToken) ⇒ [<code>Promise.&lt;CampaignStandardCoreAPI&gt;</code>](#CampaignStandardCoreAPI)
+Returns a Promise that resolves with a new CampaignStandardCoreAPI object.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| tenantId | <code>string</code> | the tenant id (your personal organization in Campaign Standard) |
+| apiKey | <code>string</code> | the API key for your Adobe I/O Campaign Standard Integration |
+| accessToken | <code>string</code> | the access token for your Adobe I/O Campaign Standard Integration |
 
 ### Debug Logs
 

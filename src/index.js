@@ -21,6 +21,14 @@ const { fetch, Request } = require('cross-fetch')
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
 const { codes } = require('./SDKErrors')
 
+/**
+ * Returns a Promise that resolves with a new CampaignStandardCoreAPI object.
+ *
+ * @param {string} tenantId the tenant id (your personal organization in Campaign Standard)
+ * @param {string} apiKey the API key for your Adobe I/O Campaign Standard Integration
+ * @param {string} accessToken the access token for your Adobe I/O Campaign Standard Integration
+ * @return {Promise<CampaignStandardCoreAPI>}
+ */
 function init (tenantId, apiKey, accessToken) {
   return new Promise((resolve, reject) => {
     const clientWrapper = new CampaignStandardCoreAPI()
@@ -44,7 +52,7 @@ function init (tenantId, apiKey, accessToken) {
 */
 class CampaignStandardCoreAPI {
   /**
-   * Initializes a CampaignStandardCoreAPI object and returns it.
+   * Initializes this object.
    *
    * @param {string} tenantId the tenant id (your personal organization in Campaign Standard)
    * @param {string} apiKey the API key for your Adobe I/O Campaign Standard Integration
