@@ -19,6 +19,13 @@
     "cross-fetch": "^3.0.4",
     "swagger-client": "^3.9.0"
   },
+  "files": [
+    "src",
+    "spec",
+    "README.md",
+    "LICENSE",
+    "COPYRIGHT"
+  ],
   "devDependencies": {
     "babel-runtime": "^6.26.0",
     "codecov": "^3.5.0",
