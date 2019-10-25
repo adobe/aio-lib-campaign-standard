@@ -104,32 +104,47 @@ class CampaignStandardCoreAPI {
     })
   }
 
-  __createFilterParams ({ filters, hasCustomFilter, lineCount, order, descendingSort } = {}) {
-    const params = {
+  __createFilterParams (params) {
+    const { filters, hasCustomFilter, lineCount, order, descendingSort } = params
+    const fixedParams = ['filters', 'hasCustomFilter', 'lineCount', 'order', 'descendingSort']
+
+    const retParams = {
       EXT: '',
       FILTERS: []
     }
 
+    // filter for extra keys, set these to the 'freeForm' property (for free-form query parameters)
+    retParams.freeForm = Object.keys(params)
+      .filter(key => !fixedParams.includes(key))
+      .reduce((o, key) => {
+        o[key] = params[key]
+        return o
+      }, {})
+
     if (filters) {
-      params.FILTERS = filters.join('/')
+      // this is a fixed path param
+      retParams.FILTERS = filters.join('/')
     }
 
     if (hasCustomFilter) {
-      params.EXT = 'Ext'
+      // this is modifies the url (append to resource)
+      retParams.EXT = 'Ext'
     }
 
+    // this is a fixed query param
     if (lineCount) { // lineCount default is 25
-      params._lineCount = lineCount
+      retParams._lineCount = lineCount
     }
 
     if (order) {
-      params._order = order
+      // this is a fixed query param
+      retParams._order = order
       if (descendingSort) { // ascending is the default
-        params._order += '%20desc'
+        retParams._order += '%20desc'
       }
     }
 
-    return params
+    return retParams
   }
 
   /**
