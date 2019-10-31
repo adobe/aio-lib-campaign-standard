@@ -1,7 +1,7 @@
 module.exports = {
   testEnvironment: 'node',
   setupFilesAfterEnv: [
-    '../jest/jest.setup.js'
+    '../test/jest/jest.setup.js'
   ],
   testRegex: './e2e/e2e.js'
 }

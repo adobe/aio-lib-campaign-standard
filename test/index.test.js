@@ -108,13 +108,13 @@ test('getAllProfiles', async () => {
   const apiParameters = { EXT: '', FILTERS: [], freeForm: { email: 'name@example.com' } } // equiv to default
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'profile.getAllProfiles',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_ALL_PROFILES
-  })
+  })).not.toThrow()
 })
 
 test('getAllProfiles - with filters', async () => {
@@ -152,13 +152,13 @@ test('getAllProfiles - with filters', async () => {
   })
 
   // ascending sort
-  await standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'profile.getAllProfiles',
     apiParameters: createApiParameters({ descendingSort: false }),
     apiOptions,
     sdkArgs: createSdkArgs({ descendingSort: false }),
     ErrorClass: codes.ERROR_GET_ALL_PROFILES
-  })
+  })).not.toThrow()
 })
 
 test('createProfile', async () => {
@@ -168,13 +168,13 @@ test('createProfile', async () => {
   const apiParameters = {}
   const apiOptions = createSwaggerOptions({ body: profileObject })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'profile.createProfile',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_CREATE_PROFILE
-  })
+  })).not.toThrow()
 })
 
 test('updateProfile', async () => {
@@ -185,13 +185,13 @@ test('updateProfile', async () => {
   const apiParameters = { PROFILE_PKEY: pkey }
   const apiOptions = createSwaggerOptions({ body: profileObject })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'profile.updateProfile',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_UPDATE_PROFILE
-  })
+  })).not.toThrow()
 })
 
 test('getProfile', async () => {
@@ -201,13 +201,13 @@ test('getProfile', async () => {
   const apiParameters = { PROFILE_PKEY: pkey }
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'profile.getProfile',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_PROFILE
-  })
+  })).not.toThrow()
 })
 
 test('getAllServices', async () => {
@@ -215,13 +215,13 @@ test('getAllServices', async () => {
   const apiParameters = { EXT: '', FILTERS: [], freeForm: {} } // equiv to default
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'service.getAllServices',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_ALL_SERVICES
-  })
+  })).not.toThrow()
 })
 
 test('createService', async () => {
@@ -237,13 +237,13 @@ test('createService', async () => {
   const apiParameters = {}
   const apiOptions = createSwaggerOptions({ body: serviceObject })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'service.createService',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_CREATE_SERVICE
-  })
+  })).not.toThrow()
 })
 
 test('getService', async () => {
@@ -253,13 +253,13 @@ test('getService', async () => {
   const apiParameters = { SERVICE_PKEY: pkey }
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'service.getService',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_SERVICE
-  })
+  })).not.toThrow()
 })
 
 test('getHistoryOfProfile', async () => {
@@ -269,13 +269,13 @@ test('getHistoryOfProfile', async () => {
   const apiParameters = { PROFILE_PKEY: pkey }
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'history.getHistoryOfProfile',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_HISTORY_OF_PROFILE
-  })
+  })).not.toThrow()
 })
 
 test('getMetadataForResource', async () => {
@@ -285,14 +285,13 @@ test('getMetadataForResource', async () => {
   const apiParameters = { RESOURCE: resource }
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'metadata.getMetadataForResource',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_METADATA_FOR_RESOURCE
-
-  })
+  })).not.toThrow()
 })
 
 test('getMetadataForResource - invalid resource', async () => {
@@ -309,13 +308,13 @@ test('getCustomResources', async () => {
   const apiParameters = {}
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'metadata.getCustomResources',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_CUSTOM_RESOURCES
-  })
+  })).not.toThrow()
 })
 
 test('createGDPRRequest', async () => {
@@ -331,13 +330,13 @@ test('createGDPRRequest', async () => {
   const apiParameters = {}
   const apiOptions = createSwaggerOptions({ body: gdprRequest })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'gdpr.createGDPRRequest',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_CREATE_GDPR_REQUEST
-  })
+  })).not.toThrow()
 })
 
 test('getGDPRRequest', async () => {
@@ -345,13 +344,13 @@ test('getGDPRRequest', async () => {
   const apiParameters = {}
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'gdpr.getGDPRRequest',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_GDPR_REQUEST
-  })
+  })).not.toThrow()
 })
 
 test('getGDPRDataFile - success', async () => {
@@ -417,13 +416,13 @@ test('sendTransactionalEvent', async () => {
   const apiParameters = { EVENT_ID: eventId, ORGANIZATION: gTenantId }
   const apiOptions = createSwaggerOptions({ body: eventBody })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'messaging.sendTransactionalEvent',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_SEND_TRANSACTIONAL_EVENT
-  })
+  })).not.toThrow()
 })
 
 test('getTransactionalEvent', async () => {
@@ -434,13 +433,13 @@ test('getTransactionalEvent', async () => {
   const apiParameters = { EVENT_ID: eventId, ORGANIZATION: gTenantId, EVENT_PKEY: eventPKey }
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'messaging.getTransactionalEvent',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_TRANSACTIONAL_EVENT
-  })
+  })).not.toThrow()
 })
 
 test('getWorkflow', async () => {
@@ -450,13 +449,13 @@ test('getWorkflow', async () => {
   const apiParameters = { WORKFLOW_ID: workflowId }
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'workflow.getWorkflow',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_WORKFLOW
-  })
+  })).not.toThrow()
 })
 
 test('triggerSignalActivity - success', async () => {
@@ -537,13 +536,13 @@ test('controlWorkflow', async () => {
     }
   })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'workflow.controlWorkflow',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_CONTROL_WORKFLOW
-  })
+  })).not.toThrow()
 })
 
 test('controlWorkflow - invalid resource', async () => {
@@ -562,13 +561,13 @@ test('getAllOrgUnits', async () => {
   const apiParameters = { EXT: '', FILTERS: [], freeForm: {} } // equiv to default
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'organization.getAllOrgUnits',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_ALL_ORG_UNITS
-  })
+  })).not.toThrow()
 })
 
 test('getProfileWithOrgUnit', async () => {
@@ -578,13 +577,13 @@ test('getProfileWithOrgUnit', async () => {
   const apiParameters = { PROFILE_PKEY: pkey }
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'organization.getProfileWithOrgUnit',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_PROFILE_WITH_ORG_UNIT
-  })
+  })).not.toThrow()
 })
 
 test('updateProfileOrgUnit', async () => {
@@ -601,13 +600,13 @@ test('updateProfileOrgUnit', async () => {
     }
   })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'organization.updateProfileOrgUnit',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_UPDATE_PROFILE_ORG_UNIT
-  })
+  })).not.toThrow()
 })
 
 test('updateOrgUnit', async () => {
@@ -621,13 +620,13 @@ test('updateOrgUnit', async () => {
   const apiParameters = { ORGUNIT_PKEY: pkey }
   const apiOptions = createSwaggerOptions({ body: orgUnitObject })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'organization.updateOrgUnit',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_UPDATE_ORG_UNIT
-  })
+  })).not.toThrow()
 })
 
 test('getDataFromRelativeUrl', async () => {
@@ -637,13 +636,13 @@ test('getDataFromRelativeUrl', async () => {
   const apiParameters = { RELATIVE_URL: relativeUrl }
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'util.getDataFromRelativeUrl',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_DATA_FROM_RELATIVE_URL
-  })
+  })).not.toThrow()
 })
 
 test('getAllCustomResources', async () => {
@@ -653,13 +652,13 @@ test('getAllCustomResources', async () => {
   const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [], freeForm: {} } // equiv to default
   const apiOptions = createSwaggerOptions()
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'customresource.getAllCustomResources',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_ALL_CUSTOM_RESOURCES
-  })
+  })).not.toThrow()
 })
 
 test('createCustomResource', async () => {
@@ -670,13 +669,13 @@ test('createCustomResource', async () => {
   const apiParameters = { CUSTOMRESOURCE: customResource }
   const apiOptions = createSwaggerOptions({ body: customResourceObject })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'customresource.createCustomResource',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_CREATE_CUSTOM_RESOURCE
-  })
+  })).not.toThrow()
 })
 
 test('deleteCustomResource', async () => {
@@ -687,13 +686,13 @@ test('deleteCustomResource', async () => {
   const apiParameters = { CUSTOMRESOURCE: customResource, PKEY: customResourcePKey }
   const apiOptions = createSwaggerOptions({})
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'customresource.deleteCustomResource',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_DELETE_CUSTOM_RESOURCE
-  })
+  })).not.toThrow()
 })
 
 test('updateCustomResource', async () => {
@@ -705,11 +704,11 @@ test('updateCustomResource', async () => {
   const apiParameters = { CUSTOMRESOURCE: customResource, PKEY: customResourcePKey }
   const apiOptions = createSwaggerOptions({ body: customResourceObject })
 
-  return standardTest({
+  return expect(() => standardTest({
     fullyQualifiedApiName: 'customresource.updateCustomResource',
     apiParameters,
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_UPDATE_CUSTOM_RESOURCE
-  })
+  })).not.toThrow()
 })
