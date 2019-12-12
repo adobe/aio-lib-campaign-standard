@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 const sdk = require('../src/index')
 const path = require('path')
 const crypto = require('crypto')
+const { codes } = require('../src/SDKErrors')
 
 // load .env values in the e2e folder, if any
 require('dotenv').config({ path: path.join(__dirname, '.env') })
@@ -51,8 +52,9 @@ test('test bad tenant id', async () => {
   const _sdkClient = await sdk.init('bad_tenant_id', apiKey, accessToken)
   const promise = _sdkClient.getAllProfiles()
 
-  // just match the error message
-  return expect(promise).rejects.toThrow('500')
+  // just catch the general expected error. on cold start, it throws "Bad Request",
+  // on subsequent warm starts, it throws a HTTP 500 error, so it is not consistent
+  return expect(promise).rejects.toEqual(expect.any(codes.ERROR_GET_ALL_PROFILES))
 })
 
 test('test getAllProfiles API', async () => {
