@@ -3,6 +3,6 @@
     "fixtureFile": true,
     "fixtureJson": true,
     "fakeFileSystem": true,
-    "fetch": true
+    "fetchMock": true
   }
 }
