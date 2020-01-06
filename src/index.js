@@ -182,7 +182,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { profileObject }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.createProfile({}, this.__createRequestOptions({ body: profileObject }))
+      this.sdk.apis.profile.createProfile(this.__createFilterParams({}), this.__createRequestOptions({ body: profileObject }))
         .then(response => {
           resolve(response)
         })
@@ -266,7 +266,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { serviceObject }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.service.createService({}, this.__createRequestOptions({ body: serviceObject }))
+      this.sdk.apis.service.createService(this.__createFilterParams({}), this.__createRequestOptions({ body: serviceObject }))
         .then(response => {
           resolve(response)
         })
