@@ -136,3 +136,26 @@ test('test deleteCustomResource API', async () => {
   // just match the error message
   return expect(promise).rejects.toThrow('404')
 })
+
+test('test createProfile, updateProfile, getProfile API', async () => {
+  // create random string for name
+  const randomString = crypto.randomBytes(4).toString('hex')
+  const firstName = `ACSSDK_Test_First_${randomString}`
+  const lastName = `ACSSDK_Test_Last_${randomString}`
+
+  let res = await sdkClient.createProfile({
+    email: `${firstName}@notanemail.net`,
+    firstName: firstName,
+    lastName: lastName
+  })
+
+  expect(res.status).toEqual(201)
+
+  res = await sdkClient.updateProfile(res.body.PKey, {
+    firstName: `UPDATED_${firstName}`
+  })
+  expect(res.status).toEqual(200)
+
+  res = await sdkClient.getProfile(res.body.PKey)
+  expect(res.status).toEqual(200)
+})
