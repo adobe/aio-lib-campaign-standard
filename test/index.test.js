@@ -10,7 +10,6 @@ governing permissions and limitations under the License.
 */
 
 const sdk = require('../src')
-const fetch = require('node-fetch')
 const { createRequestOptions } = require('../src/helpers')
 const { codes } = require('../src/SDKErrors')
 
@@ -38,7 +37,7 @@ const createSdkClient = async () => {
 // /////////////////////////////////////////////
 
 beforeEach(() => {
-  fetch.resetMocks()
+  fetchMock.resetMocks()
 })
 
 test('sdk init test', async () => {
@@ -358,16 +357,16 @@ test('getGDPRDataFile - success', async () => {
   const requestInternalName = 'my-name'
 
   const expectedResult = { data: '12345' }
-  fetch.mockResponseOnce(JSON.stringify(expectedResult))
+  fetchMock.mockResponseOnce(JSON.stringify(expectedResult))
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
   const client = await createSdkClient()
   const triggerSuccess = client.getGDPRDataFile(privacyDataRequestUrl, requestInternalName)
 
-  expect(fetch.mock.calls.length).toEqual(1)
+  expect(fetchMock.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetch.mock.calls[0][0]
+  const requestObject = fetchMock.mock.calls[0][0]
   const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
 
   expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(privacyDataRequestUrl)
@@ -379,7 +378,7 @@ test('getGDPRDataFile - error', async () => {
   const requestInternalName = 'my-name'
 
   const expectedError = new Error('Foo')
-  fetch.mockRejectOnce(expectedError)
+  fetchMock.mockRejectOnce(expectedError)
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
@@ -388,9 +387,9 @@ test('getGDPRDataFile - error', async () => {
   const triggerFail = client.getGDPRDataFile(privacyDataRequestUrl, requestInternalName)
   const sdkDetails = { privacyDataRequestUrl, requestInternalName }
 
-  expect(fetch.mock.calls.length).toEqual(1)
+  expect(fetchMock.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetch.mock.calls[0][0]
+  const requestObject = fetchMock.mock.calls[0][0]
   const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
 
   expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(privacyDataRequestUrl)
@@ -474,16 +473,16 @@ test('triggerSignalActivity - success', async () => {
   }
 
   const expectedResult = { data: '12345' }
-  fetch.mockResponseOnce(JSON.stringify(expectedResult))
+  fetchMock.mockResponseOnce(JSON.stringify(expectedResult))
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
   const client = await createSdkClient()
   const triggerSuccess = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
 
-  expect(fetch.mock.calls.length).toEqual(1)
+  expect(fetchMock.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetch.mock.calls[0][0]
+  const requestObject = fetchMock.mock.calls[0][0]
   const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
 
   expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
@@ -506,7 +505,7 @@ test('triggerSignalActivity - error', async () => {
   }
 
   const expectedError = new Error('Foo')
-  fetch.mockRejectOnce(expectedError)
+  fetchMock.mockRejectOnce(expectedError)
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
@@ -515,9 +514,9 @@ test('triggerSignalActivity - error', async () => {
   const triggerFail = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
   const sdkDetails = { workflowTriggerUrl, workflowParameters }
 
-  expect(fetch.mock.calls.length).toEqual(1)
+  expect(fetchMock.mock.calls.length).toEqual(1)
   // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetch.mock.calls[0][0]
+  const requestObject = fetchMock.mock.calls[0][0]
   const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
 
   expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
