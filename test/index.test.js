@@ -164,7 +164,8 @@ test('createProfile', async () => {
   const profileObject = { firstName: 'Jack', lastName: 'Smith', email: 'foo@bar.com' }
 
   const sdkArgs = [profileObject]
-  const apiParameters = {}
+  const apiParameters = { EXT: '', FILTERS: [], freeForm: {} }
+
   const apiOptions = createSwaggerOptions({ body: profileObject })
 
   return expect(() => standardTest({
@@ -233,7 +234,7 @@ test('createService', async () => {
   }
 
   const sdkArgs = [serviceObject]
-  const apiParameters = {}
+  const apiParameters = { EXT: '', FILTERS: [], freeForm: {} }
   const apiOptions = createSwaggerOptions({ body: serviceObject })
 
   return expect(() => standardTest({
