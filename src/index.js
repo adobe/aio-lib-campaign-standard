@@ -632,8 +632,8 @@ class CampaignStandardCoreAPI {
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
         'Cache-Control': 'no-cache',
-        Authorization: `Bearer ${options.accessToken}`,
-        'X-Api-Key': options.apiKey
+        Authorization: `Bearer ${options.securities.authorized.BearerAuth.value}`,
+        'X-Api-Key': options.securities.authorized.ApiKeyAuth.value
       }
     })
 
