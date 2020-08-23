@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 [![Version](https://img.shields.io/npm/v/@adobe/aio-lib-campaign-standard.svg)](https://npmjs.org/package/@adobe/aio-lib-campaign-standard)
 [![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-lib-campaign-standard.svg)](https://npmjs.org/package/@adobe/aio-lib-campaign-standard)
 [![Build Status](https://travis-ci.com/adobe/aio-lib-campaign-standard.svg?branch=master)](https://travis-ci.com/adobe/aio-lib-campaign-standard)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Greenkeeper badge](https://badges.greenkeeper.io/adobe/aio-lib-campaign-standard.svg)](https://greenkeeper.io/)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-campaign-standard/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-campaign-standard/)
 
 # Adobe I/O Adobe Campaign Standard SDK
@@ -115,7 +115,8 @@ with valid values for tenantId, apiKey and accessToken
     * [.createGDPRRequest(gdprRequest)](#CampaignStandardCoreAPI+createGDPRRequest)
     * [.getGDPRRequest()](#CampaignStandardCoreAPI+getGDPRRequest)
     * [.getGDPRDataFile(privacyRequestDataUrl, requestInternalName)](#CampaignStandardCoreAPI+getGDPRDataFile)
-    * [.sendTransactionalEvent(eventId, eventBody)](#CampaignStandardCoreAPI+sendTransactionalEvent)
+    * ~~[.sendTransactionalEvent(eventId, eventBody)](#CampaignStandardCoreAPI+sendTransactionalEvent)~~
+    * [.sendTransactionalEventForMacTenantId(macTenantId, eventId, eventBody)](#CampaignStandardCoreAPI+sendTransactionalEventForMacTenantId)
     * [.getTransactionalEvent(eventId, eventPKey)](#CampaignStandardCoreAPI+getTransactionalEvent)
     * [.getWorkflow(workflowId)](#CampaignStandardCoreAPI+getWorkflow)
     * [.triggerSignalActivity(workflowTriggerUrl, [workflowParameters])](#CampaignStandardCoreAPI+triggerSignalActivity)
@@ -312,13 +313,29 @@ Get the GDPR data file.
 
 <a name="CampaignStandardCoreAPI+sendTransactionalEvent"></a>
 
-### campaignStandardCoreAPI.sendTransactionalEvent(eventId, eventBody)
+### ~~campaignStandardCoreAPI.sendTransactionalEvent(eventId, eventBody)~~
+***Deprecated***
+
 Send a transactional event.
+Deprecated since 2.1.0. use sendTransactionalEventForMacTenantId instead.
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
 
 | Param | Type | Description |
 | --- | --- | --- |
+| eventId | <code>string</code> | the type of event you want to send. This depends on the [event definition](https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html). |
+| eventBody | <code>Object</code> | the event data to send. This depends on the [event definition](https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html). |
+
+<a name="CampaignStandardCoreAPI+sendTransactionalEventForMacTenantId"></a>
+
+### campaignStandardCoreAPI.sendTransactionalEventForMacTenantId(macTenantId, eventId, eventBody)
+Send a transactional event for a Marketing Cloud Tenant ID
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| macTenantId | <code>string</code> | the Marketing Cloud Tenant ID |
 | eventId | <code>string</code> | the type of event you want to send. This depends on the [event definition](https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html). |
 | eventBody | <code>Object</code> | the event data to send. This depends on the [event definition](https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html). |
 

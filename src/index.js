@@ -408,17 +408,29 @@ class CampaignStandardCoreAPI {
 
   /**
    * Send a transactional event.
-   *
+   * Deprecated since 2.1.0. use sendTransactionalEventForMacTenantId instead.
+   * @deprecated
    * @param {string} eventId the type of event you want to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
    * @param {Object} eventBody the event data to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
    */
   sendTransactionalEvent (eventId, eventBody) {
-    const sdkDetails = { eventId, eventBody }
+    return this.sendTransactionalEventForMacTenantId(this.tenantId, eventId, eventBody)
+  }
+
+  /**
+   * Send a transactional event for a Marketing Cloud Tenant ID
+   *
+   * @param {string} macTenantId the Marketing Cloud Tenant ID
+   * @param {string} eventId the type of event you want to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
+   * @param {Object} eventBody the event data to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
+   */
+  sendTransactionalEventForMacTenantId (macTenantId, eventId, eventBody) {
+    const sdkDetails = { macTenantId, eventId, eventBody }
 
     return new Promise((resolve, reject) => {
       this.sdk.apis.messaging.sendTransactionalEvent(
         {
-          ORGANIZATION: this.tenantId,
+          ORGANIZATION: macTenantId,
           EVENT_ID: eventId
         }, this.__createRequestOptions({ body: eventBody }))
         .then(response => {
