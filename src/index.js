@@ -409,6 +409,7 @@ class CampaignStandardCoreAPI {
   /**
    * Send a transactional event.
    * Deprecated since 2.1.0. use sendTransactionalEventForMacTenantId instead.
+   *
    * @deprecated
    * @param {string} eventId the type of event you want to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
    * @param {Object} eventBody the event data to send. This depends on the {@link https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html|event definition}.
@@ -444,18 +445,32 @@ class CampaignStandardCoreAPI {
 
   /**
    * Gets data about a transactional event (status, properties)
+   * Deprecated since 2.1.0. use getTransactionalEventForMacTenantId instead.
    *
+   * @deprecated
    * @param {string} eventId the type of event you want to send
    * @param {string} eventPKey the PKey of an event (you get this from a sendTransactionalEvent call)
    * @see sendTransactionalEvent
    */
   getTransactionalEvent (eventId, eventPKey) {
-    const sdkDetails = { eventId, eventPKey }
+    return this.getTransactionalEventForMacTenantId(this.tenantId, eventId, eventPKey)
+  }
+
+  /**
+   * Gets data about a transactional event for a Marketing Cloud Tenant ID (status, properties)
+   *
+   * @param {string} macTenantId the Marketing Cloud Tenant ID
+   * @param {string} eventId the type of event you want to send
+   * @param {string} eventPKey the PKey of an event (you get this from a sendTransactionalEvent call)
+   * @see sendTransactionalEvent
+   */
+  getTransactionalEventForMacTenantId (macTenantId, eventId, eventPKey) {
+    const sdkDetails = { macTenantId, eventId, eventPKey }
 
     return new Promise((resolve, reject) => {
       this.sdk.apis.messaging.getTransactionalEvent(
         {
-          ORGANIZATION: this.tenantId,
+          ORGANIZATION: macTenantId,
           EVENT_ID: eventId,
           EVENT_PKEY: eventPKey
         }, this.__createRequestOptions())
