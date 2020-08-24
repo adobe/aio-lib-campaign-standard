@@ -117,7 +117,8 @@ with valid values for tenantId, apiKey and accessToken
     * [.getGDPRDataFile(privacyRequestDataUrl, requestInternalName)](#CampaignStandardCoreAPI+getGDPRDataFile)
     * ~~[.sendTransactionalEvent(eventId, eventBody)](#CampaignStandardCoreAPI+sendTransactionalEvent)~~
     * [.sendTransactionalEventForMacTenantId(macTenantId, eventId, eventBody)](#CampaignStandardCoreAPI+sendTransactionalEventForMacTenantId)
-    * [.getTransactionalEvent(eventId, eventPKey)](#CampaignStandardCoreAPI+getTransactionalEvent)
+    * ~~[.getTransactionalEvent(eventId, eventPKey)](#CampaignStandardCoreAPI+getTransactionalEvent)~~
+    * [.getTransactionalEventForMacTenantId(macTenantId, eventId, eventPKey)](#CampaignStandardCoreAPI+getTransactionalEventForMacTenantId)
     * [.getWorkflow(workflowId)](#CampaignStandardCoreAPI+getWorkflow)
     * [.triggerSignalActivity(workflowTriggerUrl, [workflowParameters])](#CampaignStandardCoreAPI+triggerSignalActivity)
     * [.controlWorkflow(workflowId, command)](#CampaignStandardCoreAPI+controlWorkflow)
@@ -341,14 +342,31 @@ Send a transactional event for a Marketing Cloud Tenant ID
 
 <a name="CampaignStandardCoreAPI+getTransactionalEvent"></a>
 
-### campaignStandardCoreAPI.getTransactionalEvent(eventId, eventPKey)
+### ~~campaignStandardCoreAPI.getTransactionalEvent(eventId, eventPKey)~~
+***Deprecated***
+
 Gets data about a transactional event (status, properties)
+Deprecated since 2.1.0. use getTransactionalEventForMacTenantId instead.
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
 **See**: sendTransactionalEvent  
 
 | Param | Type | Description |
 | --- | --- | --- |
+| eventId | <code>string</code> | the type of event you want to send |
+| eventPKey | <code>string</code> | the PKey of an event (you get this from a sendTransactionalEvent call) |
+
+<a name="CampaignStandardCoreAPI+getTransactionalEventForMacTenantId"></a>
+
+### campaignStandardCoreAPI.getTransactionalEventForMacTenantId(macTenantId, eventId, eventPKey)
+Gets data about a transactional event for a Marketing Cloud Tenant ID (status, properties)
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
+**See**: sendTransactionalEvent  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| macTenantId | <code>string</code> | the Marketing Cloud Tenant ID |
 | eventId | <code>string</code> | the type of event you want to send |
 | eventPKey | <code>string</code> | the PKey of an event (you get this from a sendTransactionalEvent call) |
 
