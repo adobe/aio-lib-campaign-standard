@@ -115,7 +115,8 @@ with valid values for tenantId, apiKey and accessToken
     * [.createGDPRRequest(gdprRequest)](#CampaignStandardCoreAPI+createGDPRRequest)
     * [.getGDPRRequest()](#CampaignStandardCoreAPI+getGDPRRequest)
     * [.getGDPRDataFile(privacyRequestDataUrl, requestInternalName)](#CampaignStandardCoreAPI+getGDPRDataFile)
-    * [.sendTransactionalEvent(eventId, eventBody)](#CampaignStandardCoreAPI+sendTransactionalEvent)
+    * ~~[.sendTransactionalEvent(eventId, eventBody)](#CampaignStandardCoreAPI+sendTransactionalEvent)~~
+    * [.sendTransactionalEventForMacTenantId(macTenantId, eventId, eventBody)](#CampaignStandardCoreAPI+sendTransactionalEventForMacTenantId)
     * [.getTransactionalEvent(eventId, eventPKey)](#CampaignStandardCoreAPI+getTransactionalEvent)
     * [.getWorkflow(workflowId)](#CampaignStandardCoreAPI+getWorkflow)
     * [.triggerSignalActivity(workflowTriggerUrl, [workflowParameters])](#CampaignStandardCoreAPI+triggerSignalActivity)
@@ -312,13 +313,29 @@ Get the GDPR data file.
 
 <a name="CampaignStandardCoreAPI+sendTransactionalEvent"></a>
 
-### campaignStandardCoreAPI.sendTransactionalEvent(eventId, eventBody)
+### ~~campaignStandardCoreAPI.sendTransactionalEvent(eventId, eventBody)~~
+***Deprecated***
+
 Send a transactional event.
+Deprecated since 2.1.0. use sendTransactionalEventForMacTenantId instead.
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
 
 | Param | Type | Description |
 | --- | --- | --- |
+| eventId | <code>string</code> | the type of event you want to send. This depends on the [event definition](https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html). |
+| eventBody | <code>Object</code> | the event data to send. This depends on the [event definition](https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html). |
+
+<a name="CampaignStandardCoreAPI+sendTransactionalEventForMacTenantId"></a>
+
+### campaignStandardCoreAPI.sendTransactionalEventForMacTenantId(macTenantId, eventId, eventBody)
+Send a transactional event for a Marketing Cloud Tenant ID
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| macTenantId | <code>string</code> | the Marketing Cloud Tenant ID |
 | eventId | <code>string</code> | the type of event you want to send. This depends on the [event definition](https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html). |
 | eventBody | <code>Object</code> | the event data to send. This depends on the [event definition](https://docs.adobe.com/content/help/en/campaign-standard/using/administrating/configuring-channels/configuring-transactional-messaging.html). |
 
