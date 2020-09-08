@@ -17,7 +17,7 @@ governing permissions and limitations under the License.
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-campaign-standard/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-campaign-standard/)
 
 # Adobe I/O Adobe Campaign Standard SDK
-Javascript SDK wrapping the [Adobe Campaign Standard APIs](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#introduction).
+Javascript SDK wrapping the [Adobe Campaign Standard APIs](https://docs.adobe.com/content/help/en/campaign-standard/using/working-with-apis/get-started-apis.html).
 
 ### Installing
 
