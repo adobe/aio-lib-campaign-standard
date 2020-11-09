@@ -645,11 +645,27 @@ test('getDataFromRelativeUrl', async () => {
   })).not.toThrow()
 })
 
-test('getAllCustomResources', async () => {
+test('getAllCustomResourcesExt', async () => {
   const customResource = 'mycustomresource'
 
   const sdkArgs = [customResource]
   const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [], freeForm: {} } // equiv to default
+  const apiOptions = createSwaggerOptions()
+
+  return expect(() => standardTest({
+    fullyQualifiedApiName: 'customresourceExt.getAllCustomResourcesExt',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_GET_ALL_CUSTOM_RESOURCES_EXT
+  })).not.toThrow()
+})
+
+test('getAllCustomResources', async () => {
+  const resource = 'profile'
+
+  const sdkArgs = [resource]
+  const apiParameters = { RESOURCE: resource }
   const apiOptions = createSwaggerOptions()
 
   return expect(() => standardTest({
@@ -659,6 +675,15 @@ test('getAllCustomResources', async () => {
     sdkArgs,
     ErrorClass: codes.ERROR_GET_ALL_CUSTOM_RESOURCES
   })).not.toThrow()
+})
+
+test('getAllCustomResources - invalid resource', async () => {
+  const resource = 'gibberish'
+  const sdkClient = await createSdkClient()
+
+  return expect(sdkClient.getAllCustomResources(resource)).rejects.toEqual(
+    new codes.ERROR_INVALID_RESOURCE_TYPE({ messageValues: 'profile, service, history' })
+  )
 })
 
 test('createCustomResource', async () => {

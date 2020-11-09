@@ -687,7 +687,32 @@ class CampaignStandardCoreAPI {
   }
 
   /**
-   * Get all Custom Resource records
+   * Get all Ext Custom Resource records
+   *
+   * @param {string} resource one of profile, service, history
+   */
+  getAllCustomResources (resource) {
+    const sdkDetails = { resource }
+
+    return new Promise((resolve, reject) => {
+      // TODO need to verify what all resource types are supported
+      const acceptedResources = ['profile', 'service', 'history']
+      if (!acceptedResources.includes(resource.toLowerCase())) {
+        reject(new codes.ERROR_INVALID_RESOURCE_TYPE({ sdkDetails, messageValues: `${acceptedResources.join(', ')}` }))
+      }
+
+      this.sdk.apis.customresource.getAllCustomResources({ RESOURCE: resource }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+  /**
+   * Get all Ext Custom Resource records
    *
    * @param {string} customResource the custom resource to get records from
    * @param {Object} [parameters={}] parameters to pass
@@ -699,17 +724,17 @@ class CampaignStandardCoreAPI {
    *
    * @see getMetadataForResource
    */
-  getAllCustomResources (customResource, parameters) {
+  getAllCustomResourcesExt (customResource, parameters) {
     const sdkDetails = { customResource, parameters }
 
     return new Promise((resolve, reject) => {
       const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
-      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
+      this.sdk.apis.customresourceExt.getAllCustomResourcesExt(filterParams, this.__createRequestOptions())
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES_EXT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }

@@ -191,7 +191,7 @@
           }
         },
         "style": "form"
-      }      
+      }
     }
   },
   "security": [
@@ -743,6 +743,34 @@
         }
       }
     },
+    "/customResources/resourceType/{RESOURCE}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "RESOURCE",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieve all the Custom Resource records",
+        "operationId": "getAllCustomResources",
+        "tags": ["customresource"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/profileAndServicesExt/{CUSTOMRESOURCE}/{FILTERS}": {
       "parameters": [
         {
@@ -764,7 +792,7 @@
         },
         {
           "$ref": "#/components/parameters/Order"
-        },        
+        },
         {
           "$ref": "#/components/parameters/Cache-Control"
         },
@@ -773,9 +801,9 @@
         }
       ],
       "get": {
-        "summary": "Retrieve all the Custom Resource records",
-        "operationId": "getAllCustomResources",
-        "tags": ["customresource"],
+        "summary": "Retrieve all the Ext Custom Resource records",
+        "operationId": "getAllCustomResourcesExt",
+        "tags": ["customresourceExt"],
         "responses": {
           "default": {
             "description": ""
