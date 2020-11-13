@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 [![Version](https://img.shields.io/npm/v/@adobe/aio-lib-campaign-standard.svg)](https://npmjs.org/package/@adobe/aio-lib-campaign-standard)
 [![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-lib-campaign-standard.svg)](https://npmjs.org/package/@adobe/aio-lib-campaign-standard)
-[![Build Status](https://travis-ci.com/adobe/aio-lib-campaign-standard.svg?branch=master)](https://travis-ci.com/adobe/aio-lib-campaign-standard)
+![Node.js CI](https://github.com/adobe/aio-lib-campaign-standard/workflows/Node.js%20CI/badge.svg)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-campaign-standard/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-campaign-standard/)
 
