@@ -688,10 +688,38 @@ class CampaignStandardCoreAPI {
 
   /**
    * Get all Ext Custom Resource records
+   * @deprecated use getAllProfileAndServicesExt
+   *
+   * @param {string} customResource the custom resource to get records from
+   * @param {Object} [parameters={}] parameters to pass
+   * @param {Array} [parameters.filters=[]] apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {Boolean} [parameters.hasCustomFilter=false] set to true if you have a custom filter. Defaults to false.
+   * @param {integer} [parameters.lineCount=25] limit the number of records to return (default is 25)
+   * @param {string} [parameters.order] the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|Profile})
+   * @param {boolean} [parameters.descendingSort=false] set to true to get results in descending order (default is ascending)
+   *
+   */
+  getAllCustomResources (customResource, parameters) {
+    const sdkDetails = { customResource, parameters }
+    logger.warn('getAllCustomResources has been deprecated, use getAllProfileAndServicesExt()')
+    return new Promise((resolve, reject) => {
+      const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
+      this.sdk.apis.customresourceExt.getAllCustomResourcesExt(filterParams, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+  /**
+   * Get all Custom Resource records
    *
    * @param {string} resource one of profile, service, history
    */
-  getAllCustomResources (resource) {
+  getAllBasicCustomResources (resource) {
     const sdkDetails = { resource }
 
     return new Promise((resolve, reject) => {
@@ -706,7 +734,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+          reject(new codes.ERROR_GET_ALL_BASIC_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -724,7 +752,7 @@ class CampaignStandardCoreAPI {
    *
    * @see getMetadataForResource
    */
-  getAllCustomResourcesExt (customResource, parameters) {
+  getAllProfileAndServicesExt (customResource, parameters) {
     const sdkDetails = { customResource, parameters }
 
     return new Promise((resolve, reject) => {
@@ -734,7 +762,7 @@ class CampaignStandardCoreAPI {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES_EXT({ sdkDetails, messageValues: reduceError(err) }))
+          reject(new codes.ERROR_GET_ALL_PROFILES_SERVICES_EXT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
