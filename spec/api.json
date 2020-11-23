@@ -419,7 +419,7 @@
         }
       }
     },
-    "/profileAndServicesExt/resourceType/{RESOURCE}": {
+    "/profileAndServicesExt/{RESOURCE}": {
       "parameters": [
         {
           "in": "path",
@@ -811,7 +811,7 @@
         }
       }
     },
-    "/customResources/resourceType/{RESOURCE}": {
+    "/customResources/{RESOURCE}": {
       "parameters": [
         {
           "in": "path",

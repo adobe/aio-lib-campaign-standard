@@ -347,11 +347,6 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { resource }
 
     return new Promise((resolve, reject) => {
-      const acceptedResources = ['profile', 'service', 'history']
-      if (!acceptedResources.includes(resource.toLowerCase())) {
-        reject(new codes.ERROR_INVALID_RESOURCE_TYPE({ sdkDetails, messageValues: `${acceptedResources.join(', ')}` }))
-      }
-
       this.sdk.apis.metadataExt.getMetadataForResourceExt({ RESOURCE: resource }, this.__createRequestOptions())
         .then(response => {
           resolve(response)
@@ -712,7 +707,9 @@ class CampaignStandardCoreAPI {
 
   /**
    * Get all Custom Resource records
-   * @deprecated use getAllProfileAndServicesExt()
+   * Either use getAllBasicCustomResources() to get custom resources or
+   * getAllProfileAndServicesExt() to get extended resource data
+   * @deprecated
    *
    * @param {string} customResource the custom resource to get records from
    * @param {Object} [parameters={}] parameters to pass
@@ -726,7 +723,7 @@ class CampaignStandardCoreAPI {
    */
   getAllCustomResources (customResource, parameters) {
     const sdkDetails = { customResource, parameters }
-    logger.warn('getAllCustomResources has been deprecated, use getAllProfileAndServicesExt()')
+    logger.warn('getAllCustomResources has been deprecated, either use getAllBasicCustomResources() to get custom resources or getAllProfileAndServicesExt() to get extended resource data')
     return new Promise((resolve, reject) => {
       const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
       this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
@@ -748,12 +745,6 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { resource }
 
     return new Promise((resolve, reject) => {
-      // TODO need to verify what all resource types are supported
-      const acceptedResources = ['profile', 'service', 'history']
-      if (!acceptedResources.includes(resource.toLowerCase())) {
-        reject(new codes.ERROR_INVALID_RESOURCE_TYPE({ sdkDetails, messageValues: `${acceptedResources.join(', ')}` }))
-      }
-
       this.sdk.apis.basiccustomresource.getAllBasicCustomResources({ RESOURCE: resource }, this.__createRequestOptions())
         .then(response => {
           resolve(response)

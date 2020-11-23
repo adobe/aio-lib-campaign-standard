@@ -661,6 +661,55 @@ test('getAllCustomResources', async () => {
   })).not.toThrow()
 })
 
+test('getAllProfileAndServicesExt', async () => {
+  const customResource = 'mycustomresource'
+
+  const sdkArgs = [customResource]
+  const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [], freeForm: {} } // equiv to default
+  const sdkFunctionName = 'getAllProfileAndServicesExt'
+  const apiOptions = createSwaggerOptions()
+  return expect(() => standardTest({
+    fullyQualifiedApiName: 'customresource.getAllCustomResources',
+    apiParameters,
+    apiOptions,
+    sdkFunctionName,
+    sdkArgs,
+    ErrorClass: codes.ERROR_GET_ALL_PROFILES_AND_SERVICES_EXT
+  })).not.toThrow()
+})
+
+test('getAllBasicCustomResources', async () => {
+  const customResource = 'mycustomresource'
+
+  const sdkArgs = [customResource]
+  const apiParameters = { RESOURCE: customResource }
+  const apiOptions = createSwaggerOptions()
+
+  return expect(() => standardTest({
+    fullyQualifiedApiName: 'basiccustomresource.getAllBasicCustomResources',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_GET_ALL_BASIC_CUSTOM_RESOURCES
+  })).not.toThrow()
+})
+
+test('getMetadataForResourceExt', async () => {
+  const resource = 'mycustomresource'
+
+  const sdkArgs = [resource]
+  const apiParameters = { RESOURCE: resource }
+  const apiOptions = createSwaggerOptions()
+
+  return expect(() => standardTest({
+    fullyQualifiedApiName: 'metadataExt.getMetadataForResourceExt',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_GET_METADATA_FOR_RESOURCE_EXT
+  })).not.toThrow()
+})
+
 test('createCustomResource', async () => {
   const customResourceObject = { firstName: 'Jack', lastName: 'Smith', email: 'foo@bar.com' }
   const customResource = 'mycustomresource'
