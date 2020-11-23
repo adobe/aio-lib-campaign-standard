@@ -339,6 +339,25 @@ class CampaignStandardCoreAPI {
   }
 
   /**
+   * Get the Ext metadata information for a resource.
+   *
+   * @param {string} resource one of profile, service, history
+   */
+  getMetadataForResourceExt (resource) {
+    const sdkDetails = { resource }
+
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.metadataExt.getMetadataForResourceExt({ RESOURCE: resource }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_METADATA_FOR_RESOURCE_EXT({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+  /**
    * Get all the custom resource collections linked to the Profile table.
    */
   getCustomResources () {
@@ -688,6 +707,9 @@ class CampaignStandardCoreAPI {
 
   /**
    * Get all Custom Resource records
+   * Either use getAllBasicCustomResources() to get custom resources or
+   * getAllProfileAndServicesExt() to get extended resource data
+   * @deprecated
    *
    * @param {string} customResource the custom resource to get records from
    * @param {Object} [parameters={}] parameters to pass
@@ -701,7 +723,7 @@ class CampaignStandardCoreAPI {
    */
   getAllCustomResources (customResource, parameters) {
     const sdkDetails = { customResource, parameters }
-
+    logger.warn('getAllCustomResources has been deprecated, either use getAllBasicCustomResources() to get custom resources or getAllProfileAndServicesExt() to get extended resource data')
     return new Promise((resolve, reject) => {
       const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
       this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
@@ -710,6 +732,53 @@ class CampaignStandardCoreAPI {
         })
         .catch(err => {
           reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+  /**
+   * Get all Custom Resource records
+   *
+   * @param {string} resource one of profile, service, history
+   */
+  getAllBasicCustomResources (resource) {
+    const sdkDetails = { resource }
+
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.basiccustomresource.getAllBasicCustomResources({ RESOURCE: resource }, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_ALL_BASIC_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+  /**
+   * Get all Custom Resource records
+   *
+   * @param {string} customResource the custom resource to get records from
+   * @param {Object} [parameters={}] parameters to pass
+   * @param {Array} [parameters.filters=[]] apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {Boolean} [parameters.hasCustomFilter=false] set to true if you have a custom filter. Defaults to false.
+   * @param {integer} [parameters.lineCount=25] limit the number of records to return (default is 25)
+   * @param {string} [parameters.order] the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|Profile})
+   * @param {boolean} [parameters.descendingSort=false] set to true to get results in descending order (default is ascending)
+   *
+   * @see getMetadataForResource
+   */
+  getAllProfileAndServicesExt (customResource, parameters) {
+    const sdkDetails = { customResource, parameters }
+
+    return new Promise((resolve, reject) => {
+      const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
+      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_ALL_PROFILES_AND_SERVICES_EXT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }

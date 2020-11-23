@@ -191,7 +191,7 @@
           }
         },
         "style": "form"
-      }      
+      }
     }
   },
   "security": [
@@ -412,6 +412,34 @@
         "summary": "Retrieving the metadata for a resource",
         "operationId": "getMetadataForResource",
         "tags": ["metadata"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/profileAndServicesExt/{RESOURCE}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "RESOURCE",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieving the metadata for a resource",
+        "operationId": "getMetadataForResourceExt",
+        "tags": ["metadataExt"],
         "responses": {
           "default": {
             "description": ""
@@ -764,7 +792,7 @@
         },
         {
           "$ref": "#/components/parameters/Order"
-        },        
+        },
         {
           "$ref": "#/components/parameters/Cache-Control"
         },
@@ -776,6 +804,34 @@
         "summary": "Retrieve all the Custom Resource records",
         "operationId": "getAllCustomResources",
         "tags": ["customresource"],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/customResources/{RESOURCE}": {
+      "parameters": [
+        {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "name": "RESOURCE",
+          "required": true
+        },
+        {
+          "$ref": "#/components/parameters/Cache-Control"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "get": {
+        "summary": "Retrieve all the Custom Resource records",
+        "operationId": "getAllBasicCustomResources",
+        "tags": ["basiccustomresource"],
         "responses": {
           "default": {
             "description": ""
