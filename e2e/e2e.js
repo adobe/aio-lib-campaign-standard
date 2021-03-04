@@ -100,7 +100,7 @@ test('test getAllCustomResources API', async () => {
   const promise = sdkClient.getAllCustomResources({ customResource })
 
   // just match the error message
-  return expect(promise).rejects.toThrow('404')
+  return expect(promise).rejects.toEqual(expect.any(codes.ERROR_GET_ALL_CUSTOM_RESOURCES))
 })
 
 test('test createCustomResource API', async () => {
@@ -111,7 +111,7 @@ test('test createCustomResource API', async () => {
   const promise = sdkClient.createCustomResource(customResource, customResourceObject)
 
   // just match the error message
-  return expect(promise).rejects.toThrow('404')
+  return expect(promise).rejects.toEqual(expect.any(codes.ERROR_CREATE_CUSTOM_RESOURCE))
 })
 
 test('test updateCustomResource API', async () => {
@@ -134,7 +134,7 @@ test('test deleteCustomResource API', async () => {
   const promise = sdkClient.deleteCustomResource(customResource, customResourcePKey)
 
   // just match the error message
-  return expect(promise).rejects.toThrow('404')
+  return expect(promise).rejects.toEqual(expect.any(codes.ERROR_DELETE_CUSTOM_RESOURCE))
 })
 
 test('test createProfile, updateProfile, getProfile API', async () => {
