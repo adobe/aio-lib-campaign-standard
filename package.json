@@ -1,6 +1,6 @@
 {
   "name": "@adobe/aio-lib-campaign-standard",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Adobe I/O Campaign Standard SDK",
   "repository": "https://github.com/adobe/aio-lib-campaign-standard/",
   "license": "Apache-2.0",
