@@ -163,7 +163,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { parameters }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.getAllProfiles(this.__createFilterParams(parameters), this.__createRequestOptions())
+      this.sdk.apis.profile.getAllProfiles(this.__createFilterParams(parameters), this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -221,7 +221,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { profilePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.getProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+      this.sdk.apis.profile.getProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -247,7 +247,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { parameters }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.service.getAllServices(this.__createFilterParams(parameters), this.__createRequestOptions())
+      this.sdk.apis.service.getAllServices(this.__createFilterParams(parameters), this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -285,7 +285,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { servicePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.service.getService({ SERVICE_PKEY: servicePKey }, this.__createRequestOptions())
+      this.sdk.apis.service.getService({ SERVICE_PKEY: servicePKey }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -304,7 +304,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { profilePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.history.getHistoryOfProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+      this.sdk.apis.history.getHistoryOfProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -328,7 +328,7 @@ class CampaignStandardCoreAPI {
         reject(new codes.ERROR_INVALID_RESOURCE_TYPE({ sdkDetails, messageValues: `${acceptedResources.join(', ')}` }))
       }
 
-      this.sdk.apis.metadata.getMetadataForResource({ RESOURCE: resource }, this.__createRequestOptions())
+      this.sdk.apis.metadata.getMetadataForResource({ RESOURCE: resource }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -347,7 +347,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { resource }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.metadataExt.getMetadataForResourceExt({ RESOURCE: resource }, this.__createRequestOptions())
+      this.sdk.apis.metadataExt.getMetadataForResourceExt({ RESOURCE: resource }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -362,7 +362,7 @@ class CampaignStandardCoreAPI {
    */
   getCustomResources () {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.metadata.getCustomResources({}, this.__createRequestOptions())
+      this.sdk.apis.metadata.getCustomResources({}, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -396,7 +396,7 @@ class CampaignStandardCoreAPI {
    */
   getGDPRRequest () {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.gdpr.getGDPRRequest({}, this.__createRequestOptions())
+      this.sdk.apis.gdpr.getGDPRRequest({}, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -492,7 +492,7 @@ class CampaignStandardCoreAPI {
           ORGANIZATION: macTenantId,
           EVENT_ID: eventId,
           EVENT_PKEY: eventPKey
-        }, this.__createRequestOptions())
+        }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -511,7 +511,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { workflowId }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.workflow.getWorkflow({ WORKFLOW_ID: workflowId }, this.__createRequestOptions())
+      this.sdk.apis.workflow.getWorkflow({ WORKFLOW_ID: workflowId }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -586,7 +586,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { parameters }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.organization.getAllOrgUnits(this.__createFilterParams(parameters), this.__createRequestOptions())
+      this.sdk.apis.organization.getAllOrgUnits(this.__createFilterParams(parameters), this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -605,7 +605,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { profilePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.organization.getProfileWithOrgUnit({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+      this.sdk.apis.organization.getProfileWithOrgUnit({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -695,7 +695,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { relativeUrl }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.util.getDataFromRelativeUrl({ RELATIVE_URL: relativeUrl }, this.__createRequestOptions())
+      this.sdk.apis.util.getDataFromRelativeUrl({ RELATIVE_URL: relativeUrl }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -726,7 +726,7 @@ class CampaignStandardCoreAPI {
     logger.warn('getAllCustomResources has been deprecated, either use getAllBasicCustomResources() to get custom resources or getAllProfileAndServicesExt() to get extended resource data')
     return new Promise((resolve, reject) => {
       const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
-      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
+      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -745,7 +745,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { resource }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.basiccustomresource.getAllBasicCustomResources({ RESOURCE: resource }, this.__createRequestOptions())
+      this.sdk.apis.basiccustomresource.getAllBasicCustomResources({ RESOURCE: resource }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -773,7 +773,7 @@ class CampaignStandardCoreAPI {
 
     return new Promise((resolve, reject) => {
       const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
-      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
+      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
