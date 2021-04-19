@@ -545,9 +545,10 @@ class CampaignStandardCoreAPI {
             // This is a hardcoded restriction to prevent serious issues in the workflows.
             // Handle the response during this 10 minute period -- response is not json,
             // we just grab the text data and put it in a json object
-            return {
-              payload: ri.text()
-            }
+            return ri.text()
+              .then(
+                text => ({ payload: text })
+              )
           }
         })
         .then(json => resolve(json))

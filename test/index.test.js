@@ -474,7 +474,9 @@ test('triggerSignalActivity - success', async () => {
   }
 
   const expectedResult = { data: '12345' }
-  fetchMock.mockResponseOnce(JSON.stringify(expectedResult))
+  fetchMock.mockResponseOnce(JSON.stringify(expectedResult), {
+    headers: { 'content-type': 'application/json' }
+  })
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
@@ -488,6 +490,41 @@ test('triggerSignalActivity - success', async () => {
 
   expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
   return expect(triggerSuccess).resolves.toEqual(expectedResult)
+})
+
+test('triggerSignalActivity - success (call within restricted period)', async () => {
+  const workflowTriggerUrl = 'https://fake.site/'
+  const workflowParameters = {
+    'source:': 'API',
+    parameters: {
+      audience: 'audience',
+      email: 'anna.anna@gibberishxyz.com',
+      template: '05',
+      contentURL: 'http://www.adobe.com',
+      test: 'true',
+      segmentCode: 'my segment',
+      attribute: '2019-04-03 08:17:19.100Z'
+    }
+  }
+
+  const expectedResult = 'this is a call within restricted period'
+  fetchMock.mockResponseOnce(expectedResult, {
+    headers: { 'content-type': 'text/plain' },
+    body: expectedResult
+  })
+
+  // this API function does not go through Swagger Client at all,
+  // and goes through node-fetch
+  const client = await createSdkClient()
+  const triggerSuccess = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
+
+  expect(fetchMock.mock.calls.length).toEqual(1)
+  // [0][0] -> [call-index][argument-index], so first call's first argument
+  const requestObject = fetchMock.mock.calls[0][0]
+  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+
+  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
+  return expect(triggerSuccess).resolves.toEqual({ payload: expectedResult })
 })
 
 test('triggerSignalActivity - error', async () => {
