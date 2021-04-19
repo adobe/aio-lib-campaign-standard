@@ -535,7 +535,21 @@ class CampaignStandardCoreAPI {
 
     return new Promise((resolve, reject) => {
       this.postDataToUrl(workflowTriggerUrl, workflowParameters)
-        .then(res => responseInterceptor(res).json())
+        .then(res => {
+          const ri = responseInterceptor(res)
+          const contentType = ri.headers.get('content-type')
+          if (contentType && contentType.includes('application/json')) {
+            return ri.json()
+          } else {
+            // external Signal activities in ACS can only be called once every 10 minutes.
+            // This is a hardcoded restriction to prevent serious issues in the workflows.
+            // Handle the response during this 10 minute period -- response is not json,
+            // we just grab the text data and put it in a json object
+            return {
+              payload: ri.text()
+            }
+          }
+        })
         .then(json => resolve(json))
         .catch(err => reject(new codes.ERROR_TRIGGER_SIGNAL_ACTIVITY({ sdkDetails, messageValues: reduceError(err) })))
     })
