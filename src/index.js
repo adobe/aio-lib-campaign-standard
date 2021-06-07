@@ -17,7 +17,7 @@ governing permissions and limitations under the License.
 const Swagger = require('swagger-client')
 const loggerNamespace = 'aio-lib-campaign-standard'
 const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: process.env.LOG_LEVEL })
-const fetch = require('cross-fetch')
+const fetch = require('node-fetch')
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
 const { codes } = require('./SDKErrors')
 
