@@ -105,7 +105,7 @@ async function standardTest ({
 test('getAllProfiles', async () => {
   const sdkArgs = [{ email: 'name@example.com' }]
   const apiParameters = { EXT: '', FILTERS: [], freeForm: { email: 'name@example.com' } } // equiv to default
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'profile.getAllProfiles',
@@ -139,7 +139,7 @@ test('getAllProfiles - with filters', async () => {
     }
   }
 
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   // descending sort
   await standardTest({
@@ -199,7 +199,7 @@ test('getProfile', async () => {
 
   const sdkArgs = [pkey]
   const apiParameters = { PROFILE_PKEY: pkey }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'profile.getProfile',
@@ -213,7 +213,7 @@ test('getProfile', async () => {
 test('getAllServices', async () => {
   const sdkArgs = []
   const apiParameters = { EXT: '', FILTERS: [], freeForm: {} } // equiv to default
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'service.getAllServices',
@@ -251,7 +251,7 @@ test('getService', async () => {
 
   const sdkArgs = [pkey]
   const apiParameters = { SERVICE_PKEY: pkey }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'service.getService',
@@ -267,7 +267,7 @@ test('getHistoryOfProfile', async () => {
 
   const sdkArgs = [pkey]
   const apiParameters = { PROFILE_PKEY: pkey }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'history.getHistoryOfProfile',
@@ -283,7 +283,7 @@ test('getMetadataForResource', async () => {
 
   const sdkArgs = [resource]
   const apiParameters = { RESOURCE: resource }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'metadata.getMetadataForResource',
@@ -306,7 +306,7 @@ test('getMetadataForResource - invalid resource', async () => {
 test('getCustomResources', async () => {
   const sdkArgs = []
   const apiParameters = {}
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'metadata.getCustomResources',
@@ -342,7 +342,7 @@ test('createGDPRRequest', async () => {
 test('getGDPRRequest', async () => {
   const sdkArgs = []
   const apiParameters = {}
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'gdpr.getGDPRRequest',
@@ -431,7 +431,7 @@ test('getTransactionalEvent', async () => {
 
   const sdkArgs = [eventId, eventPKey]
   const apiParameters = { EVENT_ID: eventId, ORGANIZATION: gTenantId, EVENT_PKEY: eventPKey }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'messaging.getTransactionalEvent',
@@ -447,7 +447,7 @@ test('getWorkflow', async () => {
 
   const sdkArgs = [workflowId]
   const apiParameters = { WORKFLOW_ID: workflowId }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'workflow.getWorkflow',
@@ -474,7 +474,9 @@ test('triggerSignalActivity - success', async () => {
   }
 
   const expectedResult = { data: '12345' }
-  fetchMock.mockResponseOnce(JSON.stringify(expectedResult))
+  fetchMock.mockResponseOnce(JSON.stringify(expectedResult), {
+    headers: { 'content-type': 'application/json' }
+  })
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
@@ -488,6 +490,41 @@ test('triggerSignalActivity - success', async () => {
 
   expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
   return expect(triggerSuccess).resolves.toEqual(expectedResult)
+})
+
+test('triggerSignalActivity - success (call within restricted period)', async () => {
+  const workflowTriggerUrl = 'https://fake.site/'
+  const workflowParameters = {
+    'source:': 'API',
+    parameters: {
+      audience: 'audience',
+      email: 'anna.anna@gibberishxyz.com',
+      template: '05',
+      contentURL: 'http://www.adobe.com',
+      test: 'true',
+      segmentCode: 'my segment',
+      attribute: '2019-04-03 08:17:19.100Z'
+    }
+  }
+
+  const expectedResult = 'this is a call within restricted period'
+  fetchMock.mockResponseOnce(expectedResult, {
+    headers: { 'content-type': 'text/plain' },
+    body: expectedResult
+  })
+
+  // this API function does not go through Swagger Client at all,
+  // and goes through node-fetch
+  const client = await createSdkClient()
+  const triggerSuccess = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
+
+  expect(fetchMock.mock.calls.length).toEqual(1)
+  // [0][0] -> [call-index][argument-index], so first call's first argument
+  const requestObject = fetchMock.mock.calls[0][0]
+  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+
+  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
+  return expect(triggerSuccess).resolves.toEqual({ payload: expectedResult })
 })
 
 test('triggerSignalActivity - error', async () => {
@@ -559,7 +596,7 @@ test('controlWorkflow - invalid resource', async () => {
 test('getAllOrgUnits', async () => {
   const sdkArgs = []
   const apiParameters = { EXT: '', FILTERS: [], freeForm: {} } // equiv to default
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'organization.getAllOrgUnits',
@@ -575,7 +612,7 @@ test('getProfileWithOrgUnit', async () => {
 
   const sdkArgs = [pkey]
   const apiParameters = { PROFILE_PKEY: pkey }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'organization.getProfileWithOrgUnit',
@@ -634,7 +671,7 @@ test('getDataFromRelativeUrl', async () => {
 
   const sdkArgs = [relativeUrl]
   const apiParameters = { RELATIVE_URL: relativeUrl }
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'util.getDataFromRelativeUrl',
@@ -650,7 +687,7 @@ test('getAllCustomResources', async () => {
 
   const sdkArgs = [customResource]
   const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [], freeForm: {} } // equiv to default
-  const apiOptions = createSwaggerOptions()
+  const apiOptions = createSwaggerOptions({ body: null })
 
   return expect(() => standardTest({
     fullyQualifiedApiName: 'customresource.getAllCustomResources',
@@ -658,6 +695,55 @@ test('getAllCustomResources', async () => {
     apiOptions,
     sdkArgs,
     ErrorClass: codes.ERROR_GET_ALL_CUSTOM_RESOURCES
+  })).not.toThrow()
+})
+
+test('getAllProfileAndServicesExt', async () => {
+  const customResource = 'mycustomresource'
+
+  const sdkArgs = [customResource]
+  const apiParameters = { CUSTOMRESOURCE: customResource, EXT: '', FILTERS: [], freeForm: {} } // equiv to default
+  const sdkFunctionName = 'getAllProfileAndServicesExt'
+  const apiOptions = createSwaggerOptions({ body: null })
+  return expect(() => standardTest({
+    fullyQualifiedApiName: 'customresource.getAllCustomResources',
+    apiParameters,
+    apiOptions,
+    sdkFunctionName,
+    sdkArgs,
+    ErrorClass: codes.ERROR_GET_ALL_PROFILES_AND_SERVICES_EXT
+  })).not.toThrow()
+})
+
+test('getAllBasicCustomResources', async () => {
+  const customResource = 'mycustomresource'
+
+  const sdkArgs = [customResource]
+  const apiParameters = { RESOURCE: customResource }
+  const apiOptions = createSwaggerOptions({ body: null })
+
+  return expect(() => standardTest({
+    fullyQualifiedApiName: 'basiccustomresource.getAllBasicCustomResources',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_GET_ALL_BASIC_CUSTOM_RESOURCES
+  })).not.toThrow()
+})
+
+test('getMetadataForResourceExt', async () => {
+  const resource = 'mycustomresource'
+
+  const sdkArgs = [resource]
+  const apiParameters = { RESOURCE: resource }
+  const apiOptions = createSwaggerOptions({ body: null })
+
+  return expect(() => standardTest({
+    fullyQualifiedApiName: 'metadataExt.getMetadataForResourceExt',
+    apiParameters,
+    apiOptions,
+    sdkArgs,
+    ErrorClass: codes.ERROR_GET_METADATA_FOR_RESOURCE_EXT
   })).not.toThrow()
 })
 

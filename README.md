@@ -12,12 +12,12 @@ governing permissions and limitations under the License.
 
 [![Version](https://img.shields.io/npm/v/@adobe/aio-lib-campaign-standard.svg)](https://npmjs.org/package/@adobe/aio-lib-campaign-standard)
 [![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-lib-campaign-standard.svg)](https://npmjs.org/package/@adobe/aio-lib-campaign-standard)
-[![Build Status](https://travis-ci.com/adobe/aio-lib-campaign-standard.svg?branch=master)](https://travis-ci.com/adobe/aio-lib-campaign-standard)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
+![Node.js CI](https://github.com/adobe/aio-lib-campaign-standard/workflows/Node.js%20CI/badge.svg)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-campaign-standard/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-campaign-standard/)
 
 # Adobe I/O Adobe Campaign Standard SDK
-Javascript SDK wrapping the [Adobe Campaign Standard APIs](https://docs.adobe.com/content/help/en/campaign-standard/using/working-with-apis/get-started-apis.html).
+Node Javascript SDK wrapping the [Adobe Campaign Standard APIs](https://docs.adobe.com/content/help/en/campaign-standard/using/working-with-apis/get-started-apis.html).
 
 ### Installing
 
@@ -111,6 +111,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.getService(servicePKey)](#CampaignStandardCoreAPI+getService)
     * [.getHistoryOfProfile(profilePKey)](#CampaignStandardCoreAPI+getHistoryOfProfile)
     * [.getMetadataForResource(resource)](#CampaignStandardCoreAPI+getMetadataForResource)
+    * [.getMetadataForResourceExt(resource)](#CampaignStandardCoreAPI+getMetadataForResourceExt)
     * [.getCustomResources()](#CampaignStandardCoreAPI+getCustomResources)
     * [.createGDPRRequest(gdprRequest)](#CampaignStandardCoreAPI+createGDPRRequest)
     * [.getGDPRRequest()](#CampaignStandardCoreAPI+getGDPRRequest)
@@ -128,7 +129,9 @@ with valid values for tenantId, apiKey and accessToken
     * [.updateOrgUnit(orgUnitPKey, orgUnitObject)](#CampaignStandardCoreAPI+updateOrgUnit)
     * [.postDataToUrl(url, body)](#CampaignStandardCoreAPI+postDataToUrl)
     * [.getDataFromRelativeUrl(relativeUrl)](#CampaignStandardCoreAPI+getDataFromRelativeUrl)
-    * [.getAllCustomResources(customResource, [parameters])](#CampaignStandardCoreAPI+getAllCustomResources)
+    * ~~[.getAllCustomResources(customResource, [parameters])](#CampaignStandardCoreAPI+getAllCustomResources)~~
+    * [.getAllBasicCustomResources(resource)](#CampaignStandardCoreAPI+getAllBasicCustomResources)
+    * [.getAllProfileAndServicesExt(customResource, [parameters])](#CampaignStandardCoreAPI+getAllProfileAndServicesExt)
     * [.updateCustomResource(customResource, customResourcePKey, customResourceObject)](#CampaignStandardCoreAPI+updateCustomResource)
     * [.createCustomResource(customResource, customResourceObject)](#CampaignStandardCoreAPI+createCustomResource)
     * [.deleteCustomResource(customResource, customResourcePKey, customResourceObject)](#CampaignStandardCoreAPI+deleteCustomResource)
@@ -269,6 +272,17 @@ Get the marketing history of a Profile
 
 ### campaignStandardCoreAPI.getMetadataForResource(resource)
 Get the metadata information for a resource.
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>string</code> | one of profile, service, history |
+
+<a name="CampaignStandardCoreAPI+getMetadataForResourceExt"></a>
+
+### campaignStandardCoreAPI.getMetadataForResourceExt(resource)
+Get the Ext metadata information for a resource.
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
 
@@ -484,7 +498,40 @@ Gets data from a relative url. Helper function.
 
 <a name="CampaignStandardCoreAPI+getAllCustomResources"></a>
 
-### campaignStandardCoreAPI.getAllCustomResources(customResource, [parameters])
+### ~~campaignStandardCoreAPI.getAllCustomResources(customResource, [parameters])~~
+***Deprecated***
+
+Get all Custom Resource records
+Either use getAllBasicCustomResources() to get custom resources or
+getAllProfileAndServicesExt() to get extended resource data
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
+**See**: getMetadataForResource  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| customResource | <code>string</code> |  | the custom resource to get records from |
+| [parameters] | <code>Object</code> | <code>{}</code> | parameters to pass |
+| [parameters.filters] | <code>Array</code> | <code>[]</code> | apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call |
+| [parameters.hasCustomFilter] | <code>Boolean</code> | <code>false</code> | set to true if you have a custom filter. Defaults to false. |
+| [parameters.lineCount] | <code>integer</code> | <code>25</code> | limit the number of records to return (default is 25) |
+| [parameters.order] | <code>string</code> |  | the field to order your records by (see the fields of a [Profile](https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile)) |
+| [parameters.descendingSort] | <code>boolean</code> | <code>false</code> | set to true to get results in descending order (default is ascending) |
+
+<a name="CampaignStandardCoreAPI+getAllBasicCustomResources"></a>
+
+### campaignStandardCoreAPI.getAllBasicCustomResources(resource)
+Get all Custom Resource records
+
+**Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>string</code> | one of profile, service, history |
+
+<a name="CampaignStandardCoreAPI+getAllProfileAndServicesExt"></a>
+
+### campaignStandardCoreAPI.getAllProfileAndServicesExt(customResource, [parameters])
 Get all Custom Resource records
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  

@@ -163,7 +163,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { parameters }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.getAllProfiles(this.__createFilterParams(parameters), this.__createRequestOptions())
+      this.sdk.apis.profile.getAllProfiles(this.__createFilterParams(parameters), this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -221,7 +221,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { profilePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.profile.getProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+      this.sdk.apis.profile.getProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -247,7 +247,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { parameters }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.service.getAllServices(this.__createFilterParams(parameters), this.__createRequestOptions())
+      this.sdk.apis.service.getAllServices(this.__createFilterParams(parameters), this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -285,7 +285,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { servicePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.service.getService({ SERVICE_PKEY: servicePKey }, this.__createRequestOptions())
+      this.sdk.apis.service.getService({ SERVICE_PKEY: servicePKey }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -304,7 +304,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { profilePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.history.getHistoryOfProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+      this.sdk.apis.history.getHistoryOfProfile({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -328,7 +328,7 @@ class CampaignStandardCoreAPI {
         reject(new codes.ERROR_INVALID_RESOURCE_TYPE({ sdkDetails, messageValues: `${acceptedResources.join(', ')}` }))
       }
 
-      this.sdk.apis.metadata.getMetadataForResource({ RESOURCE: resource }, this.__createRequestOptions())
+      this.sdk.apis.metadata.getMetadataForResource({ RESOURCE: resource }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -339,11 +339,30 @@ class CampaignStandardCoreAPI {
   }
 
   /**
+   * Get the Ext metadata information for a resource.
+   *
+   * @param {string} resource one of profile, service, history
+   */
+  getMetadataForResourceExt (resource) {
+    const sdkDetails = { resource }
+
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.metadataExt.getMetadataForResourceExt({ RESOURCE: resource }, this.__createRequestOptions({ body: null }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_METADATA_FOR_RESOURCE_EXT({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+  /**
    * Get all the custom resource collections linked to the Profile table.
    */
   getCustomResources () {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.metadata.getCustomResources({}, this.__createRequestOptions())
+      this.sdk.apis.metadata.getCustomResources({}, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -377,7 +396,7 @@ class CampaignStandardCoreAPI {
    */
   getGDPRRequest () {
     return new Promise((resolve, reject) => {
-      this.sdk.apis.gdpr.getGDPRRequest({}, this.__createRequestOptions())
+      this.sdk.apis.gdpr.getGDPRRequest({}, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -473,7 +492,7 @@ class CampaignStandardCoreAPI {
           ORGANIZATION: macTenantId,
           EVENT_ID: eventId,
           EVENT_PKEY: eventPKey
-        }, this.__createRequestOptions())
+        }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -492,7 +511,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { workflowId }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.workflow.getWorkflow({ WORKFLOW_ID: workflowId }, this.__createRequestOptions())
+      this.sdk.apis.workflow.getWorkflow({ WORKFLOW_ID: workflowId }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -516,7 +535,22 @@ class CampaignStandardCoreAPI {
 
     return new Promise((resolve, reject) => {
       this.postDataToUrl(workflowTriggerUrl, workflowParameters)
-        .then(res => responseInterceptor(res).json())
+        .then(res => {
+          const ri = responseInterceptor(res)
+          const contentType = ri.headers.get('content-type')
+          if (contentType && contentType.includes('application/json')) {
+            return ri.json()
+          } else {
+            // external Signal activities in ACS can only be called once every 10 minutes.
+            // This is a hardcoded restriction to prevent serious issues in the workflows.
+            // Handle the response during this 10 minute period -- response is not json,
+            // we just grab the text data and put it in a json object
+            return ri.text()
+              .then(
+                text => ({ payload: text })
+              )
+          }
+        })
         .then(json => resolve(json))
         .catch(err => reject(new codes.ERROR_TRIGGER_SIGNAL_ACTIVITY({ sdkDetails, messageValues: reduceError(err) })))
     })
@@ -567,7 +601,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { parameters }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.organization.getAllOrgUnits(this.__createFilterParams(parameters), this.__createRequestOptions())
+      this.sdk.apis.organization.getAllOrgUnits(this.__createFilterParams(parameters), this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -586,7 +620,7 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { profilePKey }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.organization.getProfileWithOrgUnit({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions())
+      this.sdk.apis.organization.getProfileWithOrgUnit({ PROFILE_PKEY: profilePKey }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
@@ -676,12 +710,62 @@ class CampaignStandardCoreAPI {
     const sdkDetails = { relativeUrl }
 
     return new Promise((resolve, reject) => {
-      this.sdk.apis.util.getDataFromRelativeUrl({ RELATIVE_URL: relativeUrl }, this.__createRequestOptions())
+      this.sdk.apis.util.getDataFromRelativeUrl({ RELATIVE_URL: relativeUrl }, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
         .catch(err => {
           reject(new codes.ERROR_GET_DATA_FROM_RELATIVE_URL({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+  /**
+   * Get all Custom Resource records
+   * Either use getAllBasicCustomResources() to get custom resources or
+   * getAllProfileAndServicesExt() to get extended resource data
+   * @deprecated
+   *
+   * @param {string} customResource the custom resource to get records from
+   * @param {Object} [parameters={}] parameters to pass
+   * @param {Array} [parameters.filters=[]] apply the filters to the results. List of filters for a resource can be retrieved via a getMetadataForResource call
+   * @param {Boolean} [parameters.hasCustomFilter=false] set to true if you have a custom filter. Defaults to false.
+   * @param {integer} [parameters.lineCount=25] limit the number of records to return (default is 25)
+   * @param {string} [parameters.order] the field to order your records by (see the fields of a {@link https://docs.campaign.adobe.com/doc/standard/en/api/ACS_API.html#profile|Profile})
+   * @param {boolean} [parameters.descendingSort=false] set to true to get results in descending order (default is ascending)
+   *
+   * @see getMetadataForResource
+   */
+  getAllCustomResources (customResource, parameters) {
+    const sdkDetails = { customResource, parameters }
+    logger.warn('getAllCustomResources has been deprecated, either use getAllBasicCustomResources() to get custom resources or getAllProfileAndServicesExt() to get extended resource data')
+    return new Promise((resolve, reject) => {
+      const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
+      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions({ body: null }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+        })
+    })
+  }
+
+  /**
+   * Get all Custom Resource records
+   *
+   * @param {string} resource one of profile, service, history
+   */
+  getAllBasicCustomResources (resource) {
+    const sdkDetails = { resource }
+
+    return new Promise((resolve, reject) => {
+      this.sdk.apis.basiccustomresource.getAllBasicCustomResources({ RESOURCE: resource }, this.__createRequestOptions({ body: null }))
+        .then(response => {
+          resolve(response)
+        })
+        .catch(err => {
+          reject(new codes.ERROR_GET_ALL_BASIC_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
@@ -699,17 +783,17 @@ class CampaignStandardCoreAPI {
    *
    * @see getMetadataForResource
    */
-  getAllCustomResources (customResource, parameters) {
+  getAllProfileAndServicesExt (customResource, parameters) {
     const sdkDetails = { customResource, parameters }
 
     return new Promise((resolve, reject) => {
       const filterParams = { ...this.__createFilterParams(parameters), CUSTOMRESOURCE: customResource }
-      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions())
+      this.sdk.apis.customresource.getAllCustomResources(filterParams, this.__createRequestOptions({ body: null }))
         .then(response => {
           resolve(response)
         })
         .catch(err => {
-          reject(new codes.ERROR_GET_ALL_CUSTOM_RESOURCES({ sdkDetails, messageValues: reduceError(err) }))
+          reject(new codes.ERROR_GET_ALL_PROFILES_AND_SERVICES_EXT({ sdkDetails, messageValues: reduceError(err) }))
         })
     })
   }
