@@ -282,13 +282,13 @@ Get the metadata information for a resource.
 <a name="CampaignStandardCoreAPI+getMetadataForResourceExt"></a>
 
 ### campaignStandardCoreAPI.getMetadataForResourceExt(resource)
-Get the Ext metadata information for a resource.
+Retrieve custom resource linked to the Profile table
 
 **Kind**: instance method of [<code>CampaignStandardCoreAPI</code>](#CampaignStandardCoreAPI)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resource | <code>string</code> | one of profile, service, history |
+| resource | <code>string</code> | any custom resource |
 
 <a name="CampaignStandardCoreAPI+getCustomResources"></a>
 
