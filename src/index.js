@@ -339,9 +339,9 @@ class CampaignStandardCoreAPI {
   }
 
   /**
-   * Get the Ext metadata information for a resource.
+   * Retrieve custom resource linked to the Profile table
    *
-   * @param {string} resource one of profile, service, history
+   * @param {string} resource any custom resource
    */
   getMetadataForResourceExt (resource) {
     const sdkDetails = { resource }
