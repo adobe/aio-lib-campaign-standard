@@ -17,9 +17,10 @@ governing permissions and limitations under the License.
 const Swagger = require('swagger-client')
 const loggerNamespace = 'aio-lib-campaign-standard'
 const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: process.env.LOG_LEVEL })
-const fetch = require('node-fetch')
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
 const { codes } = require('./SDKErrors')
+const { createFetch } = require('@adobe/aio-lib-core-networking')
+const fetch = createFetch()
 
 /**
  * Returns a Promise that resolves with a new CampaignStandardCoreAPI object.
@@ -66,7 +67,8 @@ class CampaignStandardCoreAPI {
       spec: spec,
       requestInterceptor,
       responseInterceptor,
-      usePromise: true
+      usePromise: true,
+      userFetch: fetch
     })
     this.sdk = (await swagger)
 
