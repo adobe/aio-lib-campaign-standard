@@ -20,7 +20,6 @@ const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: 
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('./helpers')
 const { codes } = require('./SDKErrors')
 const { createFetch } = require('@adobe/aio-lib-core-networking')
-const fetch = createFetch()
 
 /**
  * Returns a Promise that resolves with a new CampaignStandardCoreAPI object.
@@ -68,7 +67,7 @@ class CampaignStandardCoreAPI {
       requestInterceptor,
       responseInterceptor,
       usePromise: true,
-      userFetch: fetch
+      userFetch: createFetch()
     })
     this.sdk = (await swagger)
 
@@ -688,7 +687,7 @@ class CampaignStandardCoreAPI {
    */
   postDataToUrl (url, body) {
     const options = this.__createRequestOptions()
-
+    const fetch = createFetch()
     const request = new fetch.Request(url, {
       method: 'post',
       body: JSON.stringify(body),

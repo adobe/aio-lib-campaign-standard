@@ -9,9 +9,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+const libNetworking = require('@adobe/aio-lib-core-networking')
 const sdk = require('../src')
 const { createRequestOptions } = require('../src/helpers')
 const { codes } = require('../src/SDKErrors')
+
+jest.mock('@adobe/aio-lib-core-networking')
 
 // /////////////////////////////////////////////
 
@@ -35,9 +38,14 @@ const createSdkClient = async () => {
 }
 
 // /////////////////////////////////////////////
-
+const mockProxyFetch = jest.fn()
 beforeEach(() => {
   fetchMock.resetMocks()
+  mockProxyFetch.mockReset()
+  libNetworking.createFetch.mockReset()
+  mockProxyFetch.Request = jest.fn()
+
+  libNetworking.createFetch.mockReturnValue(mockProxyFetch)
 })
 
 test('sdk init test', async () => {
@@ -358,19 +366,21 @@ test('getGDPRDataFile - success', async () => {
   const requestInternalName = 'my-name'
 
   const expectedResult = { data: '12345' }
-  fetchMock.mockResponseOnce(JSON.stringify(expectedResult))
+  mockProxyFetch.mockResolvedValue({
+    json: () => expectedResult
+  })
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
   const client = await createSdkClient()
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(1)
   const triggerSuccess = client.getGDPRDataFile(privacyDataRequestUrl, requestInternalName)
 
-  expect(fetchMock.mock.calls.length).toEqual(1)
-  // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetchMock.mock.calls[0][0]
-  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(2)
+  expect(mockProxyFetch).toHaveBeenCalledTimes(1)
+  expect(mockProxyFetch.Request).toHaveBeenCalledTimes(1)
 
-  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(privacyDataRequestUrl)
+  expect(mockProxyFetch.Request).toHaveBeenCalledWith(privacyDataRequestUrl, expect.any(Object))
   return expect(triggerSuccess).resolves.toEqual(expectedResult)
 })
 
@@ -379,21 +389,21 @@ test('getGDPRDataFile - error', async () => {
   const requestInternalName = 'my-name'
 
   const expectedError = new Error('Foo')
-  fetchMock.mockRejectOnce(expectedError)
+  mockProxyFetch.mockRejectedValue(expectedError)
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
   const client = await createSdkClient()
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(1)
 
   const triggerFail = client.getGDPRDataFile(privacyDataRequestUrl, requestInternalName)
+
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(2)
+  expect(mockProxyFetch).toHaveBeenCalledTimes(1)
+  expect(mockProxyFetch.Request).toHaveBeenCalledTimes(1)
+  expect(mockProxyFetch.Request).toHaveBeenCalledWith(privacyDataRequestUrl, expect.any(Object))
+
   const sdkDetails = { privacyDataRequestUrl, requestInternalName }
-
-  expect(fetchMock.mock.calls.length).toEqual(1)
-  // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetchMock.mock.calls[0][0]
-  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
-
-  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(privacyDataRequestUrl)
   return expect(triggerFail).rejects.toEqual(new codes.ERROR_GET_GDPR_DATA_FILE({ sdkDetails, messageValues: expectedError }))
 })
 
@@ -474,21 +484,29 @@ test('triggerSignalActivity - success', async () => {
   }
 
   const expectedResult = { data: '12345' }
-  fetchMock.mockResponseOnce(JSON.stringify(expectedResult), {
-    headers: { 'content-type': 'application/json' }
+  mockProxyFetch.mockResolvedValue({
+    ok: true,
+    json: async () => expectedResult,
+    headers: {
+      get: value => {
+        if (value === 'content-type') {
+          return ['application/json']
+        }
+      }
+    }
   })
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
   const client = await createSdkClient()
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(1)
   const triggerSuccess = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
 
-  expect(fetchMock.mock.calls.length).toEqual(1)
-  // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetchMock.mock.calls[0][0]
-  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(2)
+  expect(mockProxyFetch).toHaveBeenCalledTimes(1)
+  expect(mockProxyFetch.Request).toHaveBeenCalledTimes(1)
 
-  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
+  expect(mockProxyFetch.Request).toHaveBeenCalledWith(workflowTriggerUrl, expect.any(Object))
   return expect(triggerSuccess).resolves.toEqual(expectedResult)
 })
 
@@ -508,22 +526,29 @@ test('triggerSignalActivity - success (call within restricted period)', async ()
   }
 
   const expectedResult = 'this is a call within restricted period'
-  fetchMock.mockResponseOnce(expectedResult, {
-    headers: { 'content-type': 'text/plain' },
-    body: expectedResult
+  mockProxyFetch.mockResolvedValue({
+    ok: true,
+    text: async () => expectedResult,
+    headers: {
+      get: value => {
+        if (value === 'content-type') {
+          return ['text/plain']
+        }
+      }
+    }
   })
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
   const client = await createSdkClient()
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(1)
   const triggerSuccess = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
 
-  expect(fetchMock.mock.calls.length).toEqual(1)
-  // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetchMock.mock.calls[0][0]
-  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(2)
+  expect(mockProxyFetch).toHaveBeenCalledTimes(1)
+  expect(mockProxyFetch.Request).toHaveBeenCalledTimes(1)
 
-  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
+  expect(mockProxyFetch.Request).toHaveBeenCalledWith(workflowTriggerUrl, expect.any(Object))
   return expect(triggerSuccess).resolves.toEqual({ payload: expectedResult })
 })
 
@@ -543,21 +568,22 @@ test('triggerSignalActivity - error', async () => {
   }
 
   const expectedError = new Error('Foo')
-  fetchMock.mockRejectOnce(expectedError)
+  mockProxyFetch.mockRejectedValue(expectedError)
 
   // this API function does not go through Swagger Client at all,
   // and goes through node-fetch
   const client = await createSdkClient()
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(1)
 
   const triggerFail = client.triggerSignalActivity(workflowTriggerUrl, workflowParameters)
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(2)
+
+  expect(libNetworking.createFetch).toHaveBeenCalledTimes(2)
+  expect(mockProxyFetch).toHaveBeenCalledTimes(1)
+  expect(mockProxyFetch.Request).toHaveBeenCalledTimes(1)
+
   const sdkDetails = { workflowTriggerUrl, workflowParameters }
-
-  expect(fetchMock.mock.calls.length).toEqual(1)
-  // [0][0] -> [call-index][argument-index], so first call's first argument
-  const requestObject = fetchMock.mock.calls[0][0]
-  const requestInternalsSymbol = Object.getOwnPropertySymbols(requestObject).find(item => String(item) === 'Symbol(Request internals)')
-
-  expect(requestObject[requestInternalsSymbol].parsedURL.href).toEqual(workflowTriggerUrl)
+  expect(mockProxyFetch.Request).toHaveBeenCalledWith(workflowTriggerUrl, expect.any(Object))
   return expect(triggerFail).rejects.toEqual(new codes.ERROR_TRIGGER_SIGNAL_ACTIVITY({ sdkDetails, messageValues: expectedError }))
 })
 
