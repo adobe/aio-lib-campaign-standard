@@ -16,6 +16,7 @@
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^3.0.0",
     "@adobe/aio-lib-core-logging": "^1.1.2",
+    "@adobe/aio-lib-core-networking": "github:adobe/aio-lib-core-networking#proxy-support",
     "node-fetch": "^2.6.1",
     "swagger-client": "3.13.5"
   },
@@ -38,6 +39,9 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "http-proxy": "^1.18.1",
     "jest": "^24.8.0",
     "jest-fetch-mock": "^3.0.1",
     "jest-junit": "^10.0.0",
