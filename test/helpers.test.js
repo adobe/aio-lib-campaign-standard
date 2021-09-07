@@ -10,6 +10,14 @@ governing permissions and limitations under the License.
 */
 
 const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('../src/helpers')
+const config = require('@adobe/aio-lib-core-config')
+
+jest.mock('@adobe/aio-lib-core-config')
+
+beforeEach(() => {
+  jest.resetAllMocks()
+  config.get = jest.fn()
+})
 
 test('reduceError', () => {
   // no args produces empty object
@@ -62,9 +70,23 @@ test('createRequestOptions', () => {
   })
 })
 
-test('requestInterceptor', () => {
+test('requestInterceptor (proxy set)', () => {
   const req = {}
-  expect(requestInterceptor(req)).toEqual(req)
+  config.get.mockImplementation(key => {
+    if (key === 'proxy.url') {
+      return 'http://foo.bar'
+    }
+  })
+
+  const result = requestInterceptor(req)
+  expect(result.agent).toBeDefined()
+  expect(typeof result.agent).toEqual('object')
+})
+
+test('requestInterceptor (proxy not set)', () => {
+  const req = {}
+  const result = requestInterceptor(req)
+  expect(result.agent).not.toBeDefined()
 })
 
 test('responseInterceptor', () => {
