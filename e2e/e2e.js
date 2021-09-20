@@ -13,7 +13,7 @@ const sdk = require('../src/index')
 const path = require('path')
 const crypto = require('crypto')
 const { codes } = require('../src/SDKErrors')
-const { createHttpProxy } = require('@adobe/aio-lib-core-networking/test/server/http-proxy')
+const { createHttpsProxy } = require('@adobe/aio-lib-core-networking/test/server/proxy')
 
 // load .env values in the e2e folder, if any
 require('dotenv').config({ path: path.join(__dirname, '.env') })
@@ -24,26 +24,20 @@ const apiKey = process.env.CAMPAIGN_STANDARD_API_KEY
 const accessToken = process.env.CAMPAIGN_STANDARD_ACCESS_TOKEN
 const USE_PROXY = process.env.E2E_USE_PROXY
 
-let proxyServer, proxyCleanup
+let proxyServer
 
 beforeAll(async () => {
   if (USE_PROXY) {
-    [proxyServer, proxyCleanup] = await createHttpProxy()
-
-    const proxyServerAddress = proxyServer.address()
-    const proxyUrl = `http://${proxyServerAddress.address}:${proxyServerAddress.port}`
-    process.env.AIO_PROXY_URL = proxyUrl
+    proxyServer = await createHttpsProxy()
+    process.env.AIO_PROXY_URL = proxyServer.url
   }
 
   sdkClient = await sdk.init(tenantId, apiKey, accessToken)
 })
 
 afterAll(() => {
-  if (proxyCleanup) {
-    proxyCleanup()
-  }
   if (proxyServer) {
-    proxyServer.close()
+    proxyServer.stop()
   }
   delete process.env.AIO_PROXY_URL
 })
