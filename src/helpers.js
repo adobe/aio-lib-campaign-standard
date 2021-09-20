@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 
 const loggerNamespace = 'aio-lib-campaign-standard'
 const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: process.env.LOG_LEVEL })
-const { ProxyFetch, getProxyOptionsFromConfig } = require('@adobe/aio-lib-core-networking')
 
 /** Reduce an Error to a string */
 function reduceError (error = {}) {
@@ -41,12 +40,6 @@ function createRequestOptions ({ tenantId, apiKey, accessToken, body = {} }) {
 }
 
 function requestInterceptor (req) {
-  const proxyOptions = getProxyOptionsFromConfig()
-  if (proxyOptions) {
-    const proxyFetch = new ProxyFetch(proxyOptions)
-    req.agent = proxyFetch.proxyAgent()
-  }
-
   logger.debug(`REQUEST:\n ${JSON.stringify(req, null, 2)}`)
   return req
 }
