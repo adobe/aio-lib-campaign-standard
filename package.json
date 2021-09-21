@@ -16,8 +16,7 @@
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^3.0.0",
     "@adobe/aio-lib-core-logging": "^1.1.2",
-    "@adobe/aio-lib-core-networking": "github:adobe/aio-lib-core-networking#proxy-support",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "2.6.2",
     "swagger-client": "3.13.5"
   },
   "files": [
