@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('../src/helpers')
+const { reduceError, responseInterceptor, createRequestOptions } = require('../src/helpers')
 const config = require('@adobe/aio-lib-core-config')
 
 jest.mock('@adobe/aio-lib-core-config')
@@ -68,25 +68,6 @@ test('createRequestOptions', () => {
       ORGANIZATION: tenantId
     }
   })
-})
-
-test('requestInterceptor (proxy set)', () => {
-  const req = {}
-  config.get.mockImplementation(key => {
-    if (key === 'proxy.url') {
-      return 'http://foo.bar'
-    }
-  })
-
-  const result = requestInterceptor(req)
-  expect(result.agent).toBeDefined()
-  expect(typeof result.agent).toEqual('object')
-})
-
-test('requestInterceptor (proxy not set)', () => {
-  const req = {}
-  const result = requestInterceptor(req)
-  expect(result.agent).not.toBeDefined()
 })
 
 test('responseInterceptor', () => {
