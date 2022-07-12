@@ -46,5 +46,8 @@
     "jsdoc-to-markdown": "^5.0.0",
     "openapi-schema-validator": "^3.0.3",
     "stdout-stderr": "^0.1.9"
+  },
+  "engines": {
+    "node": "^14.18 || ^16.13 || >=18"
   }
 }
