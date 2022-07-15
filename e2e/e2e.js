@@ -13,6 +13,7 @@ const sdk = require('../src/index')
 const path = require('path')
 const crypto = require('crypto')
 const { codes } = require('../src/SDKErrors')
+const { createHttpsProxy } = require('@adobe/aio-lib-test-proxy')
 
 // load .env values in the e2e folder, if any
 require('dotenv').config({ path: path.join(__dirname, '.env') })
@@ -21,9 +22,34 @@ let sdkClient = {}
 const tenantId = process.env.CAMPAIGN_STANDARD_TENANT_ID
 const apiKey = process.env.CAMPAIGN_STANDARD_API_KEY
 const accessToken = process.env.CAMPAIGN_STANDARD_ACCESS_TOKEN
+const E2E_USE_PROXY = process.env.E2E_USE_PROXY
+const HTTPS_PROXY = process.env.HTTPS_PROXY
+
+let proxyServer
 
 beforeAll(async () => {
+  if (E2E_USE_PROXY) {
+    proxyServer = await createHttpsProxy()
+    console.log(`Using test proxy at ${proxyServer.url}`)
+  }
+
   sdkClient = await sdk.init(tenantId, apiKey, accessToken)
+})
+
+afterAll(() => {
+  if (proxyServer) {
+    proxyServer.stop()
+  }
+})
+
+// eslint-disable-next-line jest/expect-expect
+test('HTTPS_PROXY must be set if E2E_USE_PROXY is set', () => {
+  // jest wraps process.env, so libraries will not pick up an env change via code change, so it has to be set on the shell level
+  if (E2E_USE_PROXY) {
+    if (!HTTPS_PROXY) {
+      throw new Error(`If you set E2E_USE_PROXY, you must set the HTTPS_PROXY environment variable. Please set it to HTTPS_PROXY=${proxyServer.url}.`)
+    }
+  }
 })
 
 test('sdk init test', async () => {

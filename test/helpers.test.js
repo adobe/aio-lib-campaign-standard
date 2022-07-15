@@ -9,7 +9,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { reduceError, requestInterceptor, responseInterceptor, createRequestOptions } = require('../src/helpers')
+const { reduceError, responseInterceptor, createRequestOptions } = require('../src/helpers')
+const config = require('@adobe/aio-lib-core-config')
+
+jest.mock('@adobe/aio-lib-core-config')
+
+beforeEach(() => {
+  jest.resetAllMocks()
+  config.get = jest.fn()
+})
 
 test('reduceError', () => {
   // no args produces empty object
@@ -60,11 +68,6 @@ test('createRequestOptions', () => {
       ORGANIZATION: tenantId
     }
   })
-})
-
-test('requestInterceptor', () => {
-  const req = {}
-  expect(requestInterceptor(req)).toEqual(req)
 })
 
 test('responseInterceptor', () => {
