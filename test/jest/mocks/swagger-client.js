@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 /* global fixtureFile */
 
 const mockSwaggerClient = {
-  ...require.requireActual('swagger-client'), // we want the original implementation in there. Then we override the ones we want to mock below
+  ...jest.requireActual('swagger-client'), // we want the original implementation in there. Then we override the ones we want to mock below
   apis: {},
   mockFn: function (methodName) {
     const cmd = methodName.split('.')
