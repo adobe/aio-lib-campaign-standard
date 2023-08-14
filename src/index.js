@@ -63,7 +63,7 @@ class CampaignStandardCoreAPI {
     // init swagger client
     const spec = require('../spec/api.json')
     const swagger = new Swagger({
-      spec: spec,
+      spec,
       requestInterceptor,
       responseInterceptor,
       usePromise: true,
@@ -862,5 +862,5 @@ class CampaignStandardCoreAPI {
   }
 }
 module.exports = {
-  init: init
+  init
 }
