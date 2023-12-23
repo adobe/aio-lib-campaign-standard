@@ -17,7 +17,7 @@
     "@adobe/aio-lib-core-errors": "^3.1.0",
     "@adobe/aio-lib-core-logging": "^2.0.0",
     "@adobe/aio-lib-core-networking": "^4.1.0",
-    "swagger-client": "3.20.0"
+    "swagger-client": "3.24.5"
   },
   "files": [
     "src",
